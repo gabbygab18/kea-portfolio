@@ -1,0 +1,76 @@
+// ===========================
+// _mixins.scss
+// ===========================
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin card {
+    background: $color-bg-card;
+    border: 0.1rem solid $color-border;
+    border-radius: $border-radius;
+    padding: 1.5rem;
+}
+
+@mixin button-base {
+    font-weight: 600;
+    transition: $transition-base;
+    padding: $spacing-sm;
+    width: 8rem;
+    border-radius: $border-radius;
+    cursor: pointer;
+    border: $color-dark 0.1rem solid;
+}
+
+@mixin button-filled {
+    @include button-base;
+    background: $color-dark;
+    color: white;
+
+    &:hover {
+        background: $color-darker;
+    }
+}
+
+@mixin button-outline {
+    @include button-base;
+    background: none;
+    color: $color-dark;
+
+    &:hover {
+        background: $color-dark;
+        color: white;
+        border-color: white;
+    }
+}
+
+// Enhanced respond-to mixin with xs and desktop breakpoints
+@mixin respond-to($bp) {
+    @if $bp == 'xs' {
+        @media screen and (max-width: $bp-xs) { @content; }
+    } @else if $bp == 'mobile' {
+        @media screen and (max-width: $bp-mobile) { @content; }
+    } @else if $bp == 'tablet' {
+        @media screen and (max-width: $bp-tablet) { @content; }
+    } @else if $bp == 'desktop' {
+        @media screen and (max-width: $bp-desktop) { @content; }
+    } @else if $bp == 'wide' {
+        @media screen and (min-width: $bp-wide) { @content; }
+    }
+}
+
+@mixin section-arrow {
+    position: absolute;
+    right: -5rem;
+    bottom: 2.5rem;
+    height: 2rem;
+    cursor: pointer;
+}

@@ -1,0 +1,47 @@
+// ===========================
+// _variables.scss
+// ===========================
+
+// Colors
+$color-dark:      #353535;
+$color-darker:    #000000;
+$color-medium:    #555555;
+$color-light:     #a3a3a3;
+$color-bg:        #ffffff;
+$color-bg-card:   #fafafa;
+$color-border:    #a3a3a3;
+$color-accent:    #353535;
+
+// Typography
+$font-display:    'Clash Display', sans-serif;
+$font-body:       'Urbanist', sans-serif;
+$font-size-base:  1rem;
+$font-size-sm:    0.875rem;
+$font-size-lg:    1.5rem;
+$font-size-xl:    1.75rem;
+$font-size-2xl:   2rem;
+$font-size-3xl:   3rem;
+
+// Spacing
+$spacing-xs:   0.5rem;
+$spacing-sm:   1rem;
+$spacing-md:   2rem;
+$spacing-lg:   4rem;
+$spacing-xl:   5rem;
+
+// Layout
+$nav-height:      17vh;
+$section-margin:  0 10rem;
+$border-radius:   2rem;
+$border-radius-sm: 0.5rem;
+
+// Transitions
+$transition-base: all 300ms ease;
+$transition-fast: all 0.3s ease-in-out;
+
+// Breakpoints
+$bp-xs:      375px;
+$bp-mobile:  768px;
+$bp-tablet:  1024px;
+$bp-desktop: 1200px;
+$bp-wide:    1440px;

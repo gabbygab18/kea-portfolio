@@ -1,0 +1,536 @@
+// ─────────────────────────────────────────────
+// _seo.scss  — SEO page styles
+// ─────────────────────────────────────────────
+
+// ── Variables (mirrored from _home.scss) ─────
+$color-primary: #531A24;
+$color-primary-dark: #521320;
+$color-bg-cream: #F2E8D9;
+$color-bg-tan: #E3D4BC;
+$color-bg-light: #FAF6EE;
+$color-white: #FAF6EE;
+$color-text-muted: rgba(123, 29, 46, 0.56);
+$color-text-semi: rgba(123, 29, 46, 0.78);
+$color-accent-rose: #9C2438;
+
+$font-sans: 'Inter', sans-serif;
+$font-serif: 'Poppins', sans-serif;
+
+$max-width: 1106px;
+$transition: 0.2s ease;
+
+// ── Shared label ─────────────────────────────
+.seo-section-label {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: $color-primary;
+    margin-bottom: .75rem;
+}
+
+// ── HERO ─────────────────────────────────────
+.seo-hero {
+    background: $color-bg-cream;
+    padding: 5rem 10vw 4rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    overflow: hidden;
+
+    @media (max-width: 900px) {
+        grid-template-columns: 1fr;
+        padding: 3rem 6vw;
+    }
+}
+
+.seo-hero__label {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: $color-primary;
+    margin-bottom: 1rem;
+}
+
+.seo-hero__title {
+    font-family: $font-serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: $color-primary;
+    margin-bottom: 1.25rem;
+
+    em {
+        font-style: italic;
+        color: $color-accent-rose;
+    }
+}
+
+.seo-hero__desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: $color-text-semi;
+    max-width: 480px;
+    margin-bottom: 2rem;
+}
+
+.seo-hero__cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+// Right visual panel
+.seo-hero__visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.seo-hero__badge {
+    position: absolute;
+    background: $color-primary;
+    color: $color-white;
+    border-radius: 12px;
+    padding: .6rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 16px rgba(123, 29, 46, .25);
+
+    &--1 {
+        top: 0;
+        right: 2rem;
+    }
+
+    &--2 {
+        top: 4.5rem;
+        right: 8rem;
+    }
+}
+
+.seo-hero__badge-num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.seo-hero__badge-label {
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    opacity: .8;
+    margin-top: .15rem;
+}
+
+// Rank card
+.seo-hero__rank-card {
+    margin-top: 7rem;
+    background: $color-bg-light;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 20px rgba(123, 29, 46, .07);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.seo-hero__rank-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .83rem;
+    gap: .75rem;
+
+    span {
+        color: $color-text-muted;
+        white-space: nowrap;
+    }
+
+    strong {
+        color: $color-primary;
+        font-weight: 700;
+    }
+
+    &::before {
+        content: '';
+        flex: 1;
+        height: 6px;
+        border-radius: 99px;
+        background: linear-gradient(to right, $color-primary var(--w), $color-bg-cream var(--w));
+    }
+}
+
+// ── TOOLS ────────────────────────────────────
+.seo-tools {
+    background: $color-bg-light;
+    padding: 5rem 10vw;
+
+    @media (max-width: 768px) {
+        padding: 3rem 6vw;
+    }
+}
+
+.seo-tools__inner {
+    max-width: $max-width;
+    margin: 0 auto;
+}
+
+.seo-tools__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+}
+
+.seo-tools__title {
+    font-family: $font-serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: $color-primary;
+    margin: 0;
+}
+
+.seo-tools__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.25rem;
+}
+
+.seo-tool-card {
+    background: $color-bg-cream;
+    border: 1px solid rgba(123, 29, 46, .1);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    transition: transform $transition, box-shadow $transition;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 24px rgba(123, 29, 46, .1);
+    }
+}
+
+.seo-tool-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: $color-bg-tan;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: .25rem;
+    color: $color-primary;
+
+    img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+    }
+}
+
+.seo-tool-card__name {
+    font-size: .95rem;
+    font-weight: 700;
+    color: $color-primary;
+    margin: 0;
+}
+
+.seo-tool-card__desc {
+    font-size: .8rem;
+    line-height: 1.55;
+    color: $color-text-semi;
+    margin: 0;
+    flex: 1;
+}
+
+.seo-tool-card__tag {
+    display: inline-block;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: $color-primary;
+    background: rgba(123, 29, 46, .08);
+    padding: .25rem .6rem;
+    border-radius: 99px;
+    margin-top: .25rem;
+    align-self: flex-start;
+}
+
+// ── PROJECTS ─────────────────────────────────
+.seo-projects {
+    background: $color-bg-cream;
+    padding: 5rem 10vw;
+
+    @media (max-width: 768px) {
+        padding: 3rem 6vw;
+    }
+}
+
+.seo-projects__inner {
+    max-width: $max-width;
+    margin: 0 auto;
+}
+
+.seo-projects__header {
+    margin-bottom: 3rem;
+}
+
+.seo-projects__title {
+    font-family: $font-serif;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: $color-primary;
+    margin: 0 0 .5rem;
+}
+
+.seo-projects__desc {
+    font-size: .95rem;
+    color: $color-text-semi;
+    margin: 0;
+}
+
+.seo-projects__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.seo-project-card {
+    background: $color-bg-light;
+    border-radius: 16px;
+    padding: 2rem 2rem 2rem 1.75rem;
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 1.5rem;
+    align-items: flex-start;
+    border-left: 4px solid $color-primary;
+    box-shadow: 0 2px 12px rgba(123, 29, 46, .05);
+    transition: box-shadow $transition;
+
+    &:hover {
+        box-shadow: 0 6px 24px rgba(123, 29, 46, .1);
+    }
+
+    @media (max-width: 700px) {
+        grid-template-columns: 1fr;
+        border-left: none;
+        border-top: 4px solid $color-primary;
+    }
+}
+
+.seo-project-card__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .5rem;
+    padding-top: .25rem;
+}
+
+.seo-project-card__num {
+    font-size: 2rem;
+    font-weight: 800;
+    color: rgba(123, 29, 46, .15);
+    line-height: 1;
+    font-family: $font-serif;
+}
+
+.seo-project-card__cat {
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: $color-primary;
+    background: rgba(123, 29, 46, .08);
+    padding: .25rem .6rem;
+    border-radius: 99px;
+}
+
+.seo-project-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.seo-project-card__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $color-primary;
+    margin: 0;
+}
+
+.seo-project-card__desc {
+    font-size: .9rem;
+    line-height: 1.65;
+    color: $color-text-semi;
+    margin: 0;
+}
+
+.seo-project-card__results {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+
+    li {
+        font-size: .85rem;
+        color: $color-primary;
+        padding-left: 1.1rem;
+        position: relative;
+
+        &::before {
+            content: '↑';
+            position: absolute;
+            left: 0;
+            color: $color-primary;
+            font-size: .75rem;
+        }
+    }
+}
+
+.seo-project-card__tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-top: .25rem;
+}
+
+.seo-project-card__tool-tag {
+    font-size: .72rem;
+    font-weight: 600;
+    color: $color-text-semi;
+    background: $color-bg-tan;
+    padding: .2rem .55rem;
+    border-radius: 6px;
+}
+
+.seo-project-card__link {
+    font-size: .83rem;
+    font-weight: 700;
+    color: $color-primary;
+    text-decoration: none;
+    white-space: nowrap;
+    padding-top: .35rem;
+    transition: opacity $transition;
+
+    &:hover {
+        opacity: .7;
+    }
+}
+
+// ── CTA ──────────────────────────────────────
+.seo-cta {
+    background: $color-primary;
+    padding: 5rem 10vw;
+    text-align: center;
+}
+
+.seo-cta__inner {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.seo-cta__title {
+    font-family: $font-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    color: $color-white;
+    margin: 0;
+}
+
+.seo-cta__desc {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: rgba(250, 246, 238, .75);
+    margin: 0 0 .5rem;
+}
+
+/* ── SKILLS & EXPERTISE ── */
+.seo-skills {
+    padding: 5rem 0;
+    background: #faf8f5;
+}
+
+.seo-skills__inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.seo-skills__header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.seo-skills__title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    margin: .4rem 0 .75rem;
+}
+
+.seo-skills__desc {
+    color: #666;
+    font-size: .95rem;
+}
+
+.seo-skills__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.seo-skill-card {
+    background: #fff;
+    border: 1px solid #ede9e3;
+    border-radius: 14px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.seo-skill-card:hover {
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .07);
+    transform: translateY(-2px);
+}
+
+.seo-skill-card__num {
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    color: #531A24;
+    opacity: .6;
+}
+
+.seo-skill-card__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.seo-skill-card__text {
+    font-size: .875rem;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}

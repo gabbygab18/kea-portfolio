@@ -1,0 +1,256 @@
+/* ============================================================
+   admin-forms.css
+   Add <link rel="stylesheet" href="{{ asset('css/admin-forms.css') }}">
+   to layouts/admin.blade.php — just after the admin.css link
+   ============================================================ */
+
+.admin-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+    flex-wrap: wrap;
+}
+.admin-page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+.admin-page-subtitle {
+    font-size: 0.85rem;
+    color: #a0a0a0;
+    margin: 0.2rem 0 0;
+}
+
+/* Grid */
+.admin-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+.admin-form-group--full {
+    grid-column: 1 / -1;
+}
+
+/* Label */
+.admin-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a0a0a0;
+}
+.admin-required { color: #ff6b6b; }
+
+/* Input */
+.admin-input {
+    width: 100%;
+    padding: 0.65rem 0.9rem;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    font-family: 'Sora', sans-serif;
+    font-size: max(16px, 0.875rem);
+    color: #f5f5f5;
+    transition: 0.2s ease;
+    box-sizing: border-box;
+}
+.admin-input::placeholder { color: #a0a0a0; }
+.admin-input:focus {
+    outline: none;
+    border-color: #fff;
+    background: rgba(255,255,255,0.06);
+    box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+}
+.admin-input.is-invalid { border-color: #ff6b6b; }
+.admin-input--sm { margin-top: 0.5rem; font-size: 0.82rem; }
+.admin-textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+
+/* Hint / Error */
+.admin-error { font-size: 0.78rem; color: #ff6b6b; margin: 0; }
+.admin-form-hint { font-size: 0.75rem; color: #a0a0a0; margin: 0.2rem 0 0; }
+.admin-form-hint code {
+    background: #222;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    font-size: 0.85em;
+}
+
+/* Actions bar */
+.admin-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+}
+
+/* ── Button overrides using double-dash (--) naming ── */
+.btn-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 100px;
+    font-family: 'Sora', sans-serif;
+    font-size: 0.825rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
+    min-height: 36px;
+    text-decoration: none;
+}
+.btn-admin--primary {
+    background: #fff;
+    color: #0a0a0a;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.btn-admin--primary:hover {
+    background: #e0e0e0;
+    transform: translateY(-1px);
+}
+.btn-admin--ghost {
+    background: transparent;
+    color: #c0c0c0;
+    border-color: rgba(255,255,255,0.08);
+    border-radius: 10px;
+}
+.btn-admin--ghost:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: #fff;
+    background: rgba(255,255,255,0.04);
+}
+.btn-admin--danger {
+    background: #0a0a0a;
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+}
+.btn-admin--danger:hover {
+    background: #1a1a1a;
+    border-color: #fff;
+}
+
+/* Image upload zone */
+.admin-image-upload-zone {
+    position: relative;
+    border: 2px dashed rgba(255,255,255,0.08);
+    border-radius: 10px;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    overflow: hidden;
+    background: rgba(255,255,255,0.01);
+}
+.admin-image-upload-zone:hover,
+.admin-image-upload-zone.is-dragging {
+    border-color: #fff;
+    background: rgba(255,255,255,0.03);
+}
+.admin-image-upload-zone__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: #a0a0a0;
+    pointer-events: none;
+    text-align: center;
+    padding: 1.5rem;
+}
+.admin-image-upload-zone__inner p { color: #a0a0a0; font-size: 0.875rem; }
+.admin-image-upload-zone__link {
+    color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+    pointer-events: all;
+}
+.admin-image-upload-zone__hint { font-size: 0.75rem; color: #666 !important; }
+.admin-file-input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+.admin-image-preview {
+    max-height: 240px;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    display: block;
+    margin: auto;
+}
+
+/* Current image */
+.admin-current-image { margin-bottom: 0.75rem; }
+.admin-current-image__thumb {
+    max-height: 120px;
+    max-width: 240px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    display: block;
+    margin: 0.4rem 0;
+}
+
+/* Toggle */
+.admin-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    user-select: none;
+}
+.admin-toggle input { display: none; }
+.admin-toggle__track {
+    width: 38px;
+    height: 22px;
+    border-radius: 999px;
+    background: #222;
+    border: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+.admin-toggle__track::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #666;
+    transition: transform 0.2s, background 0.2s;
+}
+.admin-toggle input:checked + .admin-toggle__track {
+    background: #fff;
+    border-color: #fff;
+}
+.admin-toggle input:checked + .admin-toggle__track::after {
+    transform: translateX(16px);
+    background: #0a0a0a;
+}
+.admin-toggle__label { font-size: 0.875rem; color: #f5f5f5; }
+
+@media (max-width: 640px) {
+    .admin-form-grid { grid-template-columns: 1fr; }
+    .admin-form-group--full { grid-column: 1; }
+}

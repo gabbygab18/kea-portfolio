@@ -1,0 +1,24 @@
+// ── Design Tokens (matched from my-portfolio) ──────────────
+$color-primary:      #531A24;
+$color-primary-dark: #521320;
+$color-bg-cream:     #F2E8D9;
+$color-bg-tan:       #E3D4BC;
+$color-bg-light:     #FAF6EE;
+$color-white:        #FAF6EE;
+$color-text-muted:   rgba(123, 29, 46, 0.56);
+$color-text-semi:    rgba(123, 29, 46, 0.78);
+$color-accent-rose:  #9C2438;
+
+$font-sans:  'Inter', sans-serif;
+$font-serif: 'Poppins', sans-serif;
+
+$max-width:  1106px;
+$transition: 0.2s ease;
+
+// Artworks carousel
+$artwork-card-width: 300px;
+$artwork-card-gap:   24px;
+$artwork-visible:    3;
+$artwork-viewport:   (
+  $artwork-card-width * $artwork-visible) + ($artwork-card-gap * ($artwork-visible - 1)
+);

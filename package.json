@@ -1,0 +1,12 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "sass": "sass public/assets/sass/style.scss public/assets/css/style.css",
+        "sass-watch": "sass --watch public/assets/sass/style.scss:public/assets/css/style.css"
+    },
+    "devDependencies": {
+        "sass": "^1.99.0"
+    }
+}
