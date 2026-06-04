@@ -250,6 +250,41 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
 
+    <script>
+        // ── Smooth scroll for anchor links ───────────────────────────
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // ── Scroll-reveal via IntersectionObserver ───────────────────
+        const revealEls = document.querySelectorAll(
+            '.skill-card, .services__card, .exp-item, .about__content, ' +
+            '.newsletter__content, .about-hero__inner, .about-hero__image-wrap'
+        );
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const siblings = [...(entry.target.parentElement?.children ?? [])];
+                    const delay = siblings.indexOf(entry.target) * 80;
+                    setTimeout(() => entry.target.classList.add('visible'), delay);
+                    observer.unobserve(entry.target);
+                });
+            }, { threshold: 0.12 });
+
+            revealEls.forEach(el => {
+                el.classList.add('scroll-reveal');
+                observer.observe(el);
+            });
+        }
+    </script>
+
 </body>
 
 </html>
