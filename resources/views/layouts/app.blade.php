@@ -14,9 +14,17 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Playfair+Display:wght@400&display=swap"
+    @php $font = \App\Models\Setting::getValue('font_family', 'Inter'); @endphp
+    <link href="https://fonts.googleapis.com/css2?family={{ urlencode($font) }}:wght@400;600;800&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
+    <style>
+        body,
+        body * {
+            font-family: '{{ $font }}', sans-serif !important;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
 
@@ -144,7 +152,7 @@
                         <li class="nav-item">
                             <a href="{{ route('seo') }}"
                                 class="header__nav-link nav-link {{ request()->routeIs('seo') ? 'active' : '' }}">
-                                CASE STUDIES
+                                SEO
                             </a>
                         </li>
                         <li class="nav-item mt-2 mt-md-0">
@@ -238,6 +246,7 @@
     <div class="toast" id="toast"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
 
 </body>

@@ -48,5 +48,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('seo-projects', SeoProjectController::class)->except(['show']);
         Route::resource('seo-tools', SeoToolController::class)->except(['show', 'index']);
         Route::resource('seo-skills', SeoSkillController::class)->except(['show', 'index']);
+        Route::post('/settings/bulk-update', [SettingController::class, 'bulkUpdate'])->name('settings.bulk-update');
     });
 });

@@ -32,4 +32,15 @@ class SettingController extends Controller
 
         return redirect()->route('admin.settings.index')->with('success', 'Setting updated.');
     }
+
+    public function bulkUpdate(Request $request)
+    {
+        $data = $request->except(['_token', '_method']);
+
+        foreach ($data as $key => $value) {
+            Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
+        return back()->with('success', 'Settings updated!');
+    }
 }

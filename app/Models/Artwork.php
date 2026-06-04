@@ -19,6 +19,7 @@ class Artwork extends Model
         'meta',
         'gallery',      // ← added
         'stats',        // ← added
+        'preview_image',
     ];
 
     protected $casts = [

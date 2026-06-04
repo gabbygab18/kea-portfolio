@@ -19,6 +19,10 @@ class ContactController extends Controller
 
         ContactMessage::create($data);
 
-        return redirect()->route('contact')->with('success', 'Thank you — your message has been submitted.');
+        $redirectTo = $request->input('redirect_to') === 'home'
+            ? route('home') . '#contact'
+            : route('contact');
+
+        return redirect($redirectTo)->with('success', 'Thank you — your message has been submitted.');
     }
 }

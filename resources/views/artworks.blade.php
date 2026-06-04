@@ -34,7 +34,7 @@
                                 : asset('images/' . $artwork->image))
                             : null;
                     @endphp
-                    <div class="artwork-card" data-category="{{ Str::slug($artwork->category) }}" data-idx="{{ $idx }}">
+                   <div class="artwork-card" data-category="{{ Str::slug($artwork->category) }}" data-idx="{{ $idx }}" onclick="window.location='{{ route('project.detail', $artwork->slug) }}'">
                         <div class="artwork-card__img-wrap">
                             @if($thumb)
                                 <img src="{{ $thumb }}" alt="{{ $artwork->title }}" />
@@ -91,6 +91,9 @@
             </div>
         </div>
     </section>
+
+    @include('partials.contact-newsletter')
+
 @endsection
 
 @push('scripts')

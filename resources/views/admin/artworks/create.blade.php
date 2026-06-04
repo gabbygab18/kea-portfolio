@@ -134,6 +134,30 @@
                         placeholder="e.g. herotuc.png (from public/images/)">
                 </div>
 
+                <div class="admin-form-group">
+                    <label class="admin-label">Full-Width Preview Image</label>
+                    <p class="admin-form-hint" style="margin-bottom:.5rem">Large image shown in the full-width section below
+                        the hero.</p>
+                    <div class="admin-image-upload-zone" id="previewZone">
+                        <div class="admin-image-upload-zone__inner" id="previewPrompt">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            <p>Drop or <label for="preview_image" class="admin-image-upload-zone__link">browse</label></p>
+                            <p class="admin-image-upload-zone__hint">PNG, JPG, WEBP — max 4MB</p>
+                        </div>
+                        <img id="previewImgThumb" class="admin-image-preview" src="#" alt="" style="display:none">
+                        <input type="file" id="preview_image" name="preview_image" accept="image/*" class="admin-file-input"
+                            onchange="previewSingle(this,'previewImgThumb','previewPrompt')">
+                    </div>
+                    <p class="admin-form-hint">Or use existing filename:</p>
+                    <input type="text" name="preview_image_name" class="admin-input admin-input--sm"
+                        placeholder="Leave blank to keep current">
+                </div>
+
             </div>
         </div>
 
@@ -298,20 +322,20 @@
             div.className = 'gallery-slot';
             div.dataset.index = i;
             div.innerHTML = `
-                        <div class="gallery-slot__inner">
-                            <button type="button" class="gallery-slot__remove" onclick="this.closest('.gallery-slot').remove()">✕</button>
-                            <div class="admin-image-upload-zone gallery-upload-zone" id="gz_${i}">
-                                <div class="admin-image-upload-zone__inner" id="gp_${i}">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                                    <p>Drop or <label for="gf_${i}" class="admin-image-upload-zone__link">browse</label></p>
+                            <div class="gallery-slot__inner">
+                                <button type="button" class="gallery-slot__remove" onclick="this.closest('.gallery-slot').remove()">✕</button>
+                                <div class="admin-image-upload-zone gallery-upload-zone" id="gz_${i}">
+                                    <div class="admin-image-upload-zone__inner" id="gp_${i}">
+                                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                        <p>Drop or <label for="gf_${i}" class="admin-image-upload-zone__link">browse</label></p>
+                                    </div>
+                                    <img id="gi_${i}" class="admin-image-preview" src="#" alt="" style="display:none">
+                                    <input type="file" id="gf_${i}" name="gallery_files[]" accept="image/*" class="admin-file-input"
+                                        onchange="previewGallery(this,${i})">
                                 </div>
-                                <img id="gi_${i}" class="admin-image-preview" src="#" alt="" style="display:none">
-                                <input type="file" id="gf_${i}" name="gallery_files[]" accept="image/*" class="admin-file-input"
-                                    onchange="previewGallery(this,${i})">
-                            </div>
-                            <input type="text" name="gallery_labels[]" class="admin-input admin-input--sm"
-                                placeholder="Label e.g. About Us">
-                        </div>`;
+                                <input type="text" name="gallery_labels[]" class="admin-input admin-input--sm"
+                                    placeholder="Label e.g. About Us">
+                            </div>`;
             document.getElementById('gallerySlots').appendChild(div);
         }
 
@@ -347,10 +371,10 @@
             div.className = 'stats-slot';
             div.style.cssText = 'display:flex;gap:.75rem;align-items:center';
             div.innerHTML = `
-            <input type="text" name="stats[${i}][value]" class="admin-input" style="width:120px" placeholder="e.g. 50K+">
-            <input type="text" name="stats[${i}][label]" class="admin-input" placeholder="e.g. Rides Completed">
-            <button type="button" onclick="this.closest('.stats-slot').remove()"
-                style="background:none;border:none;color:#c0392b;font-size:1.1rem;cursor:pointer;padding:0 4px">✕</button>`;
+                <input type="text" name="stats[${i}][value]" class="admin-input" style="width:120px" placeholder="e.g. 50K+">
+                <input type="text" name="stats[${i}][label]" class="admin-input" placeholder="e.g. Rides Completed">
+                <button type="button" onclick="this.closest('.stats-slot').remove()"
+                    style="background:none;border:none;color:#c0392b;font-size:1.1rem;cursor:pointer;padding:0 4px">✕</button>`;
             document.getElementById('statsSlots').appendChild(div);
         }
     </script>

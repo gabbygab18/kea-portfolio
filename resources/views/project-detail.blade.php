@@ -97,11 +97,21 @@
     </section>
 
     {{-- ===================== FULL-WIDTH PREVIEW ===================== --}}
-    @if($imgUrl)
-        <section class="tuc-preview">
-            <img src="{{ $imgUrl }}" alt="{{ $project->title }} preview" />
-        </section>
-    @endif
+@php
+    $previewUrl = null;
+    if ($project->preview_image) {
+        $previewUrl = str_starts_with($project->preview_image, 'artworks/')
+            ? asset('storage/' . $project->preview_image)
+            : asset('images/' . $project->preview_image);
+    } elseif ($imgUrl) {
+        $previewUrl = $imgUrl;
+    }
+@endphp
+@if($previewUrl)
+    <section class="tuc-preview">
+        <img src="{{ $previewUrl }}" alt="{{ $project->title }} preview" />
+    </section>
+@endif
 
     {{-- ===================== DESIGN PROCESS ===================== --}}
     <section class="tuc-process">

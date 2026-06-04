@@ -30,6 +30,7 @@ class PageController extends Controller
                 'img' => $img ?? asset('images/placeholder.png'),
                 'title' => $a->title,
                 'link' => route('project.detail', $a->slug),
+                'category' => $a->category ? \Illuminate\Support\Str::slug($a->category) : 'ui-design', // ← add this
             ];
         })->values()->toArray();
 
@@ -39,6 +40,12 @@ class PageController extends Controller
             'featuredArtworks' => $featuredArtworks,
             'recentArtworks' => Artwork::orderBy('created_at', 'desc')->limit(6)->get(),
             'artworkCards' => $artworkCards,
+            'artworkCategories' => Artwork::where('featured', true)  // ← add this
+                ->whereNotNull('category')
+                ->distinct()
+                ->pluck('category')
+                ->sort()
+                ->values(),
             'siteSettings' => Setting::pluck('value', 'key')->toArray(),
         ]);
     }

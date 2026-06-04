@@ -7,18 +7,21 @@
         <div class="about-hero__inner">
             <div class="about-hero__label">About Me</div>
             <h1 class="about-hero__title">{{ $siteSettings['about_hero_title'] ?? 'UI/UX Designer & SEO Specialist' }}</h1>
-            <p class="about-hero__summary">{{ $siteSettings['about_hero_description'] ?? 'A designer who bridges aesthetics and discoverability — combining user-centered design with data-driven SEO strategies.' }}</p>
+            <p class="about-hero__summary">
+                {{ $siteSettings['about_hero_description'] ?? 'A designer who bridges aesthetics and discoverability — combining user-centered design with data-driven SEO strategies.' }}
+            </p>
             <div class="about-hero__cta">
-                <a href="{{ route('contact') }}" class="btn btn--primary btn--arrow">Get in touch<span class="btn__arrow">›</span></a>
-                <a href="{{ asset('assets/docs/Keana_Resume_SEO_Highlighted.pdf') }}" download class="btn btn--outline-light">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                        <polyline points="7 10 12 15 17 10"/>
-                        <line x1="12" y1="15" x2="12" y2="3"/>
+                <a href="{{ route('contact') }}" class="btn btn--primary btn--arrow">Get in touch<span
+                        class="btn__arrow">›</span></a>
+                <a href="{{ asset('assets/docs/Keana_Resume_SEO_Highlighted.pdf') }}" download class="btn btn--outline-dark">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
                     Download CV
                 </a>
-                <a href="{{ route('artworks') }}" class="btn btn--outline-light">View artworks</a>
             </div>
         </div>
         <div class="about-hero__image-wrap">
@@ -43,7 +46,8 @@
                         <div class="skill-card__icon">
                             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
                                 <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" />
-                                <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                                <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="currentColor"
+                                    stroke-width="1.8" stroke-linecap="round" />
                             </svg>
                         </div>
                         <h3 class="skill-card__title">{{ $skill->name }}</h3>
@@ -101,9 +105,11 @@
                             <ul class="exp-item__bullets">
                                 <li>Designed wireframes, mockups, and high-fidelity prototypes using Figma</li>
                                 <li>Conducted user research and usability testing to improve UX and interface consistency</li>
-                                <li>Performed on-page and technical SEO audits — optimizing meta tags, heading hierarchies, and content structure</li>
+                                <li>Performed on-page and technical SEO audits — optimizing meta tags, heading hierarchies, and
+                                    content structure</li>
                                 <li>Implemented keyword research and SEO best practices across site content</li>
-                                <li>Collaborated with the dev team to ensure accurate design handoffs with SEO standards integrated</li>
+                                <li>Collaborated with the dev team to ensure accurate design handoffs with SEO standards
+                                    integrated</li>
                                 <li>Monitored performance via Google Analytics and Google Search Console</li>
                             </ul>
                         </div>
@@ -121,7 +127,8 @@
                             </div>
                             <h3 class="exp-item__role">Web Development Intern</h3>
                             <ul class="exp-item__bullets">
-                                <li>Independently designed and developed a fully functional school website from concept to deployment</li>
+                                <li>Independently designed and developed a fully functional school website from concept to
+                                    deployment</li>
                                 <li>Built and styled responsive web pages using HTML and CSS</li>
                                 <li>Structured site content and navigation architecture for ease of use</li>
                                 <li>Conducted thorough testing and iterative refinement for cross-browser functionality</li>
@@ -133,15 +140,6 @@
         </div>
     </section>
 
-    {{-- ── CTA ── --}}
-    <section class="about-cta">
-        <div class="about-cta__inner">
-            <h2 class="about-cta__title">Let's build something great together.</h2>
-            <p class="about-cta__desc">Whether you need a polished UI, a performance SEO audit, or both — I'm ready.</p>
-            <a href="{{ route('contact') }}" class="btn btn--primary btn--arrow">
-                Get in touch <span class="btn__arrow">›</span>
-            </a>
-        </div>
-    </section>
+   @include('partials.contact-newsletter')
 
 @endsection

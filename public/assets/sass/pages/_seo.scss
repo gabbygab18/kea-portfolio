@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────
-// _seo.scss  — SEO page styles
+// _seo.scss  — SEO page styles (fully responsive)
 // ─────────────────────────────────────────────
 
 // ── Variables (mirrored from _home.scss) ─────
@@ -19,6 +19,18 @@ $font-serif: 'Poppins', sans-serif;
 $max-width: 1106px;
 $transition: 0.2s ease;
 
+// ── Global section containment ────────────────
+// Prevents any SEO section from causing horizontal scroll
+.seo-hero,
+.seo-tools,
+.seo-projects,
+.seo-skills,
+.seo-cta {
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
 // ── Shared label ─────────────────────────────
 .seo-section-label {
     display: inline-block;
@@ -30,7 +42,10 @@ $transition: 0.2s ease;
     margin-bottom: .75rem;
 }
 
-// ── HERO ─────────────────────────────────────
+// ═══════════════════════════════════════════════
+// ── HERO
+// ═══════════════════════════════════════════════
+// ── HERO ─────────────────────────────────────────────────────
 .seo-hero {
     background: $color-bg-cream;
     padding: 5rem 10vw 4rem;
@@ -38,12 +53,24 @@ $transition: 0.2s ease;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: center;
-    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 
     @media (max-width: 900px) {
         grid-template-columns: 1fr;
-        padding: 3rem 6vw;
+        padding: 3rem 1.5rem;
     }
+
+    @media (max-width: 480px) {
+        padding: 2.5rem 1.25rem;
+    }
+}
+
+.seo-hero__inner {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: visible; // ensure no clipping
 }
 
 .seo-hero__label {
@@ -57,11 +84,13 @@ $transition: 0.2s ease;
 
 .seo-hero__title {
     font-family: $font-serif;
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-size: clamp(1.8rem, 6vw, 3.4rem);
     font-weight: 700;
     line-height: 1.15;
     color: $color-primary;
     margin-bottom: 1.25rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
 
     em {
         font-style: italic;
@@ -75,15 +104,30 @@ $transition: 0.2s ease;
     color: $color-text-semi;
     max-width: 480px;
     margin-bottom: 2rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+
+    @media (max-width: 480px) {
+        font-size: .9rem;
+    }
 }
 
 .seo-hero__cta {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+
+    @media (max-width: 480px) {
+        flex-direction: column;
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
 }
 
-// Right visual panel
+// ── Hero right visual panel ───────────────────
 .seo-hero__visual {
     position: relative;
     display: flex;
@@ -92,7 +136,7 @@ $transition: 0.2s ease;
     padding: 2rem;
 
     @media (max-width: 900px) {
-        display: none;
+        display: none; // hidden on tablet/mobile
     }
 }
 
@@ -132,7 +176,6 @@ $transition: 0.2s ease;
     margin-top: .15rem;
 }
 
-// Rank card
 .seo-hero__rank-card {
     margin-top: 7rem;
     background: $color-bg-light;
@@ -159,6 +202,7 @@ $transition: 0.2s ease;
     strong {
         color: $color-primary;
         font-weight: 700;
+        white-space: nowrap;
     }
 
     &::before {
@@ -166,23 +210,33 @@ $transition: 0.2s ease;
         flex: 1;
         height: 6px;
         border-radius: 99px;
-        background: linear-gradient(to right, $color-primary var(--w), $color-bg-cream var(--w));
+        background: linear-gradient(to right,
+                $color-primary var(--w),
+                $color-bg-cream var(--w));
     }
 }
 
-// ── TOOLS ────────────────────────────────────
+// ═══════════════════════════════════════════════
+// ── TOOLS
+// ═══════════════════════════════════════════════
 .seo-tools {
     background: $color-bg-light;
     padding: 5rem 10vw;
 
-    @media (max-width: 768px) {
-        padding: 3rem 6vw;
+    @media (max-width: 900px) {
+        padding: 3rem 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+        padding: 2.5rem 1.25rem;
     }
 }
 
 .seo-tools__inner {
     max-width: $max-width;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .seo-tools__header {
@@ -204,6 +258,16 @@ $transition: 0.2s ease;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.25rem;
+    width: 100%;
+
+    @media (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    @media (max-width: 360px) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .seo-tool-card {
@@ -215,10 +279,16 @@ $transition: 0.2s ease;
     flex-direction: column;
     gap: .5rem;
     transition: transform $transition, box-shadow $transition;
+    min-width: 0; // critical: prevents grid blowout
+    box-sizing: border-box;
 
     &:hover {
         transform: translateY(-3px);
         box-shadow: 0 6px 24px rgba(123, 29, 46, .1);
+    }
+
+    @media (max-width: 600px) {
+        padding: 1.25rem 1rem;
     }
 }
 
@@ -232,6 +302,7 @@ $transition: 0.2s ease;
     justify-content: center;
     margin-bottom: .25rem;
     color: $color-primary;
+    flex-shrink: 0;
 
     img {
         width: 28px;
@@ -245,6 +316,12 @@ $transition: 0.2s ease;
     font-weight: 700;
     color: $color-primary;
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+
+    @media (max-width: 600px) {
+        font-size: .88rem;
+    }
 }
 
 .seo-tool-card__desc {
@@ -253,6 +330,8 @@ $transition: 0.2s ease;
     color: $color-text-semi;
     margin: 0;
     flex: 1;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .seo-tool-card__tag {
@@ -269,19 +348,27 @@ $transition: 0.2s ease;
     align-self: flex-start;
 }
 
-// ── PROJECTS ─────────────────────────────────
+// ═══════════════════════════════════════════════
+// ── PROJECTS
+// ═══════════════════════════════════════════════
 .seo-projects {
     background: $color-bg-cream;
     padding: 5rem 10vw;
 
-    @media (max-width: 768px) {
-        padding: 3rem 6vw;
+    @media (max-width: 900px) {
+        padding: 3rem 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+        padding: 2.5rem 1.25rem;
     }
 }
 
 .seo-projects__inner {
     max-width: $max-width;
     margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .seo-projects__header {
@@ -294,6 +381,8 @@ $transition: 0.2s ease;
     font-weight: 700;
     color: $color-primary;
     margin: 0 0 .5rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .seo-projects__desc {
@@ -306,6 +395,7 @@ $transition: 0.2s ease;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
 }
 
 .seo-project-card {
@@ -319,15 +409,28 @@ $transition: 0.2s ease;
     border-left: 4px solid $color-primary;
     box-shadow: 0 2px 12px rgba(123, 29, 46, .05);
     transition: box-shadow $transition;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
 
     &:hover {
         box-shadow: 0 6px 24px rgba(123, 29, 46, .1);
     }
 
+    // Tablet: collapse to 2 cols (meta + body), no link column
     @media (max-width: 700px) {
-        grid-template-columns: 1fr;
+        grid-template-columns: auto 1fr;
         border-left: none;
         border-top: 4px solid $color-primary;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    // Mobile: fully stacked
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+        gap: .75rem;
     }
 }
 
@@ -337,6 +440,14 @@ $transition: 0.2s ease;
     align-items: flex-start;
     gap: .5rem;
     padding-top: .25rem;
+    min-width: 0;
+
+    // On mobile: display meta inline (num + cat side by side)
+    @media (max-width: 480px) {
+        flex-direction: row;
+        align-items: center;
+        gap: .75rem;
+    }
 }
 
 .seo-project-card__num {
@@ -345,6 +456,10 @@ $transition: 0.2s ease;
     color: rgba(123, 29, 46, .15);
     line-height: 1;
     font-family: $font-serif;
+
+    @media (max-width: 480px) {
+        font-size: 1.4rem;
+    }
 }
 
 .seo-project-card__cat {
@@ -356,12 +471,14 @@ $transition: 0.2s ease;
     background: rgba(123, 29, 46, .08);
     padding: .25rem .6rem;
     border-radius: 99px;
+    white-space: nowrap;
 }
 
 .seo-project-card__body {
     display: flex;
     flex-direction: column;
     gap: .75rem;
+    min-width: 0; // critical for grid text overflow
 }
 
 .seo-project-card__title {
@@ -369,6 +486,12 @@ $transition: 0.2s ease;
     font-weight: 700;
     color: $color-primary;
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+
+    @media (max-width: 480px) {
+        font-size: 1rem;
+    }
 }
 
 .seo-project-card__desc {
@@ -376,6 +499,12 @@ $transition: 0.2s ease;
     line-height: 1.65;
     color: $color-text-semi;
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
+
+    @media (max-width: 480px) {
+        font-size: .85rem;
+    }
 }
 
 .seo-project-card__results {
@@ -391,6 +520,8 @@ $transition: 0.2s ease;
         color: $color-primary;
         padding-left: 1.1rem;
         position: relative;
+        word-break: break-word;
+        overflow-wrap: break-word;
 
         &::before {
             content: '↑';
@@ -416,6 +547,7 @@ $transition: 0.2s ease;
     background: $color-bg-tan;
     padding: .2rem .55rem;
     border-radius: 6px;
+    white-space: nowrap;
 }
 
 .seo-project-card__link {
@@ -426,17 +558,33 @@ $transition: 0.2s ease;
     white-space: nowrap;
     padding-top: .35rem;
     transition: opacity $transition;
+    align-self: flex-start;
 
     &:hover {
         opacity: .7;
     }
+
+    // On mobile, link sits below the body naturally in stacked grid
+    @media (max-width: 480px) {
+        padding-top: 0;
+    }
 }
 
-// ── CTA ──────────────────────────────────────
+// ═══════════════════════════════════════════════
+// ── CTA BAND (optional section)
+// ═══════════════════════════════════════════════
 .seo-cta {
     background: $color-primary;
     padding: 5rem 10vw;
     text-align: center;
+
+    @media (max-width: 900px) {
+        padding: 3rem 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+        padding: 2.5rem 1.25rem;
+    }
 }
 
 .seo-cta__inner {
@@ -454,6 +602,8 @@ $transition: 0.2s ease;
     font-weight: 700;
     color: $color-white;
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .seo-cta__desc {
@@ -463,16 +613,27 @@ $transition: 0.2s ease;
     margin: 0 0 .5rem;
 }
 
-/* ── SKILLS & EXPERTISE ── */
+// ═══════════════════════════════════════════════
+// ── SKILLS & EXPERTISE
+// ═══════════════════════════════════════════════
 .seo-skills {
-    padding: 5rem 0;
-    background: #faf8f5;
+    padding: 5rem 10vw;
+    background: $color-bg-light;
+
+    @media (max-width: 900px) {
+        padding: 3rem 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+        padding: 2.5rem 1.25rem;
+    }
 }
 
 .seo-skills__inner {
-    max-width: 1100px;
+    max-width: $max-width;
     margin: 0 auto;
-    padding: 0 2rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .seo-skills__header {
@@ -481,56 +642,79 @@ $transition: 0.2s ease;
 }
 
 .seo-skills__title {
+    font-family: $font-serif;
     font-size: clamp(1.6rem, 3vw, 2.2rem);
     font-weight: 800;
+    color: $color-primary;
     margin: .4rem 0 .75rem;
 }
 
 .seo-skills__desc {
-    color: #666;
+    color: $color-text-semi;
     font-size: .95rem;
+    margin: 0;
 }
 
 .seo-skills__grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
+    width: 100%;
+
+    @media (max-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    @media (max-width: 420px) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .seo-skill-card {
-    background: #fff;
-    border: 1px solid #ede9e3;
+    background: $color-bg-cream;
+    border: 1px solid rgba(123, 29, 46, .1);
     border-radius: 14px;
     padding: 1.75rem;
     display: flex;
     flex-direction: column;
     gap: .6rem;
     transition: box-shadow .2s ease, transform .2s ease;
-}
+    box-sizing: border-box;
+    min-width: 0;
 
-.seo-skill-card:hover {
-    box-shadow: 0 8px 28px rgba(0, 0, 0, .07);
-    transform: translateY(-2px);
+    &:hover {
+        box-shadow: 0 8px 28px rgba(123, 29, 46, .08);
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+        padding: 1.25rem;
+    }
 }
 
 .seo-skill-card__num {
     font-size: .72rem;
     font-weight: 800;
     letter-spacing: .1em;
-    color: #531A24;
-    opacity: .6;
+    color: $color-primary;
+    opacity: .5;
 }
 
 .seo-skill-card__title {
     font-size: 1rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: $color-primary;
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .seo-skill-card__text {
     font-size: .875rem;
-    color: #555;
+    color: $color-text-semi;
     line-height: 1.6;
     margin: 0;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }

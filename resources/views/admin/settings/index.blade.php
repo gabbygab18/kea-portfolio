@@ -2,6 +2,25 @@
 @section('page-title', 'Settings')
 
 @section('content')
+<div class="admin-card" style="margin-bottom:1.5rem">
+    <div style="padding:1.5rem">
+        <h3 style="margin-bottom:1rem;font-size:.95rem;font-weight:700">Font Family</h3>
+        <form method="POST" action="{{ route('admin.settings.bulk-update') }}">
+            @csrf
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+                <select name="font_family" class="form-control" style="max-width:240px">
+                    @foreach(['Inter', 'Poppins', 'Roboto', 'Lato', 'Open Sans', 'Playfair Display'] as $f)
+                        <option value="{{ $f }}" {{ \App\Models\Setting::getValue('font_family', 'Inter') === $f ? 'selected' : '' }}>
+                            {{ $f }}
+                        </option>
+                    @endforeach
+                </select>
+                <button type="submit" class="btn-admin btn-admin-primary btn-admin-sm">Save Font</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <div class="admin-card">
     <table class="admin-table">
         <thead><tr><th>Key</th><th>Value</th><th></th></tr></thead>
