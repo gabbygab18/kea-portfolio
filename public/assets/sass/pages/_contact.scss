@@ -82,7 +82,7 @@ $transition: 0.2s ease;
 
 // ── CONTACT BODY ─────────────────────────────────────────────
 .contact-body {
-    background: $color-bg-cream;
+    background: $color-bg-tan;
     padding: 80px 24px 96px;
     display: flex;
     justify-content: center;
@@ -219,6 +219,13 @@ $transition: 0.2s ease;
         display: flex;
         gap: 24px;
         flex-wrap: wrap;
+    }
+
+    // ← Center the submit button
+    .btn {
+        align-self: center;
+        // width: 100%;
+        // justify-content: center;
     }
 }
 

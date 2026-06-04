@@ -26,6 +26,7 @@ class SkillController extends Controller
             'category' => 'nullable|string|max:100',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'icon' => 'nullable|string|max:255',  // ← add
             'order' => 'nullable|integer|min:0',
         ]);
 
@@ -33,6 +34,7 @@ class SkillController extends Controller
 
         return redirect()->route('admin.skills.index')->with('success', 'Skill added.');
     }
+
 
     public function edit(Skill $skill)
     {
@@ -47,6 +49,7 @@ class SkillController extends Controller
             'category' => 'nullable|string|max:100',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'icon' => 'nullable|string|max:255',  // ← add
             'order' => 'nullable|integer|min:0',
         ]);
 

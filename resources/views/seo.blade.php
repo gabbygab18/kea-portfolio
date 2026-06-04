@@ -22,21 +22,40 @@
                 <a href="{{ route('artworks') }}" class="btn btn--outline-dark">View design work</a>
             </div>
         </div>
-        <div class="seo-hero__visual">
-            <div class="seo-hero__badge seo-hero__badge--1">
-                <span class="seo-hero__badge-num">{{ $siteSettings['seo_projects_count'] ?? '10+' }}</span>
-                <span class="seo-hero__badge-label">Projects</span>
+        {{-- replace the existing seo-hero__visual div --}}
+<div class="seo-hero__visual">
+    <div class="seo-hero__badge seo-hero__badge--1">
+        <span class="seo-hero__badge-num">{{ $siteSettings['seo_projects_count'] ?? '10+' }}</span>
+        <span class="seo-hero__badge-label">Projects</span>
+    </div>
+    <div class="seo-hero__badge seo-hero__badge--2">
+        <span class="seo-hero__badge-num">{{ $siteSettings['seo_audits_count'] ?? '5+' }}</span>
+        <span class="seo-hero__badge-label">Audits Done</span>
+    </div>
+    <div class="seo-hero__rank-card">
+        <div class="seo-hero__rank-bar" data-width="90">
+            <span>Organic Traffic</span>
+            <div class="seo-hero__rank-track">
+                <div class="seo-hero__rank-fill"></div>
             </div>
-            <div class="seo-hero__badge seo-hero__badge--2">
-                <span class="seo-hero__badge-num">{{ $siteSettings['seo_audits_count'] ?? '5+' }}</span>
-                <span class="seo-hero__badge-label">Audits Done</span>
-            </div>
-            <div class="seo-hero__rank-card">
-                <div class="seo-hero__rank-bar" style="--w:90%"><span>Organic Traffic</span><strong>↑ 90%</strong></div>
-                <div class="seo-hero__rank-bar" style="--w:75%"><span>Keyword Rankings</span><strong>↑ 75%</strong></div>
-                <div class="seo-hero__rank-bar" style="--w:60%"><span>Page Speed Score</span><strong>↑ 60%</strong></div>
-            </div>
+            <strong>↑ 90%</strong>
         </div>
+        <div class="seo-hero__rank-bar" data-width="75">
+            <span>Keyword Rankings</span>
+            <div class="seo-hero__rank-track">
+                <div class="seo-hero__rank-fill"></div>
+            </div>
+            <strong>↑ 75%</strong>
+        </div>
+        <div class="seo-hero__rank-bar" data-width="60">
+            <span>Page Speed Score</span>
+            <div class="seo-hero__rank-track">
+                <div class="seo-hero__rank-fill"></div>
+            </div>
+            <strong>↑ 60%</strong>
+        </div>
+    </div>
+</div>
     </section>
 
     {{-- ── TOOLS ── --}}
@@ -96,7 +115,7 @@
     </section>
 
     {{-- ── PROJECTS ── --}}
-    <section class="seo-projects">
+    {{-- <section class="seo-projects">
         <div class="seo-projects__inner">
             <div class="seo-projects__header">
                 <span class="seo-section-label">Case Studies</span>
@@ -138,7 +157,7 @@
                         @endif
                     </div>
                 @empty
-                    {{-- Fallback hardcoded projects --}}
+
                     @foreach([
             [
                 'num' => '01',
@@ -187,7 +206,7 @@
                 @endforelse
             </div>
         </div>
-    </section>
+    </section> --}}
 
     {{-- ── SKILLS & EXPERTISE ── --}}
     <section class="seo-skills">
@@ -229,3 +248,28 @@
     @include('partials.contact-newsletter')
 
 @endsection
+
+@push('scripts')
+<script>
+    const bars = document.querySelectorAll('.seo-hero__rank-bar');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const bar   = entry.target;
+            const fill  = bar.querySelector('.seo-hero__rank-fill');
+            const width = bar.dataset.width + '%';
+
+            // stagger each bar slightly
+            const idx = [...bars].indexOf(bar);
+            setTimeout(() => {
+                fill.style.width = width;
+            }, idx * 180);
+
+            observer.unobserve(bar);
+        });
+    }, { threshold: 0.4 });
+
+    bars.forEach(bar => observer.observe(bar));
+</script>
+@endpush

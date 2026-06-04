@@ -361,5 +361,7 @@
             });
             saved.has(idx) ? (saved.delete(idx), showToast('Removed from saved')) : (saved.add(idx), showToast('Saved!'));
         });
+
+
     </script>
 @endpush

@@ -55,6 +55,11 @@
                     <img src="{{ $imgUrl }}" alt="{{ $project->title }}" />
                 @endif
 
+                {{-- <div class="tuc-hero__mockup-caption">
+                    <span class="tuc-hero__mockup-caption-label">{{ $project->category ?? 'Project' }}</span>
+                    <span class="tuc-hero__mockup-caption-title">{{ $project->title }}</span>
+                </div> --}}
+
                 @if(!empty($project->stats))
                     @php $positions = ['tuc-hero__badge--top-right', 'tuc-hero__badge--bottom-left', 'tuc-hero__badge--bottom-right']; @endphp
                     @foreach(array_slice((array) $project->stats, 0, 3) as $i => $stat)
@@ -97,24 +102,24 @@
     </section>
 
     {{-- ===================== FULL-WIDTH PREVIEW ===================== --}}
-@php
-    $previewUrl = null;
-    if ($project->preview_image) {
-        $previewUrl = str_starts_with($project->preview_image, 'artworks/')
-            ? asset('storage/' . $project->preview_image)
-            : asset('images/' . $project->preview_image);
-    } elseif ($imgUrl) {
-        $previewUrl = $imgUrl;
-    }
-@endphp
-@if($previewUrl)
-    <section class="tuc-preview">
-        <img src="{{ $previewUrl }}" alt="{{ $project->title }} preview" />
-    </section>
-@endif
+    @php
+        $previewUrl = null;
+        if ($project->preview_image) {
+            $previewUrl = str_starts_with($project->preview_image, 'artworks/')
+                ? asset('storage/' . $project->preview_image)
+                : asset('images/' . $project->preview_image);
+        } elseif ($imgUrl) {
+            $previewUrl = $imgUrl;
+        }
+    @endphp
+    @if($previewUrl)
+        <section class="tuc-preview">
+            <img src="{{ $previewUrl }}" alt="{{ $project->title }} preview" />
+        </section>
+    @endif
 
     {{-- ===================== DESIGN PROCESS ===================== --}}
-    <section class="tuc-process">
+    {{-- <section class="tuc-process">
         <div class="tuc-process__inner">
             <div class="tuc-process__left">
                 <span class="tuc-section-label">Behind the Build</span>
@@ -165,7 +170,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     {{-- ===================== GALLERY ===================== --}}
     @if(!empty($project->gallery) && count((array) $project->gallery))

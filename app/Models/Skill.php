@@ -10,6 +10,7 @@ class Skill extends Model
         'category',
         'name',
         'description',
+        'icon',   // ← add this
         'order',
     ];
 }

@@ -13,7 +13,8 @@
             <div class="about-hero__cta">
                 <a href="{{ route('contact') }}" class="btn btn--primary btn--arrow">Get in touch<span
                         class="btn__arrow">›</span></a>
-                <a href="{{ asset('assets/docs/Keana_Resume_SEO_Highlighted.pdf') }}" download class="btn btn--outline-dark">
+                <a href="{{ asset('assets/docs/Keana_Resume_SEO_Highlighted.pdf') }}" download
+                    class="btn btn--outline-dark">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
@@ -44,11 +45,21 @@
                 @foreach($skills as $skill)
                     <div class="skill-card">
                         <div class="skill-card__icon">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" />
-                                <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="currentColor"
-                                    stroke-width="1.8" stroke-linecap="round" />
-                            </svg>
+                            @if($skill->icon)
+                                @if(str_starts_with($skill->icon, 'si:'))
+                                    <img src="https://cdn.simpleicons.org/{{ substr($skill->icon, 3) }}" width="28" height="28"
+                                        alt="{{ $skill->name }}"
+                                        style="object-fit:contain; filter: sepia(1) saturate(2) hue-rotate(300deg) brightness(0.6);" />
+                                @else
+                                    <i class="{{ $skill->icon }} colored" style="font-size:28px;"></i>
+                                @endif
+                            @else
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" />
+                                    <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="currentColor"
+                                        stroke-width="1.8" stroke-linecap="round" />
+                                </svg>
+                            @endif
                         </div>
                         <h3 class="skill-card__title">{{ $skill->name }}</h3>
                         <p class="skill-card__desc">{{ $skill->description }}</p>
@@ -140,6 +151,6 @@
         </div>
     </section>
 
-   @include('partials.contact-newsletter')
+    @include('partials.contact-newsletter')
 
 @endsection

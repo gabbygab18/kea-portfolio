@@ -208,9 +208,13 @@ img {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: center;
+        justify-content: center; // ← this is what centers them
         gap: 2.5rem;
         flex-wrap: wrap;
+        width: 100%;       // ← was max-content, which breaks centering
+        padding: 0;        // ← remove the 60px padding copied from artworks__track
+        will-change: unset; // ← not needed here
+        min-width: unset;   // ← remove the min-width from the previous fix
     }
 
     &__group {
@@ -510,70 +514,72 @@ img {
     }
 
     &__outer {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    padding: 80px 0;
-    margin: -80px 0;
-    mask-image: linear-gradient(to right,
-            transparent 0%,
-            black 8%,
-            black 92%,
-            transparent 100%);
-    -webkit-mask-image: linear-gradient(to right,
-            transparent 0%,
-            black 8%,
-            black 92%,
-            transparent 100%);
-}
-
-// ↓ add these new blocks inside .artworks { }
-&__filters {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0 24px;
-    position: relative;
-    z-index: 20;
-}
-
-&__filter-btn {
-    font-family: $font-sans;
-    font-size: 13px;
-    font-weight: 600;
-    color: $color-primary;
-    background: rgba(123, 29, 46, 0.08);
-    border: 1.5px solid transparent;
-    border-radius: 20px;
-    padding: 6px 16px;
-    cursor: pointer;
-    transition: background 0.2s, border-color 0.2s, color 0.2s;
-
-    &:hover { background: rgba(123, 29, 46, 0.14); }
-
-    &.active {
-        background: $color-primary;
-        color: #fff;
-        border-color: $color-primary;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+        padding: 80px 0;
+        margin: -80px 0;
+        mask-image: linear-gradient(to right,
+                transparent 0%,
+                black 8%,
+                black 92%,
+                transparent 100%);
+        -webkit-mask-image: linear-gradient(to right,
+                transparent 0%,
+                black 8%,
+                black 92%,
+                transparent 100%);
     }
-}
 
-&__card-category {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: $color-primary;
-    background: rgba(123, 29, 46, 0.10);
-    border-radius: 4px;
-    padding: 3px 8px;
-    margin-left: 6px;
-    white-space: nowrap;
-}
+    // ↓ add these new blocks inside .artworks { }
+    &__filters {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0 24px;
+        position: relative;
+        z-index: 20;
+    }
+
+    &__filter-btn {
+        font-family: $font-sans;
+        font-size: 13px;
+        font-weight: 600;
+        color: $color-primary;
+        background: rgba(123, 29, 46, 0.08);
+        border: 1.5px solid transparent;
+        border-radius: 20px;
+        padding: 6px 16px;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s, color 0.2s;
+
+        &:hover {
+            background: rgba(123, 29, 46, 0.14);
+        }
+
+        &.active {
+            background: $color-primary;
+            color: #fff;
+            border-color: $color-primary;
+        }
+    }
+
+    &__card-category {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: $color-primary;
+        background: rgba(123, 29, 46, 0.10);
+        border-radius: 4px;
+        padding: 3px 8px;
+        margin-left: 6px;
+        white-space: nowrap;
+    }
 
     &__hover-zone {
         position: absolute;
@@ -586,12 +592,12 @@ img {
 
         &--left {
             left: 0;
-            background: linear-gradient(to right, rgba(123, 29, 46, 0.04) 0%, transparent 100%);
+            background: transparent; // ← remove the tinted gradient
         }
 
         &--right {
             right: 0;
-            background: linear-gradient(to left, rgba(123, 29, 46, 0.04) 0%, transparent 100%);
+            background: transparent; // ← remove the tinted gradient
         }
     }
 
@@ -805,23 +811,53 @@ img {
 }
 
 @keyframes heartBounce {
-    0% { transform: scale(1); }
-    30% { transform: scale(1.55); }
-    50% { transform: scale(0.88); }
-    70% { transform: scale(1.25); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.55);
+    }
+
+    50% {
+        transform: scale(0.88);
+    }
+
+    70% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes saveBounce {
-    0% { transform: scale(1); }
-    30% { transform: scale(1.45) translateY(-2px); }
-    60% { transform: scale(0.9); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.45) translateY(-2px);
+    }
+
+    60% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 @keyframes imgPan {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(var(--pan-end, 0px)); }
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(var(--pan-end, 0px));
+    }
 }
 
 // ── MODAL OVERLAY ────────────────────────────────────────────
@@ -923,8 +959,13 @@ img {
         max-height: 100px;
         transition: border 0.2s;
 
-        &:focus { border-color: $color-primary; }
-        &::placeholder { color: rgba(123, 29, 46, 0.40); }
+        &:focus {
+            border-color: $color-primary;
+        }
+
+        &::placeholder {
+            color: rgba(123, 29, 46, 0.40);
+        }
     }
 
     &__send {
@@ -940,7 +981,9 @@ img {
         transition: opacity 0.2s;
         flex-shrink: 0;
 
-        &:hover { opacity: 0.85; }
+        &:hover {
+            opacity: 0.85;
+        }
     }
 }
 
@@ -963,7 +1006,9 @@ img {
         color: $color-white;
     }
 
-    &__body { flex: 1; }
+    &__body {
+        flex: 1;
+    }
 
     &__name {
         font-size: 12px;
@@ -1019,7 +1064,9 @@ img {
         justify-content: center;
         transition: background 0.15s;
 
-        &:hover { background: rgba(123, 29, 46, 0.18); }
+        &:hover {
+            background: rgba(123, 29, 46, 0.18);
+        }
     }
 
     &__link-row {
@@ -1060,8 +1107,13 @@ img {
         white-space: nowrap;
         flex-shrink: 0;
 
-        &:hover { opacity: 0.85; }
-        &.copied { background: #2a8a4a; }
+        &:hover {
+            opacity: 0.85;
+        }
+
+        &.copied {
+            background: #2a8a4a;
+        }
     }
 
     &__platforms {
@@ -1084,7 +1136,9 @@ img {
     background: none;
     border: none;
 
-    &:hover { transform: translateY(-3px); }
+    &:hover {
+        transform: translateY(-3px);
+    }
 
     &__icon {
         width: 46px;
@@ -1293,7 +1347,9 @@ img {
         box-shadow: 0 1px 4px rgba(123, 29, 46, 0.05);
         transition: outline $transition, box-shadow $transition;
 
-        &::placeholder { color: rgba(123, 29, 46, 0.38); }
+        &::placeholder {
+            color: rgba(123, 29, 46, 0.38);
+        }
 
         &:focus {
             outline: 2px solid $color-primary;
@@ -1375,8 +1431,13 @@ img {
         flex: 1;
         min-width: 0;
 
-        &::placeholder { color: rgba(123, 29, 46, 0.5); }
-        &:focus { outline: none; }
+        &::placeholder {
+            color: rgba(123, 29, 46, 0.5);
+        }
+
+        &:focus {
+            outline: none;
+        }
     }
 
     &__btn {
@@ -1393,7 +1454,9 @@ img {
         transition: opacity 0.2s ease;
         flex-shrink: 0;
 
-        &:hover { opacity: 0.85; }
+        &:hover {
+            opacity: 0.85;
+        }
     }
 
     &__gallery {
