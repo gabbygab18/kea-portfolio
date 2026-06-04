@@ -101,6 +101,7 @@
 
 {{-- ===================== NEWSLETTER / CTA ===================== --}}
 <section class="newsletter">
+    <div class="blob-field"><span></span><span></span><span></span><span></span></div>
     <div class="newsletter__inner">
         <div class="newsletter__content">
             {{-- Newsletter --}}

@@ -4,6 +4,7 @@
 
 @section('content')
     <section class="hero">
+        <div class="blob-field"></div>
         <div class="hero__content">
             <h1 class="hero__title">
                 {{ $siteSettings['hero_title'] ?? 'Working through the night to bring wise ideas to light.' }}
@@ -34,6 +35,7 @@
     </div>
 
     <section class="about">
+        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <div class="about__inner">
             <div class="about__image-wrap">
                 <img src="{{ asset('images/picture.png') }}" alt="About" class="about__image" />
@@ -53,6 +55,7 @@
     </section>
 
     <section class="services">
+        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <div class="services__inner">
             <div class="services__header">
                 <h2 class="services__title">Services</h2>
@@ -73,6 +76,7 @@
     </section>
 
     <section class="artworks">
+        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <div class="artworks__header">
             <h2 class="artworks__title">Featured works</h2>
             <p class="artworks__desc">Browse a selection of recent projects built with polished UI, strong storytelling, and

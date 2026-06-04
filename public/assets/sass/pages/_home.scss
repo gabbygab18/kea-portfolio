@@ -211,10 +211,10 @@ img {
         justify-content: center; // ← this is what centers them
         gap: 2.5rem;
         flex-wrap: wrap;
-        width: 100%;       // ← was max-content, which breaks centering
-        padding: 0;        // ← remove the 60px padding copied from artworks__track
+        width: 100%; // ← was max-content, which breaks centering
+        padding: 0; // ← remove the 60px padding copied from artworks__track
         will-change: unset; // ← not needed here
-        min-width: unset;   // ← remove the min-width from the previous fix
+        min-width: unset; // ← remove the min-width from the previous fix
     }
 
     &__group {
@@ -1550,5 +1550,224 @@ img {
     .btn {
         font-size: 13px;
         padding: 11px 14px;
+    }
+}
+
+// ── BLOBS ─────────────────────────────────────────────────────
+@keyframes blobFloat {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(18px, -22px) scale(1.04);
+    }
+
+    66% {
+        transform: translate(-14px, 12px) scale(0.97);
+    }
+}
+
+@keyframes blobFloatAlt {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(-20px, 14px) scale(1.05);
+    }
+
+    66% {
+        transform: translate(16px, -18px) scale(0.96);
+    }
+}
+
+@keyframes blobFloatSlow {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(10px, -30px) scale(1.06);
+    }
+}
+
+// Args: $w, $h, $color, $top, $right, $bottom, $left, $dur, $alt
+@mixin blob($w, $h, $color, $top, $right, $bottom, $left, $dur: 14s, $alt: false) {
+    position: absolute;
+    width: $w;
+    height: $h;
+    border-radius: 50%;
+    background: radial-gradient(circle, $color, transparent 70%);
+    filter: blur(72px);
+    opacity: 0.55;
+    pointer-events: none;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    animation: if($alt, blobFloatAlt, blobFloat) $dur ease-in-out infinite;
+}
+
+.blob-field {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+
+    // ── Hero blobs ──────────────────────────────────────
+    .hero & {
+        &::before {
+            @include blob(420px, 420px, rgba(100, 15, 28, 0.88), -100px, -80px, auto, auto, 16s, false);
+        }
+
+        &::after {
+            @include blob(300px, 300px, rgba(45, 8, 15, 0.75), auto, auto, -60px, -60px, 12s, true);
+        }
+
+        span:nth-child(1) {
+            @include blob(260px, 260px, rgba(100, 15, 28, 0.70), 40%, auto, auto, 5%, 19s, false);
+        }
+
+        span:nth-child(2) {
+            @include blob(180px, 180px, rgba(45, 8, 15, 0.65), 10%, auto, auto, 40%, 11s, true);
+        }
+
+        span:nth-child(3) {
+            @include blob(340px, 200px, rgba(100, 15, 28, 0.58), auto, 20%, -40px, auto, 22s, false);
+        }
+
+        span:nth-child(4) {
+            @include blob(150px, 150px, rgba(100, 15, 28, 0.70), 20%, 25%, auto, auto, 9s, true);
+        }
+
+    }
+
+    // ── About blobs ──────────────────────────────────────
+    .about & {
+        &::before {
+            @include blob(500px, 500px, rgba(100, 15, 28, 0.68), -120px, auto, auto, -100px, 18s, false);
+        }
+
+        &::after {
+            @include blob(280px, 280px, rgba(45, 8, 15, 0.65), auto, -40px, -40px, auto, 13s, true);
+        }
+
+        span:nth-child(1) {
+            @include blob(220px, 220px, rgba(100, 15, 28, 0.62), 30%, 10%, auto, auto, 15s, false);
+        }
+
+        span:nth-child(2) {
+            @include blob(300px, 180px, rgba(45, 8, 15, 0.55), auto, auto, 10%, 20%, 20s, true);
+        }
+
+        span:nth-child(3) {
+            @include blob(160px, 160px, rgba(100, 15, 28, 0.70), 60%, 30%, auto, auto, 10s, false);
+        }
+
+        span:nth-child(4) {
+            @include blob(400px, 240px, rgba(45, 8, 15, 0.48), -60px, 25%, auto, auto, 24s, true);
+        }
+
+    }
+
+    // ── Services blobs ───────────────────────────────────
+    .services & {
+        &::before {
+            @include blob(360px, 360px, rgba(100, 15, 28, 0.68), -80px, 10%, auto, auto, 20s, false);
+        }
+
+        &::after {
+            @include blob(240px, 240px, rgba(45, 8, 15, 0.62), auto, auto, -60px, 5%, 14s, true);
+        }
+
+        span:nth-child(1) {
+            @include blob(200px, 200px, rgba(100, 15, 28, 0.65), 50%, auto, auto, 50%, 17s, false);
+        }
+
+        span:nth-child(2) {
+            @include blob(300px, 180px, rgba(45, 8, 15, 0.55), 20%, auto, auto, -60px, 21s, true);
+        }
+
+        span:nth-child(3) {
+            @include blob(160px, 280px, rgba(100, 15, 28, 0.60), auto, -40px, 0, auto, 12s, false);
+        }
+
+        span:nth-child(4) {
+            @include blob(140px, 140px, rgba(45, 8, 15, 0.70), 10%, 35%, auto, auto, 8s, true);
+        }
+
+    }
+
+    // ── Artworks blobs ───────────────────────────────────
+    .artworks & {
+        &::before {
+            @include blob(400px, 400px, rgba(100, 15, 28, 0.62), -80px, auto, auto, -60px, 17s, false);
+        }
+
+        &::after {
+            @include blob(260px, 260px, rgba(45, 8, 15, 0.58), auto, -40px, -60px, auto, 13s, true);
+        }
+
+        span:nth-child(1) {
+            @include blob(220px, 320px, rgba(100, 15, 28, 0.58), 30%, 8%, auto, auto, 19s, false);
+        }
+
+        span:nth-child(2) {
+            @include blob(180px, 180px, rgba(45, 8, 15, 0.65), auto, auto, 20%, 30%, 11s, true);
+        }
+
+        span:nth-child(3) {
+            @include blob(300px, 200px, rgba(100, 15, 28, 0.52), -40px, 30%, auto, auto, 23s, false);
+        }
+
+        span:nth-child(4) {
+            @include blob(150px, 150px, rgba(45, 8, 15, 0.68), 55%, auto, auto, 10%, 9s, true);
+        }
+    }
+
+    // ── Newsletter blobs ─────────────────────────────────
+    .newsletter & {
+        &::before {
+            @include blob(440px, 440px, rgba(100, 15, 28, 0.68), auto, auto, -100px, -80px, 15s, false);
+        }
+
+        &::after {
+            @include blob(260px, 260px, rgba(45, 8, 15, 0.62), -40px, 5%, auto, auto, 17s, true);
+        }
+
+        span:nth-child(1) {
+            @include blob(200px, 200px, rgba(100, 15, 28, 0.65), 40%, auto, auto, 40%, 13s, false);
+        }
+
+        span:nth-child(2) {
+            @include blob(320px, 180px, rgba(45, 8, 15, 0.55), 10%, auto, auto, 15%, 20s, true);
+        }
+
+        span:nth-child(3) {
+            @include blob(160px, 260px, rgba(100, 15, 28, 0.60), auto, 20%, 10%, auto, 11s, false);
+        }
+
+        span:nth-child(4) {
+            @include blob(140px, 140px, rgba(45, 8, 15, 0.70), 65%, 40%, auto, auto, 8s, true);
+        }
+    }
+}
+
+// Reduce motion
+@media (prefers-reduced-motion: reduce) {
+
+    .blob-field,
+    .blob-field::before,
+    .blob-field::after,
+    .blob-field span {
+        animation: none !important;
     }
 }
