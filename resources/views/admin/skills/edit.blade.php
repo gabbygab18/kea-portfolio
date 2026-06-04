@@ -160,6 +160,11 @@
                 <input type="number" name="order" value="{{ old('order', $skill->order) }}" />
             </div>
             <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" rows="3"
+                    style="resize:vertical;">{{ old('description', $skill->description) }}</textarea>
+            </div>
+            <div class="form-group">
                 <label>Icon</label>
                 <input type="hidden" name="icon" id="editSkillIcon" value="{{ old('icon', $skill->icon) }}" />
                 <div class="icon-preview-box" id="editPreviewBox">
@@ -272,10 +277,10 @@
 
             if (tabsEl) {
                 tabsEl.innerHTML = cats.map(c => `
-                <button type="button" class="icon-tab ${c === activeCat ? 'active' : ''}"
-                    onclick="switchTab('${c}','${gridId}','${inputId}','${previewBoxId}','${previewLabelId}','${tabsId}',this)">
-                    ${c}
-                </button>`).join('');
+                    <button type="button" class="icon-tab ${c === activeCat ? 'active' : ''}"
+                        onclick="switchTab('${c}','${gridId}','${inputId}','${previewBoxId}','${previewLabelId}','${tabsId}',this)">
+                        ${c}
+                    </button>`).join('');
             }
 
             const filtered = ICONS.filter(icon => {
@@ -294,8 +299,8 @@
                     ? `<img src="${SI_CDN(icon.slug)}" style="width:1.5rem;height:1.5rem;object-fit:contain;filter:brightness(0) invert(1);opacity:.85"/>`
                     : `<i class="${icon.cls} colored"></i>`;
                 return `<button type="button" class="${isActive ? 'selected' : ''}" title="${icon.label}"
-                onclick="selectIcon('${val}','${gridId}','${inputId}','${previewBoxId}','${previewLabelId}',event)">
-                ${imgOrI}<span>${icon.label}</span></button>`;
+                    onclick="selectIcon('${val}','${gridId}','${inputId}','${previewBoxId}','${previewLabelId}',event)">
+                    ${imgOrI}<span>${icon.label}</span></button>`;
             }).join('');
         }
 
