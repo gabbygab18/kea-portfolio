@@ -1553,6 +1553,31 @@ img {
     }
 }
 
+// ── SCROLL ANIMATIONS ────────────────────────────────────────
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+// ── Respect reduced motion ───────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .scroll-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
 // ── BLOBS ─────────────────────────────────────────────────────
 @keyframes blobFloat {
 
