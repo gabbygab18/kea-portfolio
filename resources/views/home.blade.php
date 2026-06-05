@@ -18,6 +18,17 @@
                 <a href="{{ route('artworks') }}" class="btn btn--outline-light">View artworks</a>
             </div>
         </div>
+        <div class="hero__cards">
+            <div class="hero__card hero__card--left">
+                <div class="hero__card-img"><img src="{{ asset('images/queen-left.png') }}" alt=""></div>
+            </div>
+            <div class="hero__card hero__card--center">
+                <div class="hero__card-img"><img src="{{ asset('images/queen.png') }}" alt=""></div>
+            </div>
+            <div class="hero__card hero__card--right">
+                <div class="hero__card-img"><img src="{{ asset('images/queen-right.png') }}" alt=""></div>
+            </div>
+        </div>
     </section>
 
     <div class="brand-bar">
@@ -38,7 +49,12 @@
         <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <div class="about__inner">
             <div class="about__image-wrap">
-                <img src="{{ asset('images/picture.png') }}" alt="About" class="about__image" />
+                <div class="about__card about__card--back">
+                    <img src="{{ asset('images/queen-back.png') }}" alt="" />
+                </div>
+                <div class="about__card about__card--front">
+                    <img src="{{ asset('images/queen-front.png') }}" alt="" />
+                </div>
             </div>
             <div class="about__content">
                 <h2 class="about__title">{{ $siteSettings['about_title'] ?? 'Highly effective solutions' }}</h2>
@@ -174,34 +190,34 @@
             card.dataset.idx = idx % cards.length;
             card.dataset.category = d.category || 'ui-design';
             card.innerHTML = `
-                        <div class="artworks__card__top-bar">
-                            <div class="avatar"></div>
-                            <span class="name">${d.name}</span>
-                            ${d.verified ? `<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#2C96FF"/><polyline points="6,10 9,13 14,7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ''}
-                        </div>
-                        <div class="artworks__card__img-wrap">
-                            <img src="${d.img}" alt="${d.title}" />
-                        </div>
-                        <div class="artworks__card__overlay"></div>
-                        <div class="artworks__card__bottom-bar">
-                            <div class="actions-row">
-                                <div class="actions">
-                                    <button class="icon-btn btn-heart" data-idx="${idx % cards.length}" title="Like">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>
-                                    </button>
-                                    <button class="icon-btn btn-comment" data-idx="${idx % cards.length}" title="Comment">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                                    </button>
-                                    <button class="icon-btn btn-share" data-idx="${idx % cards.length}" data-img="${d.img}" title="Share">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="none"/></svg>
-                                    </button>
-                                </div>
-                                <button class="icon-btn btn-save" data-idx="${idx % cards.length}" title="Save">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
-                                </button>
-                            </div>
-                            <div class="card-caption">${d.title || ''}</div>
-                        </div>`;
+                                    <div class="artworks__card__top-bar">
+                                        <div class="avatar"></div>
+                                        <span class="name">${d.name}</span>
+                                        ${d.verified ? `<svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#2C96FF"/><polyline points="6,10 9,13 14,7" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ''}
+                                    </div>
+                                    <div class="artworks__card__img-wrap">
+                                        <img src="${d.img}" alt="${d.title}" />
+                                    </div>
+                                    <div class="artworks__card__overlay"></div>
+                                    <div class="artworks__card__bottom-bar">
+                                        <div class="actions-row">
+                                            <div class="actions">
+                                                <button class="icon-btn btn-heart" data-idx="${idx % cards.length}" title="Like">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>
+                                                </button>
+                                                <button class="icon-btn btn-comment" data-idx="${idx % cards.length}" title="Comment">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                                                </button>
+                                                <button class="icon-btn btn-share" data-idx="${idx % cards.length}" data-img="${d.img}" title="Share">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2" fill="none"/></svg>
+                                                </button>
+                                            </div>
+                                            <button class="icon-btn btn-save" data-idx="${idx % cards.length}" title="Save">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#531A24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+                                            </button>
+                                        </div>
+                                        <div class="card-caption">${d.title || ''}</div>
+                                    </div>`;
 
             const img = card.querySelector('img');
             const CARD_H = 380;
@@ -307,10 +323,10 @@
         function renderComments() {
             const list = document.getElementById('commentList');
             list.innerHTML = (comments[currentCardIdx] || []).map(c => `
-                        <div class="comment-item">
-                            <div class="comment-item__avatar">${c.initials}</div>
-                            <div class="comment-item__body"><div class="comment-item__name">${c.name}</div><div class="comment-item__text">${c.text}</div></div>
-                        </div>`).join('');
+                                    <div class="comment-item">
+                                        <div class="comment-item__avatar">${c.initials}</div>
+                                        <div class="comment-item__body"><div class="comment-item__name">${c.name}</div><div class="comment-item__text">${c.text}</div></div>
+                                    </div>`).join('');
             list.scrollTop = list.scrollHeight;
         }
         document.getElementById('closeComment').onclick = () => document.getElementById('commentOverlay').classList.remove('open');
@@ -366,6 +382,55 @@
             saved.has(idx) ? (saved.delete(idx), showToast('Removed from saved')) : (saved.add(idx), showToast('Saved!'));
         });
 
+        // ── Hero cards: spread on load, stack on scroll ───────────────
+        (function () {
+    const cards = document.querySelector('.hero__cards');
+    if (!cards) return;
 
+    const left   = cards.querySelector('.hero__card--left');
+    const center = cards.querySelector('.hero__card--center');
+    const right  = cards.querySelector('.hero__card--right');
+
+    function updateCards() {
+    if (cards.matches(':hover')) return;
+
+    const CLOSE_START = 300;  // hindi pa magsasara hanggang 300px
+    const CLOSE_END   = 600;  // fully closed by 600px
+
+    const t = Math.min(1, Math.max(0, (window.scrollY - CLOSE_START) / (CLOSE_END - CLOSE_START)));
+
+    const rot = 22  * (1 - t);
+    const tx  = 90  * (1 - t);
+    const ty  = -10 * (1 - t);
+
+    left.style.transform   = `translateX(-50%) rotate(${-rot}deg) translateX(${-tx}px)`;
+    center.style.transform = `translateX(-50%) translateY(${ty}px)`;
+    right.style.transform  = `translateX(-50%) rotate(${rot}deg) translateX(${tx}px)`;
+}
+
+    // Start closed, fan open after 200ms
+    left.style.transform   = "translateX(-50%) rotate(0deg) translateX(0px)";
+    center.style.transform = "translateX(-50%) translateY(0px)";
+    right.style.transform  = "translateX(-50%) rotate(0deg) translateX(0px)";
+
+    setTimeout(() => {
+        updateCards(); // respect scroll position before opening
+        if (window.scrollY === 0) {
+            left.style.transform   = "translateX(-50%) rotate(-22deg) translateX(-90px)";
+            center.style.transform = "translateX(-50%) translateY(-10px)";
+            right.style.transform  = "translateX(-50%) rotate(22deg) translateX(90px)";
+        }
+    }, 200);
+
+    window.addEventListener('scroll', updateCards, { passive: true });
+
+    cards.addEventListener('mouseenter', () => {
+        left.style.transform   = "translateX(-50%) rotate(-22deg) translateX(-90px)";
+        center.style.transform = "translateX(-50%) translateY(-10px)";
+        right.style.transform  = "translateX(-50%) rotate(22deg) translateX(90px)";
+    });
+
+    cards.addEventListener('mouseleave', updateCards);
+})();
     </script>
 @endpush

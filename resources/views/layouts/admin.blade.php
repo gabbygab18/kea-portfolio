@@ -110,6 +110,18 @@
                     </span>
                     SEO
                 </a>
+                <a href="{{ route('admin.newsletter-photos.index') }}"
+                    class="{{ request()->routeIs('admin.newsletter-photos*') ? 'active' : '' }}">
+                    <span class="nav-icon">
+                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <rect x="3" y="3" width="18" height="18" rx="3" />
+                            <circle cx="8.5" cy="8.5" r="1.5" />
+                            <polyline points="21 15 16 10 5 21" />
+                        </svg>
+                    </span>
+                    Gallery Photos
+                </a>
 
                 <a href="{{ route('admin.settings.index') }}"
                     class="{{ request()->routeIs('admin.settings*') ? 'active' : '' }}">

@@ -4,6 +4,7 @@
 
 @section('content')
     <section class="about-hero">
+        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <div class="about-hero__inner">
             <div class="about-hero__label">About Me</div>
             <h1 class="about-hero__title">{{ $siteSettings['about_hero_title'] ?? 'UI/UX Designer & SEO Specialist' }}</h1>
@@ -36,6 +37,7 @@
 
     {{-- ── SKILLS ── --}}
     <section class="skills">
+        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <div class="skills__inner">
             <div class="skills__header">
                 <h2 class="skills__title">Technical Skills</h2>
@@ -71,6 +73,7 @@
 
     {{-- ── EXPERIENCE ── --}}
     <section class="experience">
+        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <div class="experience__inner">
             <div class="experience__header">
                 <h2 class="experience__title">Professional Experience</h2>

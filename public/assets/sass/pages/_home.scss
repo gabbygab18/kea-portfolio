@@ -123,14 +123,12 @@ img {
 .hero {
     background: $color-bg-cream;
     position: relative;
-    overflow: hidden;
+    overflow: hidden;       // ← clips cards so they don't bleed into brand bar
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 100px 24px 80px;
-    min-height: 460px;
-    text-align: center;
+    padding: 80px 24px 0;
+    padding-bottom: 0;
 
     &__content {
         width: min(560px, 100%);
@@ -139,12 +137,14 @@ img {
         align-items: center;
         gap: 24px;
         position: relative;
-        z-index: 1;
+        z-index: 2;
+        text-align: center;
+        padding-bottom: 60px;
     }
 
     &__title {
         font-family: $font-serif;
-        font-size: clamp(28px, 6vw, 58px);
+        font-size: clamp(28px, 5vw, 52px);
         font-weight: 700;
         line-height: 1.15;
         color: $color-primary;
@@ -167,34 +167,131 @@ img {
         justify-content: center;
     }
 
-    // Mobile
-    @media (max-width: 480px) {
-        padding: 56px 16px 48px;
-        min-height: auto;
+    &__cards {
+    position: relative;
+    z-index: 0;
+    width: 420px;
+    max-width: 100%;
+    margin-top: 0;
+    height: 260px;          // ← taller so cards are more visible
+    flex-shrink: 0;
+    align-self: center;
+    margin-bottom: 0;       // ← no negative margin, stays inside hero
+    overflow: visible;      // ← let cards breathe but hero clips them
+}
+
+    &__card {
+        position: absolute;
+        border-radius: 0;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+        // Base transition used when NOT in scroll-stack mode
+        transition: transform 0.6s cubic-bezier(0.34, 1.4, 0.64, 1);
+
+        &--left {
+            width: 200px;
+            height: 268px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg) translateX(0px);
+            transform-origin: bottom center;
+            z-index: 1;
+        }
+
+        &--center {
+            width: 220px;
+            height: 294px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(0px);
+            transform-origin: bottom center;
+            z-index: 3;
+        }
+
+        &--right {
+            width: 200px;
+            height: 268px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg) translateX(0px);
+            transform-origin: bottom center;
+            z-index: 2;
+        }
+    }
+
+    // ── Hover always fans out (overrides stacked state visually) ──
+    &__cards:hover &__card--left {
+        transform: translateX(-50%) rotate(-22deg) translateX(-90px) !important;
+    }
+
+    &__cards:hover &__card--center {
+        transform: translateX(-50%) translateY(-10px) !important;
+    }
+
+    &__cards:hover &__card--right {
+        transform: translateX(-50%) rotate(22deg) translateX(90px) !important;
+    }
+
+    // ── Scroll-stacked state (JS adds .is-stacked to .hero__cards) ──
+    &__cards.is-stacked &__card--left {
+        transform: translateX(-50%) rotate(0deg) translateX(0px);
+    }
+
+    &__cards.is-stacked &__card--center {
+        transform: translateX(-50%) translateY(0px);
+    }
+
+    &__cards.is-stacked &__card--right {
+        transform: translateX(-50%) rotate(0deg) translateX(0px);
+    }
+
+    // ── Mobile ───────────────────────────────────────────────────
+    @media (max-width: 600px) {
+        padding: 56px 16px 0;
 
         &__content {
             gap: 18px;
+            padding-bottom: 40px;
         }
 
         &__title {
             font-size: clamp(26px, 8vw, 36px);
         }
 
-        &__description {
-            font-size: 14px;
-            line-height: 24px;
+        &__cards {
+            width: 100%;
+            height: 240px;
+            margin-bottom: -60px;
         }
 
-        &__cta {
-            gap: 10px;
+        &__card--left {
+            width: 155px;
+            height: 208px;
+        }
 
-            .btn {
-                flex: 1 1 140px;
-                justify-content: center;
-            }
+        &__card--center {
+            width: 170px;
+            height: 227px;
+        }
+
+        &__card--right {
+            width: 155px;
+            height: 208px;
         }
     }
 }
+
+// @keyframes heroCardFloat {
+//     0%, 100% { transform: rotate(-22deg) translateY(0); }
+//     50%       { transform: rotate(-22deg) translateY(-7px); }
+// }
+
+// @keyframes heroCardFloatRight {
+//     0%, 100% { transform: rotate(22deg) translateY(0); }
+//     50%       { transform: rotate(22deg) translateY(-7px); }
+// }
 
 // ── BRAND BAR ────────────────────────────────────────────────
 .brand-bar {
@@ -203,6 +300,8 @@ img {
     border-top: 1px solid rgba(123, 29, 46, 0.08);
     border-bottom: 1px solid rgba(123, 29, 46, 0.08);
     overflow: hidden;
+    position: relative;
+    z-index: 10;
 
     &__track {
         display: flex;
@@ -263,23 +362,62 @@ img {
         justify-content: center;
     }
 
-    &__image-wrap {
+     &__image-wrap {
         width: min(420px, 100%);
         flex: 0 0 auto;
         position: relative;
+        height: 420px;
 
-        &::before {
-            content: '';
-            position: absolute;
-            top: 14px;
-            left: 14px;
-            right: -14px;
-            bottom: -14px;
-            border: 2px solid rgba(123, 29, 46, 0.3);
-            border-radius: 12px;
-            opacity: 0.35;
-        }
+        // remove the ::before border decoration entirely
+        &::before { display: none; }
     }
+
+      &__card {
+    position: absolute;
+    border-radius: 14px;
+    background: none;
+    border: none;
+    overflow: hidden;
+    transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+
+    &--back {
+        width: 280px;
+        height: 364px;
+        bottom: 0;
+        left: 60px;
+        transform: rotate(-12deg);
+        transform-origin: bottom center;
+        box-shadow: none;
+        z-index: 1;
+    }
+
+    &--front {
+        width: 280px;
+        height: 364px;
+        bottom: 0;
+        left: 60px;
+        transform: rotate(0deg);
+        transform-origin: bottom center;
+        box-shadow: none;
+        z-index: 2;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+    }
+}
+
+&__image-wrap:hover &__card--back {
+    transform: rotate(0deg);
+}
+
+&__image-wrap:hover &__card--front {
+    transform: rotate(0deg);
+}
+
 
     &__image {
         width: 100%;

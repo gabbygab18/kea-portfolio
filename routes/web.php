@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ExperienceController;
 use App\Http\Controllers\Admin\SeoProjectController;
 use App\Http\Controllers\Admin\SeoToolController;
 use App\Http\Controllers\Admin\SeoSkillController;
+use App\Http\Controllers\Admin\NewsletterPhotoController;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -49,5 +50,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('seo-tools', SeoToolController::class)->except(['show', 'index']);
         Route::resource('seo-skills', SeoSkillController::class)->except(['show', 'index']);
         Route::post('/settings/bulk-update', [SettingController::class, 'bulkUpdate'])->name('settings.bulk-update');
+
+        // Newsletter gallery photos
+        Route::prefix('newsletter-photos')->name('newsletter-photos.')->group(function () {
+            Route::get('/', [NewsletterPhotoController::class, 'index'])->name('index');
+            Route::post('/', [NewsletterPhotoController::class, 'store'])->name('store');
+            Route::post('/reorder', [NewsletterPhotoController::class, 'reorder'])->name('reorder');
+            Route::delete('/{newsletterPhoto}', [NewsletterPhotoController::class, 'destroy'])->name('destroy');
+        });
     });
 });

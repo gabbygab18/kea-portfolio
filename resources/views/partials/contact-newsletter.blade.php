@@ -2,7 +2,6 @@
 <section class="contact" id="contact">
     <div class="contact__inner">
         <div class="contact__info">
-            {{-- Contact title --}}
             <h2 class="contact__title">{{ $siteSettings['contact_title'] ?? 'Want to work together? Let\'s Chat!' }}
             </h2>
             <p class="contact__description">
@@ -91,8 +90,7 @@
                         placeholder="Type your message here..."></textarea>
                 </div>
                 <button type="submit" class="btn btn--primary btn--arrow">
-                    Send message
-                    <span class="btn__arrow">›</span>
+                    Send message <span class="btn__arrow">›</span>
                 </button>
             </form>
         </div>
@@ -100,54 +98,75 @@
 </section>
 
 {{-- ===================== NEWSLETTER / CTA ===================== --}}
+@php
+    // $newsletterPhotos may already be injected by the controller via
+    // View::share() or a view composer.  Fall back to a fresh query
+    // so the partial always works even without the composer.
+    if (!isset($newsletterPhotos)) {
+        $newsletterPhotos = \App\Models\NewsletterPhoto::orderBy('order')->get();
+    }
+
+    $leftPhotos = $newsletterPhotos->where('column', 'left')->values();
+    $rightPhotos = $newsletterPhotos->where('column', 'right')->values();
+
+    // Duplicate items until each column has at least 6 entries so the
+    // infinite-scroll animation never runs out of content.
+    $pad = fn($col) => $col->count()
+        ? collect(array_fill(0, (int) ceil(6 / $col->count()), null))
+            ->flatMap(fn() => $col->all())
+            ->take(max(6, $col->count() * 2))
+        : collect();
+
+    $leftLoop = $pad($leftPhotos);
+    $rightLoop = $pad($rightPhotos);
+@endphp
+
 <section class="newsletter">
     <div class="blob-field"><span></span><span></span><span></span><span></span></div>
     <div class="newsletter__inner">
+
         <div class="newsletter__content">
-            {{-- Newsletter --}}
             <h2 class="newsletter__title">
-                {{ $siteSettings['newsletter_title'] ?? 'Excited to work together on your next project?' }}</h2>
+                {{ $siteSettings['newsletter_title'] ?? 'Excited to work together on your next project?' }}
+            </h2>
             <p class="newsletter__description">
                 {{ $siteSettings['newsletter_description'] ?? 'Whether it\'s a UI redesign, a new website, or an SEO strategy — let\'s build something great together.' }}
             </p>
-            {{-- <div class="newsletter__subscribe">
-                <input type="email" class="newsletter__input" placeholder="Enter your email address" />
-                <button class="newsletter__btn">Subscribe</button>
-            </div> --}}
         </div>
 
-        <div class="newsletter__gallery">
-            {{-- Left column scrolls UP --}}
-            <div class="newsletter__col-wrap">
-                <div class="newsletter__col newsletter__col--up" id="galleryColLeft">
-                    <div class="newsletter__photo"><img src="{{ asset('images/moana.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/MCBuilders.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/MCTech.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/rwa.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/tuc.png') }}" alt="" /></div>
-                    {{-- duplicates for seamless loop --}}
-                    <div class="newsletter__photo"><img src="{{ asset('images/MCBuilders.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/moana.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/MCTech.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/rwa.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/tuc.png') }}" alt="" /></div>
+        @if($leftLoop->isNotEmpty() || $rightLoop->isNotEmpty())
+            <div class="newsletter__gallery">
+
+                {{-- Left column — scrolls UP --}}
+                <div class="newsletter__col-wrap">
+                    <div class="newsletter__col newsletter__col--up" id="galleryColLeft">
+                        {{-- Render twice for seamless loop --}}
+                        @foreach([1, 2] as $_)
+                            @foreach($leftLoop as $photo)
+                                <div class="newsletter__photo">
+                                    <img src="{{ $photo->url }}" alt="{{ $photo->alt }}" loading="lazy" />
+                                </div>
+                            @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-            {{-- Right column scrolls DOWN --}}
-            <div class="newsletter__col-wrap">
-                <div class="newsletter__col newsletter__col--down" id="galleryColRight">
-                    <div class="newsletter__photo"><img src="{{ asset('images/RWA2.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/MCSouth.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/moana.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/lazychimp.png') }}" alt="" /></div>
-                    {{-- duplicates for seamless loop --}}
-                    <div class="newsletter__photo"><img src="{{ asset('images/RWA2.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/MCSouth.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/moana.png') }}" alt="" /></div>
-                    <div class="newsletter__photo"><img src="{{ asset('images/lazychimp.png') }}" alt="" /></div>
+
+                {{-- Right column — scrolls DOWN --}}
+                <div class="newsletter__col-wrap">
+                    <div class="newsletter__col newsletter__col--down" id="galleryColRight">
+                        @foreach([1, 2] as $_)
+                            @foreach($rightLoop as $photo)
+                                <div class="newsletter__photo">
+                                    <img src="{{ $photo->url }}" alt="{{ $photo->alt }}" loading="lazy" />
+                                </div>
+                            @endforeach
+                        @endforeach
+                    </div>
                 </div>
+
             </div>
-        </div>
+        @endif
+
     </div>
 </section>
 
