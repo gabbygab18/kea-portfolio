@@ -219,7 +219,7 @@
             <div class="seo-skills__grid">
                 @forelse($seoSkills as $skill)
                     <div class="seo-skill-card">
-                        <div class="seo-skill-card__num">{{ sprintf('%02d', $loop->iteration) }}</div>
+                        <div class="seo-skill-card__num">{{ ['♣', '♥', '♦', '♠', '♣', '♥'][$loop->index % 6] }}</div>
                         <h3 class="seo-skill-card__title">{{ $skill->title }}</h3>
                         @if($skill->description)
                             <p class="seo-skill-card__text">{{ $skill->description }}</p>
@@ -235,7 +235,7 @@
             ['title' => 'SEO Auditing', 'text' => 'Full-site technical and on-page audits using Screaming Frog, Ahrefs, and Google Search Console.'],
         ] as $s)
                         <div class="seo-skill-card">
-                            <div class="seo-skill-card__num">{{ sprintf('%02d', $loop->iteration) }}</div>
+                            <div class="seo-skill-card__num">{{ ['♣', '♥', '♦', '♠', '♣', '♥'][$loop->index % 6] }}</div>
                             <h3 class="seo-skill-card__title">{{ $s['title'] }}</h3>
                             <p class="seo-skill-card__text">{{ $s['text'] }}</p>
                         </div>

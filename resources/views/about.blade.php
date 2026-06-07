@@ -4,7 +4,15 @@
 
 @section('content')
     <section class="about-hero">
-        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
+        {{-- <div class="blob-field"><span></span><span></span><span></span><span></span></div> --}}
+        <img class="about-hero__deco about-hero__deco--cards" src="{{ asset('images/deco-cards.png') }}" alt=""
+            aria-hidden="true" />
+        <img class="about-hero__deco about-hero__deco--dice" src="{{ asset('images/deco-dice.png') }}" alt=""
+            aria-hidden="true" />
+        <img class="about-hero__deco about-hero__deco--rook" src="{{ asset('images/deco-rook.png') }}" alt=""
+            aria-hidden="true" />
+        <img class="about-hero__deco about-hero__deco--domino" src="{{ asset('images/deco-domino.png') }}" alt=""
+            aria-hidden="true" />
         <div class="about-hero__inner">
             <div class="about-hero__label">About Me</div>
             <h1 class="about-hero__title">{{ $siteSettings['about_hero_title'] ?? 'UI/UX Designer & SEO Specialist' }}</h1>
@@ -27,9 +35,15 @@
             </div>
         </div>
         <div class="about-hero__image-wrap">
-            <img src="{{ asset('images/picture.png') }}" alt="About" class="about-hero__image" />
+            <div class="about-hero__card about-hero__card--back">
+                <img src="{{ asset('images/queen-back.png') }}" alt="" />
+            </div>
+            <div class="about-hero__card about-hero__card--front">
+                <img src="{{ asset('images/queen-front.png') }}" alt="About" />
+            </div>
             <div class="about-hero__image-badge">
-                <span class="about-hero__image-badge-num">{{ $siteSettings['experience_years'] ?? '2+' }}</span>
+                <span class="about-hero__image-badge-num" id="expCounter"
+                    data-target="{{ (int) ($siteSettings['experience_years'] ?? 2) }}">0</span>
                 <span class="about-hero__image-badge-label">Years of<br />Experience</span>
             </div>
         </div>
@@ -157,3 +171,32 @@
     @include('partials.contact-newsletter')
 
 @endsection
+
+@push('scripts')
+    <script>
+        (function () {
+            const el = document.getElementById('expCounter');
+            const target = parseInt(el.dataset.target, 10);
+            const suffix = '{{ str_contains($siteSettings["experience_years"] ?? "2+", "+") ? "+" : "" }}';
+            const duration = 2000; // ms — longer = smoother feel
+            const start = performance.now();
+
+            function easeOutExpo(t) {
+                return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+            }
+
+            function tick(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = easeOutExpo(progress);
+                const current = Math.round(eased * target);
+
+                el.textContent = current + (progress >= 1 ? suffix : '');
+
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+
+            requestAnimationFrame(tick);
+        })();
+    </script>
+@endpush

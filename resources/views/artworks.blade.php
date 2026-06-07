@@ -4,12 +4,13 @@
 
 @section('content')
     <section class="artworks-hero">
+        <img class="artworks-hero__deco artworks-hero__deco--cards-left"  src="{{ asset('images/Untitled_design__10_.png') }}" alt="" aria-hidden="true" />
+<img class="artworks-hero__deco artworks-hero__deco--cards-right" src="{{ asset('images/Untitled_design__9_.png') }}"  alt="" aria-hidden="true" />
         <p class="artworks-hero__eyebrow">Portfolio</p>
         <h1 class="artworks-hero__title">All Artworks & Projects</h1>
         <p class="artworks-hero__desc">A collection of web design, development, and branding projects crafted with care.</p>
     </section>
 
-    {{-- FILTER BAR --}}
     {{-- FILTER BAR --}}
     <div class="filter-bar">
         <div class="filter-bar__inner">

@@ -744,11 +744,13 @@ $transition: 0.2s ease;
 }
 
 .seo-skill-card__num {
-    font-size: .72rem;
-    font-weight: 800;
-    letter-spacing: .1em;
+    font-size: 72px;
+    line-height: 1;
     color: $color-primary;
-    opacity: .5;
+    opacity: 1;
+    user-select: none;
+    pointer-events: none;
+    margin-bottom: -8px;
 }
 
 .seo-skill-card__title {
