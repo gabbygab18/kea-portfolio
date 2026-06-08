@@ -1726,9 +1726,9 @@ img {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #2AADAE;
-  background: rgba(42, 173, 174, 0.12);
-  border: 1px solid rgba(42, 173, 174, 0.25);
+  color: #531A24;
+  background: rgba(83, 26, 36, 0.12);
+  border: 1px solid rgba(83, 26, 36, 0.25);
   border-radius: 100px;
   padding: 5px 14px;
 }
@@ -1957,7 +1957,7 @@ img {
 }
 .tuc-hero__title em {
   font-style: italic;
-  color: #2AADAE;
+  color: #531A24;
 }
 .tuc-hero__subtitle {
   font-size: 17px;
@@ -2233,52 +2233,25 @@ img {
 }
 .tuc-why__quote-wrap {
   flex: 0 0 auto;
-  width: min(380px, 100%);
+  width: min(520px, 100%);
   align-self: center;
 }
 .tuc-why__quote {
   position: relative;
-  background: #531A24;
-  color: #F2E8D9;
+  background: transparent;
   border-radius: 16px;
-  padding: 40px 36px 36px;
-  box-shadow: 0 20px 60px rgba(123, 29, 46, 0.22);
-  overflow: hidden;
+  padding: 0;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.tuc-why__quote::after {
-  content: "";
-  position: absolute;
-  bottom: -60px;
-  right: -60px;
-  width: 180px;
-  height: 180px;
-  border: 40px solid rgba(242, 232, 217, 0.06);
-  border-radius: 50%;
-}
-.tuc-why__quote p {
-  font-family: "Poppins", sans-serif;
-  font-size: 18px;
-  font-style: italic;
-  line-height: 30px;
-  color: #F2E8D9;
-  position: relative;
-  z-index: 1;
-  margin-top: 20px;
-}
-.tuc-why__quote-icon {
-  color: #F2E8D9;
-  position: relative;
-  z-index: 1;
-}
-.tuc-why__quote-cite {
+.tuc-why__deco-img {
   display: block;
-  margin-top: 20px;
-  font-family: "Inter", sans-serif;
-  font-style: normal;
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(242, 232, 217, 0.6);
-  letter-spacing: 0.02em;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
   position: relative;
   z-index: 1;
 }
@@ -2379,7 +2352,7 @@ img {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #2AADAE;
+  color: #531A24;
   transition: background 0.2s ease;
 }
 .tuc-values__card:hover .tuc-values__card-icon {
@@ -2499,7 +2472,7 @@ img {
   transition: color 0.2s ease;
 }
 .tuc-process__step:hover .tuc-process__step-num {
-  color: #2AADAE;
+  color: #531A24;
 }
 .tuc-process__step-body {
   flex: 1;
@@ -2900,6 +2873,20 @@ img {
   width: 100%;
   box-sizing: border-box;
   max-width: 100vw;
+}
+
+.tuc-hero--no-mockup .tuc-hero__inner {
+  justify-content: center;
+  text-align: center;
+}
+.tuc-hero--no-mockup .tuc-hero__left {
+  max-width: 700px;
+  align-items: center;
+}
+.tuc-hero--no-mockup .tuc-hero__breadcrumb,
+.tuc-hero--no-mockup .tuc-hero__meta,
+.tuc-hero--no-mockup .tuc-hero__cta-row {
+  justify-content: center;
 }
 
 @keyframes cardReveal {
@@ -4511,6 +4498,103 @@ img {
   display: flex;
   justify-content: center;
   border-bottom: 1px solid rgba(123, 29, 46, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+@keyframes shuffle1 {
+  0%, 100% {
+    transform: rotate(-18deg) translate(-36px, 4px);
+  }
+  25% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  50% {
+    transform: rotate(14deg) translate(32px, -6px);
+  }
+  75% {
+    transform: rotate(-6deg) translate(-12px, 6px);
+  }
+}
+@keyframes shuffle2 {
+  0%, 100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  25% {
+    transform: rotate(16deg) translate(30px, -8px);
+  }
+  50% {
+    transform: rotate(-20deg) translate(-34px, 4px);
+  }
+  75% {
+    transform: rotate(6deg) translate(14px, -4px);
+  }
+}
+@keyframes shuffle3 {
+  0%, 100% {
+    transform: rotate(16deg) translate(32px, -6px);
+  }
+  25% {
+    transform: rotate(-14deg) translate(-28px, 8px);
+  }
+  50% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  75% {
+    transform: rotate(20deg) translate(40px, -10px);
+  }
+}
+.contact-hero .card-deck {
+  position: absolute;
+  right: clamp(140px, 20vw, 280px);
+  bottom: clamp(20px, 4vw, 60px);
+  width: clamp(160px, 22vw, 280px);
+  height: clamp(160px, 22vw, 280px);
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 480px) {
+  .contact-hero .card-deck {
+    display: none;
+  }
+}
+.contact-hero .card-deck:hover .card-deck__card {
+  animation-play-state: paused;
+  transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.contact-hero .card-deck:hover .card-deck__card:nth-child(1) {
+  transform: rotate(-22deg) translate(-48px, 0);
+}
+.contact-hero .card-deck:hover .card-deck__card:nth-child(2) {
+  transform: rotate(0deg) translate(0, 0);
+}
+.contact-hero .card-deck:hover .card-deck__card:nth-child(3) {
+  transform: rotate(22deg) translate(48px, 0);
+}
+.contact-hero .card-deck__card {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+  transform-origin: center bottom;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+.contact-hero .card-deck__card:nth-child(1) {
+  animation: shuffle1 3.4s ease-in-out infinite;
+  z-index: 1;
+}
+.contact-hero .card-deck__card:nth-child(2) {
+  animation: shuffle2 3.4s ease-in-out infinite;
+  animation-delay: -1.1s;
+  z-index: 2;
+}
+.contact-hero .card-deck__card:nth-child(3) {
+  animation: shuffle3 3.4s ease-in-out infinite;
+  animation-delay: -2.2s;
+  z-index: 3;
 }
 .contact-hero__inner {
   width: 100%;

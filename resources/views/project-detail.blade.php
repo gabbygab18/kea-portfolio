@@ -13,10 +13,11 @@
 @section('content')
 
     {{-- ===================== PROJECT HERO ===================== --}}
-    <section class="tuc-hero">
+    @php $isUx = strtolower($project->category ?? '') === 'ux'; @endphp
+
+    <section class="tuc-hero {{ $isUx ? 'tuc-hero--no-mockup' : '' }}">
         <div class="tuc-hero__inner">
 
-            {{-- LEFT: all text content --}}
             <div class="tuc-hero__left">
                 <div class="tuc-hero__breadcrumb">
                     <a href="{{ route('artworks') }}" class="tuc-hero__breadcrumb-link">Artworks</a>
@@ -42,34 +43,30 @@
                 </div>
             </div>
 
-            {{-- RIGHT: mockup --}}
-            <div class="tuc-hero__mockup">
-                @if($project->hero_image)
-                    @php
-                        $heroUrl = str_starts_with($project->hero_image, 'artworks/')
-                            ? asset('storage/' . $project->hero_image)
-                            : asset('images/' . $project->hero_image);
-                    @endphp
-                    <img src="{{ $heroUrl }}" alt="{{ $project->title }}" />
-                @elseif($imgUrl)
-                    <img src="{{ $imgUrl }}" alt="{{ $project->title }}" />
-                @endif
+            @if(!$isUx)
+                <div class="tuc-hero__mockup">
+                    @if($project->hero_image)
+                        @php
+                            $heroUrl = str_starts_with($project->hero_image, 'artworks/')
+                                ? asset('storage/' . $project->hero_image)
+                                : asset('images/' . $project->hero_image);
+                        @endphp
+                        <img src="{{ $heroUrl }}" alt="{{ $project->title }}" />
+                    @elseif($imgUrl)
+                        <img src="{{ $imgUrl }}" alt="{{ $project->title }}" />
+                    @endif
 
-                {{-- <div class="tuc-hero__mockup-caption">
-                    <span class="tuc-hero__mockup-caption-label">{{ $project->category ?? 'Project' }}</span>
-                    <span class="tuc-hero__mockup-caption-title">{{ $project->title }}</span>
-                </div> --}}
-
-                @if(!empty($project->stats))
-                    @php $positions = ['tuc-hero__badge--top-right', 'tuc-hero__badge--bottom-left', 'tuc-hero__badge--bottom-right']; @endphp
-                    @foreach(array_slice((array) $project->stats, 0, 3) as $i => $stat)
-                        <div class="tuc-hero__badge {{ $positions[$i] ?? '' }}">
-                            <span class="tuc-hero__badge-value">{{ $stat['value'] }}</span>
-                            <span class="tuc-hero__badge-label">{{ $stat['label'] }}</span>
-                        </div>
-                    @endforeach
-                @endif
-            </div>
+                    @if(!empty($project->stats))
+                        @php $positions = ['tuc-hero__badge--top-right', 'tuc-hero__badge--bottom-left', 'tuc-hero__badge--bottom-right']; @endphp
+                        @foreach(array_slice((array) $project->stats, 0, 3) as $i => $stat)
+                            <div class="tuc-hero__badge {{ $positions[$i] ?? '' }}">
+                                <span class="tuc-hero__badge-value">{{ $stat['value'] }}</span>
+                                <span class="tuc-hero__badge-label">{{ $stat['label'] }}</span>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            @endif
 
         </div>
     </section>
@@ -85,19 +82,16 @@
                 </p>
             </div>
             <div class="tuc-why__quote-wrap">
-                <blockquote class="tuc-why__quote">
-                    <svg class="tuc-why__quote-icon" width="40" height="32" viewBox="0 0 40 32" fill="none">
-                        <path
-                            d="M0 32V20C0 14.667 1.333 10.333 4 7C6.667 3.667 10.667 1.333 16 0L17.6 3.2C14.933 4.133 12.933 5.6 11.6 7.6C10.267 9.467 9.6 11.8 9.6 14.6H16V32H0ZM24 32V20C24 14.667 25.333 10.333 28 7C30.667 3.667 34.667 1.333 40 0L41.6 3.2C38.933 4.133 36.933 5.6 35.6 7.6C34.267 9.467 33.6 11.8 33.6 14.6H40V32H24Z"
-                            fill="currentColor" opacity="0.2" />
-                    </svg>
-                    @if(!empty($project->tools))
-                        <p>Tools used: {{ implode(', ', (array) $project->tools) }}</p>
-                    @endif
-                    <cite class="tuc-why__quote-cite">— {{ $siteSettings['brand_name'] ?? 'Keana' }}, Designer &amp;
-                        Developer</cite>
-                </blockquote>
-            </div>
+    <blockquote class="tuc-why__quote">
+        @php
+            $decoImages = ['deco-cards', 'deco-dice', 'deco-rook', 'deco-domino'];
+            $decoIndex  = ($project->sort_order ?? $project->id) % 4;
+            $decoSrc    = asset('images/' . $decoImages[$decoIndex] . '.png');
+        @endphp
+
+        <img src="{{ $decoSrc }}" alt="" class="tuc-why__deco-img" aria-hidden="true" />
+    </blockquote>
+</div>
         </div>
     </section>
 
@@ -112,7 +106,7 @@
             $previewUrl = $imgUrl;
         }
     @endphp
-    @if($previewUrl)
+    @if($previewUrl && !$isUx)
         <section class="tuc-preview">
             <img src="{{ $previewUrl }}" alt="{{ $project->title }} preview" />
         </section>
@@ -126,14 +120,14 @@
                 <h2 class="tuc-process__title">Design Process &amp; Approach</h2>
                 <p class="tuc-process__body">{{ $project->description }}</p>
                 @if(!empty($project->tools))
-                    <div class="tuc-process__tools">
-                        <span class="tuc-process__tool-label">Tools Used</span>
-                        <div class="tuc-process__tool-tags">
-                            @foreach((array) $project->tools as $tool)
-                                <span class="tuc-process__tag">{{ $tool }}</span>
-                            @endforeach
-                        </div>
+                <div class="tuc-process__tools">
+                    <span class="tuc-process__tool-label">Tools Used</span>
+                    <div class="tuc-process__tool-tags">
+                        @foreach((array) $project->tools as $tool)
+                        <span class="tuc-process__tag">{{ $tool }}</span>
+                        @endforeach
                     </div>
+                </div>
                 @endif
             </div>
             <div class="tuc-process__right">

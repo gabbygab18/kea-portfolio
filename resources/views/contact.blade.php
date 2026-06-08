@@ -10,6 +10,12 @@
             <p class="contact-hero__desc">Have a project in mind, a question, or just want to say hi? Fill out the form or
                 reach out directly.</p>
         </div>
+
+        <div class="card-deck" aria-hidden="true">
+            <img src="{{ asset('images/queen-left.png') }}" class="card-deck__card" alt="">
+            <img src="{{ asset('images/queen.png') }}" class="card-deck__card" alt="">
+            <img src="{{ asset('images/queen-right.png') }}" class="card-deck__card" alt="">
+        </div>
     </section>
 
     <section class="contact-body" id="contact">
