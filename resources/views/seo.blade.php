@@ -24,37 +24,11 @@
         </div>
         {{-- replace the existing seo-hero__visual div --}}
 <div class="seo-hero__visual">
-    <div class="seo-hero__badge seo-hero__badge--1">
-        <span class="seo-hero__badge-num">{{ $siteSettings['seo_projects_count'] ?? '10+' }}</span>
-        <span class="seo-hero__badge-label">Projects</span>
-    </div>
-    <div class="seo-hero__badge seo-hero__badge--2">
-        <span class="seo-hero__badge-num">{{ $siteSettings['seo_audits_count'] ?? '5+' }}</span>
-        <span class="seo-hero__badge-label">Audits Done</span>
-    </div>
-    <div class="seo-hero__rank-card">
-        <div class="seo-hero__rank-bar" data-width="90">
-            <span>Organic Traffic</span>
-            <div class="seo-hero__rank-track">
-                <div class="seo-hero__rank-fill"></div>
-            </div>
-            <strong>↑ 90%</strong>
-        </div>
-        <div class="seo-hero__rank-bar" data-width="75">
-            <span>Keyword Rankings</span>
-            <div class="seo-hero__rank-track">
-                <div class="seo-hero__rank-fill"></div>
-            </div>
-            <strong>↑ 75%</strong>
-        </div>
-        <div class="seo-hero__rank-bar" data-width="60">
-            <span>Page Speed Score</span>
-            <div class="seo-hero__rank-track">
-                <div class="seo-hero__rank-fill"></div>
-            </div>
-            <strong>↑ 60%</strong>
-        </div>
-    </div>
+    <img
+        src="{{ asset('images/chips.png') }}"
+        alt="SEO visual"
+        class="seo-hero__visual-img"
+    />
 </div>
     </section>
 

@@ -12,7 +12,7 @@ class ArtworkController extends Controller
     public function index()
     {
         return view('admin.artworks.index', [
-            'artworks' => Artwork::orderBy('created_at', 'desc')->get(),
+            'artworks' => Artwork::orderBy('sort_order')->orderBy('created_at', 'desc')->get(),
         ]);
     }
 
@@ -179,6 +179,20 @@ class ArtworkController extends Controller
 
         return redirect()->route('admin.artworks.index')
             ->with('success', 'Artwork removed.');
+    }
+
+    public function reorder(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:artworks,id',
+        ]);
+
+        foreach ($request->ids as $order => $id) {
+            Artwork::where('id', $id)->update(['sort_order' => $order]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     // ── Helpers ───────────────────────────────────────────────

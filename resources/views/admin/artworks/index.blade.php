@@ -7,10 +7,19 @@
 @section('content')
 <div class="admin-card">
     <table class="admin-table">
-        <thead><tr><th>Title</th><th>Category</th><th>Featured</th><th></th></tr></thead>
-        <tbody>
-            @forelse($artworks as $artwork)
+        <thead>
             <tr>
+                <th style="width:32px"></th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Featured</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="sortableBody">
+            @forelse($artworks as $artwork)
+            <tr data-id="{{ $artwork->id }}">
+                <td class="drag-handle" title="Drag to reorder" style="cursor:grab;color:var(--a-muted);text-align:center;font-size:1.1rem">⠿</td>
                 <td><strong>{{ $artwork->title }}</strong><br><small>{{ $artwork->slug }}</small></td>
                 <td>{{ $artwork->category }}</td>
                 <td>
@@ -29,9 +38,45 @@
                 </td>
             </tr>
             @empty
-            <tr><td colspan="4" style="text-align:center;color:var(--a-muted)">No artworks yet.</td></tr>
+            <tr><td colspan="5" style="text-align:center;color:var(--a-muted)">No artworks yet.</td></tr>
             @endforelse
         </tbody>
     </table>
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script>
+    const tbody = document.getElementById('sortableBody');
+    if (tbody) {
+        Sortable.create(tbody, {
+            handle: '.drag-handle',
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd() {
+                const ids = [...tbody.querySelectorAll('tr[data-id]')]
+                    .map(tr => tr.dataset.id);
+
+                fetch('{{ route('admin.artworks.reorder') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({ ids }),
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (!data.success) console.error('Reorder failed', data);
+                })
+                .catch(err => console.error('Reorder error', err));
+            }
+        });
+    }
+</script>
+<style>
+    .sortable-ghost { opacity: 0.4; background: var(--a-surface-2, #1e1e1e); }
+    .drag-handle:hover { color: var(--a-primary) !important; cursor: grab; }
+</style>
+@endpush

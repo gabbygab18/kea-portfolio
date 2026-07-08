@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="header__topbar-right">
-                    <a href="{{ $siteSettings['social_facebook'] ?? '#' }}" class="header__social-icon" target="_blank"
+                    <a href="{{ $siteSettings['facebook_url'] ?? '#' }}" class="header__social-icon" target="_blank"
                         rel="noopener" aria-label="Facebook">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="#E7D8C4" />
@@ -73,15 +73,15 @@
                                 fill="#531A24" />
                         </svg>
                     </a>
-                    <a href="{{ $siteSettings['social_twitter'] ?? '#' }}" class="header__social-icon" target="_blank"
+                    {{-- <a href="{{ $siteSettings['social_twitter'] ?? '#' }}" class="header__social-icon" target="_blank"
                         rel="noopener" aria-label="Twitter">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="#E7D8C4" />
                             <path d="M17.5 6h-2L12 10.5 9 6H6l4.8 6L6 18h2l3.8-4.8L15.2 18H18l-5-6.2L17.5 6z"
                                 fill="#531A24" />
                         </svg>
-                    </a>
-                    <a href="{{ $siteSettings['social_instagram'] ?? '#' }}" class="header__social-icon" target="_blank"
+                    </a> --}}
+                    <a href="{{ $siteSettings['instagram_url'] ?? '#' }}" class="header__social-icon" target="_blank"
                         rel="noopener" aria-label="Instagram">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="#E7D8C4" />
@@ -91,8 +91,7 @@
                             <circle cx="16" cy="8" r="1" fill="#531A24" />
                         </svg>
                     </a>
-                    <a href="{{ $siteSettings['social_linkedin'] ?? '#' }}" class="header__social-icon" target="_blank"
-                        rel="noopener" aria-label="LinkedIn">
+                    <a href="{{ $siteSettings['linkedin_url'] ?? '#' }}" class="header__social-icon" rel="noopener" aria-label="LinkedIn">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="#E7D8C4" />
                             <rect x="6" y="10" width="2.5" height="7" fill="#531A24" />
@@ -102,7 +101,7 @@
                                 fill="#531A24" />
                         </svg>
                     </a>
-                    <a href="{{ $siteSettings['social_github'] ?? '#' }}" class="header__social-icon" target="_blank"
+                    {{-- <a href="{{ $siteSettings['social_github'] ?? '#' }}" class="header__social-icon" target="_blank"
                         rel="noopener" aria-label="GitHub">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="#E7D8C4" />
@@ -110,7 +109,7 @@
                                 d="M12 4C7.58 4 4 7.58 4 12c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.88-1.17-.88-1.17-.72-.49.05-.48.05-.48.8.06 1.22.82 1.22.82.71 1.21 1.86.86 2.31.66.07-.51.28-.86.5-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.66 7.66 0 012-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0020 12c0-4.42-3.58-8-8-8z"
                                 fill="#531A24" />
                         </svg>
-                    </a>
+                    </a> --}}
                 </div>
 
             </div>
@@ -179,7 +178,7 @@
                 <p class="footer__newsletter-desc">Subscribe our newsletters to follow the news about our fresh
                     products.</p>
                 <div class="footer__socials">
-                    <a href="{{ $siteSettings['social_facebook'] ?? '#' }}" class="footer__social" target="_blank"
+                    <a href="{{ $siteSettings['facebook_url'] ?? '#' }}" class="footer__social" target="_blank"
                         rel="noopener" aria-label="Facebook">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="rgba(198,183,163,0.74)" />
@@ -188,15 +187,15 @@
                                 fill="rgba(83,26,36,0.58)" />
                         </svg>
                     </a>
-                    <a href="{{ $siteSettings['social_twitter'] ?? '#' }}" class="footer__social" target="_blank"
+                    {{-- <a href="{{ $siteSettings['twitter_url'] ?? '#' }}" class="footer__social" target="_blank"
                         rel="noopener" aria-label="Twitter">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="rgba(198,183,163,0.74)" />
                             <path d="M17.5 6h-2L12 10.5 9 6H6l4.8 6L6 18h2l3.8-4.8L15.2 18H18l-5-6.2L17.5 6z"
                                 fill="rgba(83,26,36,0.58)" />
                         </svg>
-                    </a>
-                    <a href="{{ $siteSettings['social_instagram'] ?? '#' }}" class="footer__social" target="_blank"
+                    </a> --}}
+                    <a href="{{ $siteSettings['instagram_url'] ?? '#' }}" class="footer__social" target="_blank"
                         rel="noopener" aria-label="Instagram">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="rgba(198,183,163,0.74)" />
@@ -206,8 +205,7 @@
                             <circle cx="16" cy="8" r="1" fill="rgba(83,26,36,0.58)" />
                         </svg>
                     </a>
-                    <a href="{{ $siteSettings['social_linkedin'] ?? '#' }}" class="footer__social" target="_blank"
-                        rel="noopener" aria-label="LinkedIn">
+                    <a href="{{ $siteSettings['linkedin_url'] ?? '#' }}" class="header__social-icon" rel="noopener" aria-label="LinkedIn">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="rgba(198,183,163,0.74)" />
                             <rect x="6" y="10" width="2.5" height="7" fill="rgba(83,26,36,0.58)" />
@@ -217,7 +215,7 @@
                                 fill="rgba(83,26,36,0.58)" />
                         </svg>
                     </a>
-                    <a href="{{ $siteSettings['social_github'] ?? '#' }}" class="footer__social" target="_blank"
+                    {{-- <a href="{{ $siteSettings['github_url'] ?? '#' }}" class="footer__social" target="_blank"
                         rel="noopener" aria-label="GitHub">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <rect width="24" height="24" rx="4" fill="rgba(198,183,163,0.74)" />
@@ -225,10 +223,10 @@
                                 d="M12 4C7.58 4 4 7.58 4 12c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.88-1.17-.88-1.17-.72-.49.05-.48.05-.48.8.06 1.22.82 1.22.82.71 1.21 1.86.86 2.31.66.07-.51.28-.86.5-1.06-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.66 7.66 0 012-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.19c0 .21.15.46.55.38A8.01 8.01 0 0020 12c0-4.42-3.58-8-8-8z"
                                 fill="rgba(83,26,36,0.58)" />
                         </svg>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
-            <div class="footer__bottom">
+            {{-- <div class="footer__bottom">
                 <p class="footer__copy">
                     <span class="footer__copy--muted">Copyright © {{ date('Y') }}
                         {{ $siteSettings['brand_name'] ?? 'MCTechnologies' }}</span>
@@ -240,7 +238,7 @@
                     <span class="footer__copy--divider">|</span>
                     <a href="{{ $siteSettings['privacy_url'] ?? '#' }}" class="footer__copy--link">Privacy Policy</a>
                 </p>
-            </div>
+            </div> --}}
         </div>
     </footer>
 

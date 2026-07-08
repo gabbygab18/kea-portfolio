@@ -41,11 +41,11 @@
             <div class="about-hero__card about-hero__card--front">
                 <img src="{{ asset('images/queen-front.png') }}" alt="About" />
             </div>
-            <div class="about-hero__image-badge">
+            {{-- <div class="about-hero__image-badge">
                 <span class="about-hero__image-badge-num" id="expCounter"
                     data-target="{{ (int) ($siteSettings['experience_years'] ?? 2) }}">0</span>
                 <span class="about-hero__image-badge-label">Years of<br />Experience</span>
-            </div>
+            </div> --}}
         </div>
     </section>
 

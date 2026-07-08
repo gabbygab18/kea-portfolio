@@ -40,6 +40,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Protected admin routes
     Route::middleware('auth')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::post('/artworks/reorder', [ArtworkController::class, 'reorder'])->name('artworks.reorder');
         Route::resource('artworks', ArtworkController::class)->except(['show']);
         Route::resource('services', ServiceController::class)->except(['show']);
         Route::resource('skills', SkillController::class)->except(['show']);

@@ -112,6 +112,7 @@ img {
 // ── Shared Section Label ─────────────────────────────────────
 .tuc-section-label {
     display: inline-block;
+    align-self: flex-start;
     font-family: $font-sans;
     font-size: 11px;
     font-weight: 600;
@@ -277,18 +278,6 @@ img {
     position: relative;
     width: 100%;
     box-sizing: border-box;
-
-    &::before {
-        content: '';
-        position: absolute;
-        top: -80px;
-        right: -120px;
-        width: 600px;
-        height: 600px;
-        border-radius: 50%;
-        background: radial-gradient(ellipse at center, rgba(42, 173, 174, 0.10) 0%, transparent 70%);
-        pointer-events: none;
-    }
 
     &__inner {
         @include centered-inner;
@@ -987,6 +976,9 @@ img {
     }
 
     &__header {
+        .tuc-section-label {
+            align-self: center;
+        }
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -1105,6 +1097,9 @@ img {
         text-align: center;
         position: relative;
         z-index: 1;
+        .tuc-section-label {
+            align-self: center;
+        }
     }
 
     &__title {

@@ -15,7 +15,7 @@ class PageController extends Controller
 {
     public function home()
     {
-        $featuredArtworks = Artwork::where('featured', true)->get();
+        $featuredArtworks = Artwork::where('featured', true)->orderBy('sort_order')->get();
 
         $artworkCards = $featuredArtworks->map(function ($a) {
             $img = null;
@@ -30,7 +30,7 @@ class PageController extends Controller
                 'img' => $img ?? asset('images/placeholder.png'),
                 'title' => $a->title,
                 'link' => route('project.detail', $a->slug),
-                'category' => $a->category ? \Illuminate\Support\Str::slug($a->category) : 'ui-design', // ← add this
+                'category' => $a->category ? \Illuminate\Support\Str::slug($a->category) : 'ui-design',
             ];
         })->values()->toArray();
 
@@ -38,9 +38,9 @@ class PageController extends Controller
             'services' => Service::orderBy('order')->get(),
             'skills' => Skill::orderBy('order')->get(),
             'featuredArtworks' => $featuredArtworks,
-            'recentArtworks' => Artwork::orderBy('created_at', 'desc')->limit(6)->get(),
+            'recentArtworks' => Artwork::orderBy('sort_order')->orderBy('created_at', 'desc')->limit(6)->get(),  // ← fixed
             'artworkCards' => $artworkCards,
-            'artworkCategories' => Artwork::where('featured', true)  // ← add this
+            'artworkCategories' => Artwork::where('featured', true)
                 ->whereNotNull('category')
                 ->distinct()
                 ->pluck('category')
@@ -62,7 +62,7 @@ class PageController extends Controller
     public function artworks()
     {
         return view('artworks', [
-            'artworks' => Artwork::orderBy('created_at', 'desc')->get(),
+            'artworks' => Artwork::orderBy('sort_order')->orderBy('created_at', 'desc')->get(),  // ← change this
             'categories' => Artwork::whereNotNull('category')->distinct()->pluck('category')->sort()->values(),
             'siteSettings' => Setting::pluck('value', 'key')->toArray(),
         ]);

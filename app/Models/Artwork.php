@@ -20,6 +20,7 @@ class Artwork extends Model
         'gallery',      // ← added
         'stats',        // ← added
         'preview_image',
+        'sort_order',    // ← added
     ];
 
     protected $casts = [

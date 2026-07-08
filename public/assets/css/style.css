@@ -1721,6 +1721,7 @@ img {
 
 .tuc-section-label {
   display: inline-block;
+  align-self: flex-start;
   font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 600;
@@ -1871,17 +1872,6 @@ img {
   position: relative;
   width: 100%;
   box-sizing: border-box;
-}
-.tuc-hero::before {
-  content: "";
-  position: absolute;
-  top: -80px;
-  right: -120px;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(42, 173, 174, 0.1) 0%, transparent 70%);
-  pointer-events: none;
 }
 .tuc-hero__inner {
   width: 100%;
@@ -2509,6 +2499,9 @@ img {
   flex-direction: column;
   gap: 48px;
 }
+.tuc-gallery__header .tuc-section-label {
+  align-self: center;
+}
 .tuc-gallery__header {
   display: flex;
   flex-direction: column;
@@ -2619,6 +2612,9 @@ img {
   text-align: center;
   position: relative;
   z-index: 1;
+}
+.tuc-next__inner .tuc-section-label {
+  align-self: center;
 }
 .tuc-next__title {
   font-family: "Poppins", sans-serif;
@@ -5610,14 +5606,21 @@ img {
 .seo-hero__visual {
   position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 2rem;
+  align-items: center;
+  justify-content: center;
 }
 @media (max-width: 900px) {
   .seo-hero__visual {
     display: none;
   }
+}
+
+.seo-hero__visual-img {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
 @keyframes badgeFloat {
