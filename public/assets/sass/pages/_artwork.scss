@@ -1,13 +1,13 @@
 // ============================================================
 // _artworks.scss  –  BEM (Block Element Modifier)
 // Keana's Portfolio — Artworks page styles
-// Follows the same design system as _home.scss
+// Follows the same design system as _home.scss / _about.scss
 // Covers: artworks-hero, filter-bar, artworks-grid-section,
 //         artwork-card (incl. --featured modifier), load-more,
 //         artworks-cta, toast, card-reveal animation
 // ============================================================
 
-// ── Variables (mirrors _home.scss) ──────────────────────────
+// ── Variables (mirrors _home.scss / _about.scss) ─────────────
 $color-primary: #531A24;
 $color-primary-dark: #521320;
 $color-bg-cream: #F2E8D9;
@@ -19,6 +19,16 @@ $color-text-semi: rgba(123, 29, 46, 0.78);
 $color-accent-rose: #9C2438;
 $color-like-red: #e0294a;
 $color-saved-green: #2a8a4a;
+
+// ── Dark-theme tokens (same values as _about.scss, kept in sync) ──
+$color-hero-bg: #000000;
+$color-hero-desc: #98001B;
+$color-dark-card: rgba(250, 246, 238, 0.04);
+$color-dark-border: rgba(250, 246, 238, 0.12);
+$color-text-onDark: $color-white;
+$color-text-onDark-muted: rgba(250, 246, 238, 0.65);
+$color-text-onDark-soft: rgba(250, 246, 238, 0.45);
+$color-accent-chip-bg: rgba(156, 36, 56, 0.20);
 
 $font-sans: 'Inter', sans-serif;
 $font-serif: 'Poppins', sans-serif;
@@ -48,7 +58,7 @@ $transition: 0.2s ease;
 .artworks-hero {
     position: relative;
     overflow: visible;
-    background: $color-bg-cream;
+    background: $color-hero-bg; // was $color-bg-cream
     padding: 80px 24px 64px;
     text-align: center;
     display: flex;
@@ -56,27 +66,57 @@ $transition: 0.2s ease;
     align-items: center;
     gap: 16px;
 
+    // ── Ambient glow blobs (same treatment as .tuc-glow) ──────
+    &__glow {
+        position: absolute;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #71071A;
+        filter: blur(208px);
+        pointer-events: none;
+        user-select: none;
+        z-index: 0;
+    }
+
+    &__glow--left {
+        width: clamp(380px, 37vw, 530px);
+        left: -265px;
+        top: -114px;
+    }
+
+    &__glow--right {
+        width: clamp(420px, 41vw, 592px);
+        right: -180px;
+        top: -60px;
+        filter: blur(250px);
+    }
+
     &__eyebrow {
+        position: relative;
+        z-index: 2;
         font-size: 12px;
         font-weight: 600;
         letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: rgba(123, 29, 46, 0.55);
+        color: $color-text-onDark-soft; // was rgba(123, 29, 46, 0.55)
     }
 
     &__title {
+        position: relative;
+        z-index: 2;
         font-family: $font-serif;
         font-size: clamp(32px, 5vw, 52px);
         font-weight: 700;
         line-height: 1.1;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         max-width: 600px;
     }
 
     &__desc {
+        position: relative;
+        z-index: 2;
         font-size: 16px;
         line-height: 26px;
-        color: rgba(123, 29, 46, 0.7);
+        color: #98001B;
         max-width: 460px;
     }
 
@@ -117,7 +157,7 @@ $transition: 0.2s ease;
 // ── FILTER BAR ───────────────────────────────────────────────
 // ============================================================
 .filter-bar {
-    background: $color-bg-cream;
+    background: $color-hero-bg; // was $color-bg-cream
     padding: 0 24px 40px;
     display: flex;
     justify-content: center;
@@ -133,23 +173,23 @@ $transition: 0.2s ease;
 .filter-btn {
     padding: 9px 20px;
     border-radius: 100px;
-    border: 1.5px solid rgba(123, 29, 46, 0.25);
+    border: 1.5px solid $color-dark-border; // was rgba(123, 29, 46, 0.25)
     background: transparent;
     font-family: $font-sans;
     font-size: 13px;
     font-weight: 600;
-    color: rgba(123, 29, 46, 0.7);
+    color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.7)
     cursor: pointer;
     transition: border-color $transition, color $transition, background $transition;
 
     &:hover {
-        border-color: $color-primary;
-        color: $color-primary;
+        border-color: $color-accent-rose; // was $color-primary
+        color: $color-white; // was $color-primary
     }
 
     &.active {
-        background: $color-primary;
-        border-color: $color-primary;
+        background: $color-accent-rose; // was $color-primary
+        border-color: $color-accent-rose; // was $color-primary
         color: $color-white;
     }
 }
@@ -158,7 +198,7 @@ $transition: 0.2s ease;
 // ── ARTWORKS GRID SECTION ────────────────────────────────────
 // ============================================================
 .artworks-grid-section {
-    background: $color-bg-tan;
+    background: $color-hero-bg; // was $color-bg-tan
     padding: 64px 24px 96px;
 
     &__inner {
@@ -181,10 +221,12 @@ $transition: 0.2s ease;
 // ── ARTWORK CARD ─────────────────────────────────────────────
 // ============================================================
 .artwork-card {
-    background: $color-bg-cream;
+    background: $color-dark-card; // was $color-bg-cream
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(123, 29, 46, 0.08);
+    outline: 1px solid $color-dark-border; // NEW — card was invisible without a border once bg matched the section
+    outline-offset: -1px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25); // was rgba(123, 29, 46, 0.08)
     transition:
         transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
         box-shadow 0.35s ease;
@@ -221,7 +263,7 @@ $transition: 0.2s ease;
 
     &:hover {
         transform: translateY(-6px);
-        box-shadow: 0 20px 48px rgba(123, 29, 46, 0.18);
+        box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45); // was rgba(123, 29, 46, 0.18)
     }
 
     // ── Image wrap ─────────────────────────────────────────────
@@ -250,14 +292,14 @@ $transition: 0.2s ease;
         top: 16px;
         left: 16px;
         padding: 5px 12px;
-        background: rgba(242, 232, 217, 0.9);
+        background: rgba(11, 11, 13, 0.75); // was rgba(242, 232, 217, 0.9)
         backdrop-filter: blur(6px);
         border-radius: 100px;
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: $color-primary;
+        color: $color-white; // was $color-primary
     }
 
     // ── Body ───────────────────────────────────────────────────
@@ -291,7 +333,7 @@ $transition: 0.2s ease;
     &__name {
         font-size: 12px;
         font-weight: 600;
-        color: rgba(123, 29, 46, 0.7);
+        color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.7)
     }
 
     // ── Action icon buttons ────────────────────────────────────
@@ -312,8 +354,16 @@ $transition: 0.2s ease;
         border-radius: 6px;
         transition: transform 0.15s ease, background 0.15s ease;
 
+        // NEW — the blade template hardcodes stroke="#7B1D2E" on these inline
+        // SVGs. That's a plain presentation attribute, so any CSS rule here
+        // still overrides it — needed since dark maroon on a dark card is
+        // nearly invisible.
+        svg {
+            stroke: rgba(250, 246, 238, 0.55);
+        }
+
         &:hover {
-            background: rgba(123, 29, 46, 0.08);
+            background: rgba(250, 246, 238, 0.08); // was rgba(123, 29, 46, 0.08)
         }
 
         &:active {
@@ -329,7 +379,8 @@ $transition: 0.2s ease;
 
         &.saved {
             svg path {
-                fill: $color-primary;
+                fill: $color-accent-rose; // was $color-primary — more visible on dark
+                stroke: $color-accent-rose;
             }
         }
     }
@@ -340,14 +391,14 @@ $transition: 0.2s ease;
         font-size: 20px;
         font-weight: 700;
         line-height: 1.25;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         margin-bottom: 8px;
     }
 
     &__desc {
         font-size: 14px;
         line-height: 22px;
-        color: rgba(123, 29, 46, 0.65);
+        color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.65)
         margin-bottom: 20px;
     }
 
@@ -364,19 +415,23 @@ $transition: 0.2s ease;
         gap: 6px;
         font-size: 13px;
         font-weight: 700;
-        color: $color-primary;
+        color: $color-accent-rose; // was $color-primary
         text-decoration: none;
         letter-spacing: 0.02em;
         transition: gap 0.2s ease;
 
+        // NEW — overrides the inline stroke="#7B1D2E" on the arrow icon
         svg {
+            stroke: $color-accent-rose;
             transition: transform 0.2s ease;
         }
 
         &:hover {
             gap: 10px;
+            color: $color-white;
 
             svg {
+                stroke: $color-white;
                 transform: translateX(2px);
             }
         }
@@ -389,11 +444,11 @@ $transition: 0.2s ease;
 
     &__tool-badge {
         padding: 4px 10px;
-        background: rgba(123, 29, 46, 0.08);
+        background: $color-accent-chip-bg; // was rgba(123, 29, 46, 0.08)
         border-radius: 100px;
         font-size: 11px;
         font-weight: 600;
-        color: rgba(123, 29, 46, 0.6);
+        color: $color-accent-rose; // was rgba(123, 29, 46, 0.6)
     }
 
 }

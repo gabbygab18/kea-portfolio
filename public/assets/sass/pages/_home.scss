@@ -13,6 +13,7 @@ $color-white: #FAF6EE;
 $color-text-muted: rgba(123, 29, 46, 0.56);
 $color-text-semi: rgba(123, 29, 46, 0.78);
 $color-accent-rose: #9C2438;
+$color-hero-bg: #000000;
 
 $font-sans: 'Inter', sans-serif;
 $font-serif: 'Poppins', sans-serif;
@@ -39,7 +40,7 @@ html {
 
 body {
     font-family: $font-sans;
-    background-color: $color-bg-tan;
+    background-color: $color-hero-bg;
     color: $color-primary;
     min-width: 320px;
     overflow-x: hidden;
@@ -119,16 +120,62 @@ img {
     }
 }
 
+
+
 // ── HERO ─────────────────────────────────────────────────────
 .hero {
-    background: $color-bg-cream;
+    background: $color-hero-bg;
     position: relative;
-    overflow: hidden;       // ← clips cards so they don't bleed into brand bar
+    overflow: hidden; // ← clips cards so they don't bleed into brand bar
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 80px 24px 0;
     padding-bottom: 0;
+
+    &__blob-field,
+    .blob-field {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+
+        &::before,
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            mix-blend-mode: normal;
+        }
+
+        // right-side glow
+        &::before {
+            top: 150px;
+            right: -220px;
+            background-image: url('/images/Ellipse_2318.png');
+        }
+
+        // left-side glow
+        &::after {
+            top: 0%;
+            left: -900px;
+            background-image: url('/images/Ellipse_2319.png');
+        }
+
+        @media (max-width: 600px) {
+
+            &::before,
+            &::after {
+                width: 400px;
+                height: 400px;
+            }
+        }
+    }
 
     &__content {
         width: min(560px, 100%);
@@ -147,7 +194,7 @@ img {
         font-size: clamp(28px, 5vw, 52px);
         font-weight: 700;
         line-height: 1.15;
-        color: $color-primary;
+        color: $color-white;
         letter-spacing: -0.01em;
     }
 
@@ -155,7 +202,7 @@ img {
         font-size: 15px;
         font-weight: 400;
         line-height: 26px;
-        color: rgba(123, 29, 46, 0.75);
+        color: #98001B;
         max-width: 420px;
     }
 
@@ -168,17 +215,17 @@ img {
     }
 
     &__cards {
-    position: relative;
-    z-index: 0;
-    width: 420px;
-    max-width: 100%;
-    margin-top: 0;
-    height: 260px;          // ← taller so cards are more visible
-    flex-shrink: 0;
-    align-self: center;
-    margin-bottom: 0;       // ← no negative margin, stays inside hero
-    overflow: visible;      // ← let cards breathe but hero clips them
-}
+        position: relative;
+        z-index: 0;
+        width: 420px;
+        max-width: 100%;
+        margin-top: 0;
+        height: 260px; // ← taller so cards are more visible
+        flex-shrink: 0;
+        align-self: center;
+        margin-bottom: 0; // ← no negative margin, stays inside hero
+        overflow: visible; // ← let cards breathe but hero clips them
+    }
 
     &__card {
         position: absolute;
@@ -248,60 +295,60 @@ img {
     }
 
     // ── Decorative floating game pieces ──────────────────────────
-&__deco {
-    position: absolute;
-    z-index: 1;          // above blob-field (z:0), below content (z:2)
-    pointer-events: none;
-    user-select: none;
-    opacity: 0.92;
-    // subtle float animation — each piece has its own offset via nth-child
-    animation: decoFloat 6s ease-in-out infinite alternate;
-}
-
-// Playing cards — left side, vertically centred
-&__deco--cards {
-    width: clamp(190px, 21vw, 280px); // was clamp(200px,22vw,300px)
-    left: clamp(-60px, -5vw, -30px);  // was clamp(-30px,-2vw,-10px)
-    top: 30%;
-    transform: translateY(-52%);
-    animation-delay: 0s;
-    animation-duration: 7s;
-}
-
-// Dice — top right
-&__deco--dice {
-    width: clamp(150px, 18vw, 230px);
-    right: clamp(-30px, -2vw, -10px);
-    top: clamp(24px, 6vh, 60px);
-    animation-delay: -2s;
-    animation-duration: 8s;
-}
-
-// Chess rook — bottom right
-&__deco--rook {
-    width: clamp(110px, 14vw, 180px);
-    right: clamp(-20px, -1vw, -5px);
-    bottom: clamp(-60px, -5vw, -30px);
-    animation-delay: -4s;
-    animation-duration: 9s;
-}
-
-// Dominos — bottom left
-&__deco--domino {
-    width: clamp(140px, 16vw, 210px);
-    left: clamp(-30px, -2vw, -10px);
-    bottom: clamp(12px, 3vh, 36px);
-    animation-delay: -1.5s;
-    animation-duration: 6.5s;
-    opacity: 50%;
-}
-
-// Hide on small screens so they don't crowd the content
-@media (max-width: 600px) {
     &__deco {
-        display: none;
+        position: absolute;
+        z-index: 1; // above blob-field (z:0), below content (z:2)
+        pointer-events: none;
+        user-select: none;
+        opacity: 0.92;
+        // subtle float animation — each piece has its own offset via nth-child
+        animation: decoFloat 6s ease-in-out infinite alternate;
     }
-}
+
+    // Playing cards — left side, vertically centred
+    &__deco--cards {
+        width: clamp(190px, 21vw, 280px); // was clamp(200px,22vw,300px)
+        left: clamp(-60px, -5vw, -30px); // was clamp(-30px,-2vw,-10px)
+        top: 30%;
+        transform: translateY(-52%);
+        animation-delay: 0s;
+        animation-duration: 7s;
+    }
+
+    // Dice — top right
+    &__deco--dice {
+        width: clamp(150px, 18vw, 230px);
+        right: clamp(-30px, -2vw, -10px);
+        top: clamp(24px, 6vh, 60px);
+        animation-delay: -2s;
+        animation-duration: 8s;
+    }
+
+    // Chess rook — bottom right
+    &__deco--rook {
+        width: clamp(110px, 14vw, 180px);
+        right: clamp(-20px, -1vw, -5px);
+        bottom: clamp(-60px, -5vw, -30px);
+        animation-delay: -4s;
+        animation-duration: 9s;
+    }
+
+    // Dominos — bottom left
+    &__deco--domino {
+        width: clamp(140px, 16vw, 210px);
+        left: clamp(-30px, -2vw, -10px);
+        bottom: clamp(12px, 3vh, 36px);
+        animation-delay: -1.5s;
+        animation-duration: 6.5s;
+        opacity: 50%;
+    }
+
+    // Hide on small screens so they don't crowd the content
+    @media (max-width: 600px) {
+        &__deco {
+            display: none;
+        }
+    }
 
     // ── Mobile ───────────────────────────────────────────────────
     @media (max-width: 600px) {
@@ -340,9 +387,17 @@ img {
 }
 
 @keyframes decoFloat {
-    0%   { transform: translateY(0px) rotate(0deg); }
-    50%  { transform: translateY(-10px) rotate(1.5deg); }
-    100% { transform: translateY(-18px) rotate(-1deg); }
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(1.5deg);
+    }
+
+    100% {
+        transform: translateY(-18px) rotate(-1deg);
+    }
 }
 
 // Special override for cards since they already have a translateY
@@ -351,1685 +406,15 @@ img {
 }
 
 @keyframes decoFloatCards {
-    0%   { transform: translateY(-52%) rotate(0deg); }
-    50%  { transform: translateY(calc(-52% - 10px)) rotate(1deg); }
-    100% { transform: translateY(calc(-52% - 18px)) rotate(-1.5deg); }
-}
-
-// @keyframes heroCardFloat {
-//     0%, 100% { transform: rotate(-22deg) translateY(0); }
-//     50%       { transform: rotate(-22deg) translateY(-7px); }
-// }
-
-// @keyframes heroCardFloatRight {
-//     0%, 100% { transform: rotate(22deg) translateY(0); }
-//     50%       { transform: rotate(22deg) translateY(-7px); }
-// }
-
-// ── BRAND BAR ────────────────────────────────────────────────
-.brand-bar {
-    background: #e8ddd0;
-    padding: 1.25rem 2rem;
-    border-top: 1px solid rgba(123, 29, 46, 0.08);
-    border-bottom: 1px solid rgba(123, 29, 46, 0.08);
-    overflow: hidden;
-    position: relative;
-    z-index: 10;
-
-    &__track {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center; // ← this is what centers them
-        gap: 2.5rem;
-        flex-wrap: wrap;
-        width: 100%; // ← was max-content, which breaks centering
-        padding: 0; // ← remove the 60px padding copied from artworks__track
-        will-change: unset; // ← not needed here
-        min-width: unset; // ← remove the min-width from the previous fix
-    }
-
-    &__group {
-        display: contents;
-    }
-
-    &__logo img {
-        height: 28px;
-        width: auto;
-        opacity: 0.6;
-        filter: sepia(0.3);
-        transition: opacity 0.2s;
-
-        &:hover {
-            opacity: 1;
-        }
-    }
-
-    @media (max-width: 480px) {
-        padding: 1rem 16px;
-
-        &__track {
-            gap: 1.4rem;
-        }
-
-        &__logo img {
-            height: 22px;
-        }
-    }
-}
-
-// ── ABOUT ────────────────────────────────────────────────────
-.about {
-    background: $color-bg-cream;
-    padding: 96px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &__inner {
-        @include centered-inner;
-        display: flex;
-        align-items: center;
-        gap: 72px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-     &__image-wrap {
-        width: min(420px, 100%);
-        flex: 0 0 auto;
-        position: relative;
-        height: 420px;
-
-        // remove the ::before border decoration entirely
-        &::before { display: none; }
-    }
-
-      &__card {
-    position: absolute;
-    border-radius: 14px;
-    background: none;
-    border: none;
-    overflow: hidden;
-    transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
-
-    &--back {
-        width: 280px;
-        height: 364px;
-        bottom: 0;
-        left: 60px;
-        transform: rotate(-12deg);
-        transform-origin: bottom center;
-        box-shadow: none;
-        z-index: 1;
-    }
-
-    &--front {
-        width: 280px;
-        height: 364px;
-        bottom: 0;
-        left: 60px;
-        transform: rotate(0deg);
-        transform-origin: bottom center;
-        box-shadow: none;
-        z-index: 2;
-    }
-
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center top;
-    }
-}
-
-&__image-wrap:hover &__card--back {
-    transform: rotate(0deg);
-}
-
-&__image-wrap:hover &__card--front {
-    transform: rotate(0deg);
-}
-
-
-    &__image {
-        width: 100%;
-        height: auto;
-        max-height: 520px;
-        object-fit: cover;
-        border-radius: 10px;
-        display: block;
-    }
-
-    &__content {
-        flex: 1 1 280px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 20px;
-        max-width: 480px;
-    }
-
-    &__title {
-        font-family: $font-serif;
-        font-size: clamp(24px, 4vw, 38px);
-        font-weight: 700;
-        line-height: 1.2;
-        color: $color-primary;
-    }
-
-    &__description {
-        font-size: 15px;
-        font-weight: 400;
-        line-height: 26px;
-        color: rgba(123, 29, 46, 0.75);
-    }
-
-    &__cta {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-    }
-
-    @media (max-width: 768px) {
-        padding: 64px 24px;
-
-        &__inner {
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-        }
-
-        &__image-wrap {
-            width: 100%;
-            max-width: 480px;
-        }
-
-        &__content {
-            max-width: 100%;
-            align-items: center;
-            text-align: center;
-        }
-
-        &__cta {
-            justify-content: center;
-        }
-    }
-
-    @media (max-width: 480px) {
-        padding: 48px 16px;
-
-        &__inner {
-            gap: 32px;
-        }
-    }
-}
-
-// ── SERVICES ─────────────────────────────────────────────────
-.services {
-    background: $color-bg-cream;
-    padding: 80px 24px;
-    display: flex;
-    justify-content: center;
-
-    &__inner {
-        @include centered-inner;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 40px;
-    }
-
-    &__header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-        text-align: center;
-    }
-
-    &__title {
-        font-family: $font-serif;
-        font-size: clamp(28px, 4vw, 36px);
-        font-weight: 800;
-        line-height: 1.2;
-        color: $color-primary;
-    }
-
-    &__desc {
-        max-width: 418px;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 24px;
-        color: rgba(123, 29, 46, 0.72);
-    }
-
-    &__grid {
-        display: grid;
-        // Default: auto-fit responsive columns
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 22px;
-        width: 100%;
-        max-width: $max-width;
-    }
-
-    &__card {
-        width: 100%; // fill grid cell — no fixed 354px
-        padding: 40px 24px;
-        background: $color-bg-cream;
-        border-radius: 8px;
-        outline: 1px solid rgba(123, 29, 46, 0.15);
-        outline-offset: -1px;
-        box-shadow: 0 1px 4px rgba(123, 29, 46, 0.08);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-        text-align: center;
-        transition: box-shadow 0.2s ease, transform 0.2s ease;
-
-        &:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(123, 29, 46, 0.14);
-        }
-    }
-
-    &__card-suit {
-    position: relative;
-    width: 96px;
-    height: 96px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-&__card-suit-symbol {
-    position: absolute;
-    font-size: 96px;       // ← was 72px
-    line-height: 1;
-    color: $color-primary; // ← solid red, no opacity fade
-    opacity: 1;            // ← was 0.18
-    user-select: none;
-    pointer-events: none;
-}
-
-// &__card-suit-num {
-//     position: relative;
-//     z-index: 1;
-//     font-size: 28px;
-//     font-weight: 800;
-//     color: $color-primary;
-//     line-height: 1;
-// }
-
-    &__card-title {
-        font-size: 18px;
-        font-weight: 800;
-        line-height: 1.3;
-        color: $color-primary;
-    }
-
-    &__card-desc {
-        font-size: 15px;
-        font-weight: 400;
-        line-height: 24px;
-        color: rgba(123, 29, 46, 0.72);
-    }
-
-    // Tablet: 2 columns
-    @media (max-width: 768px) {
-        padding: 60px 16px;
-
-        &__grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    // Mobile: 1 column
-    @media (max-width: 480px) {
-        padding: 48px 16px;
-
-        &__grid {
-            grid-template-columns: 1fr;
-        }
-
-        &__card {
-            padding: 32px 20px;
-        }
-    }
-}
-
-// ── ARTWORKS ─────────────────────────────────────────────────
-.artworks {
-    background: $color-bg-tan;
-    padding: 96px 0 72px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    overflow: hidden;
-    position: relative;
-
-    &__header {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 0 24px;
-        position: relative;
-        z-index: 1;
-    }
-
-    &__title {
-        font-family: $font-serif;
-        font-size: clamp(26px, 4vw, 42px);
-        font-weight: 700;
-        color: $color-primary;
-    }
-
-    &__desc {
-        font-size: 15px;
-        line-height: 26px;
-        color: rgba(123, 29, 46, 0.7);
-        max-width: 480px;
-        text-align: center;
-    }
-
-    &__footer {
-        display: flex;
-        justify-content: center;
-        padding: 0 24px;
-        position: relative;
-        z-index: 1;
-    }
-
-    &__outer {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        z-index: 1;
-        padding: 80px 0;
-        margin: -80px 0;
-        mask-image: linear-gradient(to right,
-                transparent 0%,
-                black 8%,
-                black 92%,
-                transparent 100%);
-        -webkit-mask-image: linear-gradient(to right,
-                transparent 0%,
-                black 8%,
-                black 92%,
-                transparent 100%);
-    }
-
-    // ↓ add these new blocks inside .artworks { }
-    &__filters {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 0 24px;
-        position: relative;
-        z-index: 20;
-    }
-
-    &__filter-btn {
-        font-family: $font-sans;
-        font-size: 13px;
-        font-weight: 600;
-        color: $color-primary;
-        background: rgba(123, 29, 46, 0.08);
-        border: 1.5px solid transparent;
-        border-radius: 20px;
-        padding: 6px 16px;
-        cursor: pointer;
-        transition: background 0.2s, border-color 0.2s, color 0.2s;
-
-        &:hover {
-            background: rgba(123, 29, 46, 0.14);
-        }
-
-        &.active {
-            background: $color-primary;
-            color: #fff;
-            border-color: $color-primary;
-        }
-    }
-
-    &__card-category {
-        display: inline-block;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: $color-primary;
-        background: rgba(123, 29, 46, 0.10);
-        border-radius: 4px;
-        padding: 3px 8px;
-        margin-left: 6px;
-        white-space: nowrap;
-    }
-
-    &__hover-zone {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 30%;
-        z-index: 10;
-        pointer-events: all;
-        cursor: none;
-
-        &--left {
-            left: 0;
-            background: transparent; // ← remove the tinted gradient
-        }
-
-        &--right {
-            right: 0;
-            background: transparent; // ← remove the tinted gradient
-        }
-    }
-
-    &__track {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        padding: 60px 24px;
-        width: max-content;
-        will-change: transform;
-    }
-
-    &__card {
-        position: relative;
-        width: $artwork-card-width;
-        height: 380px;
-        border-radius: 12px;
-        overflow: visible;
-        flex-shrink: 0;
-        cursor: pointer;
-        transition:
-            transform 0.40s cubic-bezier(0.34, 1.4, 0.64, 1),
-            height 0.40s cubic-bezier(0.34, 1.4, 0.64, 1),
-            box-shadow 0.40s ease;
-
-        &__img-wrap {
-            position: absolute;
-            top: 45px;
-            inset-inline: 0;
-            bottom: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            z-index: 0;
-
-            img {
-                width: 100%;
-                height: auto;
-                min-height: 100%;
-                object-fit: cover;
-                display: block;
-                transform: translateY(0);
-                transition: transform 0s;
-            }
-        }
-
-        &:hover &__img-wrap img {
-            animation: imgPan var(--pan-dur, 3s) ease-in-out infinite alternate;
-        }
-
-        &__overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(28, 8, 12, 0.52);
-            opacity: 0;
-            transition: opacity 0.35s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        &__top-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 52px;
-            background: $color-bg-cream;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0 12px;
-            z-index: 3;
-            opacity: 0;
-            transform: translateY(-100%);
-            transition: opacity 0.35s ease, transform 0.40s cubic-bezier(0.34, 1.4, 0.64, 1);
-            border-radius: 12px 12px 0 0;
-
-            .avatar {
-                width: 24px;
-                height: 24px;
-                background-image: url('/images/logo.png');
-                background-size: cover;
-                background-position: center;
-                flex-shrink: 0;
-            }
-
-            .name {
-                font-size: 12px;
-                font-weight: 600;
-                color: rgba(123, 29, 46, 0.82);
-                flex: 1;
-            }
-        }
-
-        &__bottom-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: $color-bg-cream;
-            display: flex;
-            flex-direction: column;
-            padding: 10px 14px 12px;
-            z-index: 3;
-            opacity: 0;
-            transform: translateY(100%);
-            transition: opacity 0.35s ease, transform 0.40s cubic-bezier(0.34, 1.4, 0.64, 1);
-            border-radius: 0 0 12px 12px;
-            gap: 6px;
-
-            .actions-row {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                width: 100%;
-            }
-
-            .actions {
-                display: flex;
-                align-items: center;
-                gap: 16px;
-            }
-        }
-
-        &:hover {
-            height: 460px;
-            transform: scale(1.04) translateY(-6px);
-            box-shadow: 0 32px 64px rgba(123, 29, 46, 0.28);
-            z-index: 30;
-
-            .artworks__card__overlay {
-                opacity: 0 !important;
-            }
-
-            .artworks__card__top-bar {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            .artworks__card__bottom-bar {
-                opacity: 1;
-                transform: translateY(0);
-
-                .card-caption {
-                    font-family: $font-sans;
-                    font-size: 12px;
-                    font-weight: 700;
-                    color: $color-primary;
-                    letter-spacing: 0.02em;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    width: 100%;
-                    padding-left: 6px;
-                }
-            }
-        }
-    }
-
-    @media (max-width: 480px) {
-        padding: 56px 0 48px;
-        gap: 28px;
-
-        &__track {
-            padding: 40px 16px;
-        }
-    }
-}
-
-// ── Icon Buttons ─────────────────────────────────────────────
-.icon-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    border-radius: 6px;
-    transition: transform 0.15s ease, background 0.15s ease;
-
-    &:hover {
-        background: rgba(123, 29, 46, 0.08);
-    }
-
-    &:active {
-        transform: scale(0.88);
-    }
-
-    &.liked {
-        svg path {
-            fill: #e0294a;
-            stroke: #e0294a;
-        }
-
-        svg {
-            filter: drop-shadow(0 0 4px rgba(224, 41, 74, 0.45));
-        }
-    }
-
-    &.saved svg path {
-        fill: $color-primary;
-    }
-
-    &.heart-bounce {
-        animation: heartBounce 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
-    }
-
-    &.save-bounce {
-        animation: saveBounce 0.40s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
-    }
-}
-
-@keyframes heartBounce {
     0% {
-        transform: scale(1);
-    }
-
-    30% {
-        transform: scale(1.55);
+        transform: translateY(-52%) rotate(0deg);
     }
 
     50% {
-        transform: scale(0.88);
-    }
-
-    70% {
-        transform: scale(1.25);
+        transform: translateY(calc(-52% - 10px)) rotate(1deg);
     }
 
     100% {
-        transform: scale(1);
+        transform: translateY(calc(-52% - 18px)) rotate(-1.5deg);
     }
 }
-
-@keyframes saveBounce {
-    0% {
-        transform: scale(1);
-    }
-
-    30% {
-        transform: scale(1.45) translateY(-2px);
-    }
-
-    60% {
-        transform: scale(0.9);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes imgPan {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(var(--pan-end, 0px));
-    }
-}
-
-// ── MODAL OVERLAY ────────────────────────────────────────────
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(20, 6, 9, 0.55);
-    backdrop-filter: blur(4px);
-    z-index: 9000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-    padding: 16px; // prevents modals touching edges on small screens
-
-    &.open {
-        opacity: 1;
-        pointer-events: all;
-    }
-}
-
-// ── COMMENT MODAL ────────────────────────────────────────────
-.comment-modal {
-    background: $color-bg-cream;
-    border-radius: 18px;
-    width: 420px;
-    max-width: 100%;
-    box-shadow: 0 24px 64px rgba(20, 6, 9, 0.35);
-    transform: translateY(24px) scale(0.96);
-    transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
-    overflow: hidden;
-
-    .modal-overlay.open & {
-        transform: translateY(0) scale(1);
-    }
-
-    &__head {
-        padding: 20px 22px 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    &__title {
-        font-size: 18px;
-        font-weight: 800;
-        color: $color-primary;
-    }
-
-    &__close {
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 8px;
-        background: rgba(123, 29, 46, 0.10);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.15s;
-
-        &:hover {
-            background: rgba(123, 29, 46, 0.18);
-        }
-    }
-
-    &__comments {
-        max-height: 240px;
-        overflow-y: auto;
-        padding: 14px 22px 0;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(123, 29, 46, 0.2) transparent;
-    }
-
-    &__form {
-        padding: 16px 22px 22px;
-        display: flex;
-        gap: 10px;
-        align-items: flex-end;
-    }
-
-    &__input {
-        flex: 1;
-        padding: 12px 14px;
-        border-radius: 10px;
-        border: 1.5px solid rgba(123, 29, 46, 0.30);
-        background: rgba(250, 246, 238, 0.70);
-        font-family: $font-sans;
-        font-size: 14px;
-        color: $color-primary;
-        resize: none;
-        outline: none;
-        min-height: 44px;
-        max-height: 100px;
-        transition: border 0.2s;
-
-        &:focus {
-            border-color: $color-primary;
-        }
-
-        &::placeholder {
-            color: rgba(123, 29, 46, 0.40);
-        }
-    }
-
-    &__send {
-        width: 42px;
-        height: 42px;
-        border-radius: 10px;
-        background: $color-primary;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: opacity 0.2s;
-        flex-shrink: 0;
-
-        &:hover {
-            opacity: 0.85;
-        }
-    }
-}
-
-.comment-item {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-
-    &__avatar {
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: $color-primary;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: 700;
-        color: $color-white;
-    }
-
-    &__body {
-        flex: 1;
-    }
-
-    &__name {
-        font-size: 12px;
-        font-weight: 700;
-        color: $color-primary;
-    }
-
-    &__text {
-        font-size: 13px;
-        line-height: 19px;
-        color: rgba(123, 29, 46, 0.80);
-        margin-top: 2px;
-    }
-}
-
-// ── SHARE MODAL ──────────────────────────────────────────────
-.share-modal {
-    background: $color-bg-cream;
-    border-radius: 18px;
-    width: 380px;
-    max-width: 100%;
-    box-shadow: 0 24px 64px rgba(20, 6, 9, 0.35);
-    transform: translateY(24px) scale(0.96);
-    transition: transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
-    overflow: hidden;
-
-    .modal-overlay.open & {
-        transform: translateY(0) scale(1);
-    }
-
-    &__head {
-        padding: 20px 22px 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    &__title {
-        font-size: 18px;
-        font-weight: 800;
-        color: $color-primary;
-    }
-
-    &__close {
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 8px;
-        background: rgba(123, 29, 46, 0.10);
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: background 0.15s;
-
-        &:hover {
-            background: rgba(123, 29, 46, 0.18);
-        }
-    }
-
-    &__link-row {
-        margin: 16px 22px 0;
-        display: flex;
-        gap: 8px;
-        align-items: center;
-    }
-
-    &__link-input {
-        flex: 1;
-        padding: 11px 13px;
-        border-radius: 10px;
-        border: 1.5px solid rgba(123, 29, 46, 0.25);
-        background: rgba(250, 246, 238, 0.70);
-        font-family: $font-sans;
-        font-size: 12px;
-        color: rgba(123, 29, 46, 0.60);
-        outline: none;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        pointer-events: none;
-        min-width: 0; // prevents flex overflow
-    }
-
-    &__copy-btn {
-        padding: 11px 16px;
-        border-radius: 10px;
-        background: $color-primary;
-        border: none;
-        cursor: pointer;
-        font-family: $font-sans;
-        font-size: 13px;
-        font-weight: 600;
-        color: $color-white;
-        transition: opacity 0.2s;
-        white-space: nowrap;
-        flex-shrink: 0;
-
-        &:hover {
-            opacity: 0.85;
-        }
-
-        &.copied {
-            background: #2a8a4a;
-        }
-    }
-
-    &__platforms {
-        display: flex;
-        gap: 14px;
-        padding: 18px 22px 22px;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-    }
-}
-
-.platform-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: transform 0.2s;
-    background: none;
-    border: none;
-
-    &:hover {
-        transform: translateY(-3px);
-    }
-
-    &__icon {
-        width: 46px;
-        height: 46px;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    &__label {
-        font-size: 11px;
-        font-weight: 600;
-        color: rgba(123, 29, 46, 0.70);
-    }
-}
-
-// ── TOAST ────────────────────────────────────────────────────
-.toast {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%) translateY(16px);
-    background: $color-primary;
-    color: $color-white;
-    padding: 12px 22px;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    box-shadow: 0 8px 24px rgba(20, 6, 9, 0.25);
-    z-index: 10000;
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    pointer-events: none;
-    white-space: nowrap;
-
-    &.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-
-    @media (max-width: 480px) {
-        font-size: 13px;
-        padding: 10px 18px;
-        bottom: 20px;
-        max-width: calc(100vw - 32px);
-        white-space: normal;
-        text-align: center;
-    }
-}
-
-// ── CONTACT ──────────────────────────────────────────────────
-.contact {
-    background: $color-bg-cream;
-    padding: 96px 24px;
-    position: relative;
-    overflow: hidden;
-
-    &__inner {
-        @include centered-inner;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 60px;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-    }
-
-    &__info {
-        width: min(400px, 100%);
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    &__title {
-        font-family: $font-serif;
-        font-size: clamp(26px, 4vw, 46px);
-        font-weight: 700;
-        line-height: 1.15;
-        color: $color-primary;
-    }
-
-    &__description {
-        font-size: 15px;
-        font-weight: 400;
-        line-height: 26px;
-        color: rgba(123, 29, 46, 0.72);
-    }
-
-    &__socials {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        flex-wrap: wrap;
-    }
-
-    &__social {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: opacity $transition, transform 0.15s ease;
-
-        &:hover {
-            opacity: 0.8;
-            transform: translateY(-2px);
-        }
-    }
-
-    &__form-wrap {
-        flex: 1;
-        max-width: 540px;
-        padding: 36px;
-        border-radius: 12px;
-        outline: 1px solid rgba(123, 29, 46, 0.22);
-        outline-offset: -0.5px;
-        box-shadow: 0 4px 24px rgba(123, 29, 46, 0.06);
-        background: rgba(250, 246, 238, 0.45);
-    }
-
-    &__form {
-        display: flex;
-        flex-direction: column;
-        gap: 22px;
-        align-items: center;
-    }
-
-    &__form-row {
-        display: flex;
-        align-items: flex-start;
-        gap: 24px;
-        flex-wrap: wrap;
-        width: 100%;
-    }
-
-    @media (max-width: 768px) {
-        padding: 64px 24px;
-
-        &__inner {
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        &__info {
-            width: 100%;
-        }
-
-        &__form-wrap {
-            max-width: 100%;
-            width: 100%;
-            padding: 28px 20px;
-        }
-
-        &__form-row {
-            flex-direction: column;
-            gap: 16px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        padding: 48px 16px;
-
-        &__form-wrap {
-            padding: 20px 16px;
-        }
-    }
-}
-
-// ── Form Group ───────────────────────────────────────────────
-.form-group {
-    flex: 1;
-    min-width: 140px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-
-    &--full {
-        width: 100%;
-    }
-
-    &__label {
-        font-size: 13px;
-        font-weight: 600;
-        line-height: 20px;
-        color: $color-primary;
-        letter-spacing: 0.02em;
-    }
-
-    &__input,
-    &__textarea {
-        width: 100%;
-        padding: 16px;
-        background: transparent;
-        border-radius: 8px;
-        outline: 1.5px solid rgba(123, 29, 46, 0.3);
-        outline-offset: -1px;
-        border: none;
-        font-family: $font-sans;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        color: $color-primary;
-        box-shadow: 0 1px 4px rgba(123, 29, 46, 0.05);
-        transition: outline $transition, box-shadow $transition;
-
-        &::placeholder {
-            color: rgba(123, 29, 46, 0.38);
-        }
-
-        &:focus {
-            outline: 2px solid $color-primary;
-            box-shadow: 0 0 0 3px rgba(123, 29, 46, 0.1);
-        }
-    }
-
-    &__textarea {
-        height: 100px;
-        resize: vertical;
-    }
-
-    @media (max-width: 768px) {
-        min-width: 100%;
-    }
-}
-
-// ── NEWSLETTER ───────────────────────────────────────────────
-.newsletter {
-    background: $color-bg-tan;
-    padding: 96px 24px;
-    position: relative;
-    overflow: hidden;
-
-    &__inner {
-        @include centered-inner;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 60px;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-    }
-
-    &__content {
-        width: min(440px, 100%);
-        flex-shrink: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    &__title {
-        font-family: $font-serif;
-        font-size: clamp(22px, 3.5vw, 34px);
-        font-weight: 700;
-        line-height: 1.25;
-        color: $color-primary;
-    }
-
-    &__description {
-        font-size: 15px;
-        font-weight: 400;
-        line-height: 26px;
-        color: rgba(123, 29, 46, 0.72);
-    }
-
-    &__subscribe {
-        width: min(380px, 100%);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 8px 8px 8px 18px;
-        border-radius: 8px;
-        outline: 1.5px solid $color-primary;
-        outline-offset: -1px;
-        box-shadow: 0 1px 4px rgba(123, 29, 46, 0.08);
-    }
-
-    &__input {
-        border: none;
-        background: transparent;
-        font-family: $font-sans;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 20px;
-        color: $color-primary;
-        flex: 1;
-        min-width: 0;
-
-        &::placeholder {
-            color: rgba(123, 29, 46, 0.5);
-        }
-
-        &:focus {
-            outline: none;
-        }
-    }
-
-    &__btn {
-        padding: 10px 11px;
-        background: #7B1D2E;
-        border: none;
-        border-radius: 4px;
-        font-family: $font-sans;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 18px;
-        color: #E3D4BC;
-        cursor: pointer;
-        transition: opacity 0.2s ease;
-        flex-shrink: 0;
-
-        &:hover {
-            opacity: 0.85;
-        }
-    }
-
-    &__gallery {
-        width: min(460px, 100%);
-        height: 460px;
-        display: flex;
-        gap: 24px;
-        overflow: hidden;
-        flex-shrink: 0;
-        position: relative;
-    }
-
-    &__col-wrap {
-        width: 218px;
-        height: 100%;
-        overflow: hidden;
-        flex-shrink: 0;
-        border-radius: 10px;
-    }
-
-    &__col {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        width: 218px;
-        will-change: transform;
-    }
-
-    &__photo {
-        width: 218px;
-        flex-shrink: 0;
-        border-radius: 10px;
-        overflow: hidden;
-        background: $color-bg-light;
-        min-height: 200px;
-
-        img {
-            width: 100%;
-            height: 100%;
-            min-height: 200px;
-            object-fit: cover;
-            display: block;
-        }
-    }
-
-    // Tablet and below: hide gallery
-    @media (max-width: 900px) {
-        &__gallery {
-            display: none;
-        }
-
-        &__inner {
-            justify-content: center;
-        }
-
-        &__content {
-            width: 100%;
-            max-width: 560px;
-            align-items: center;
-            text-align: center;
-        }
-
-        &__subscribe {
-            width: 100%;
-            max-width: 420px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        padding: 56px 16px;
-
-        &__content {
-            align-items: stretch;
-        }
-
-        &__subscribe {
-            max-width: 100%;
-        }
-    }
-}
-
-// ── GLOBAL RESPONSIVE OVERRIDES ──────────────────────────────
-@media (max-width: 768px) {
-    .btn {
-        font-size: 13px;
-        padding: 12px 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .btn {
-        font-size: 13px;
-        padding: 11px 14px;
-    }
-}
-
-// ── SCROLL ANIMATIONS ────────────────────────────────────────
-.scroll-reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.scroll-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-// ── Respect reduced motion ───────────────────────────────────
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    .hero__deco {
-    animation: none !important;
-}
-
-    .scroll-reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-    }
-}
-
-// ── BLOBS ─────────────────────────────────────────────────────
-// @keyframes blobFloat {
-
-//     0%,
-//     100% {
-//         transform: translate(0, 0) scale(1);
-//     }
-
-//     33% {
-//         transform: translate(18px, -22px) scale(1.04);
-//     }
-
-//     66% {
-//         transform: translate(-14px, 12px) scale(0.97);
-//     }
-// }
-
-// @keyframes blobFloatAlt {
-
-//     0%,
-//     100% {
-//         transform: translate(0, 0) scale(1);
-//     }
-
-//     33% {
-//         transform: translate(-20px, 14px) scale(1.05);
-//     }
-
-//     66% {
-//         transform: translate(16px, -18px) scale(0.96);
-//     }
-// }
-
-// @keyframes blobFloatSlow {
-
-//     0%,
-//     100% {
-//         transform: translate(0, 0) scale(1);
-//     }
-
-//     50% {
-//         transform: translate(10px, -30px) scale(1.06);
-//     }
-// }
-
-// // Args: $w, $h, $color, $top, $right, $bottom, $left, $dur, $alt
-// @mixin blob($w, $h, $color, $top, $right, $bottom, $left, $dur: 14s, $alt: false) {
-//     position: absolute;
-//     width: $w;
-//     height: $h;
-//     border-radius: 50%;
-//     background: radial-gradient(circle, $color, transparent 70%);
-//     filter: blur(72px);
-//     opacity: 0.55;
-//     pointer-events: none;
-//     top: $top;
-//     right: $right;
-//     bottom: $bottom;
-//     left: $left;
-//     animation: if($alt, blobFloatAlt, blobFloat) $dur ease-in-out infinite;
-// }
-
-// .blob-field {
-//     position: absolute;
-//     inset: 0;
-//     overflow: hidden;
-//     pointer-events: none;
-//     z-index: 0;
-
-//     // ── Hero blobs ──────────────────────────────────────
-//     .hero & {
-//         &::before {
-//             @include blob(420px, 420px, rgba(100, 15, 28, 0.88), -100px, -80px, auto, auto, 16s, false);
-//         }
-
-//         &::after {
-//             @include blob(300px, 300px, rgba(45, 8, 15, 0.75), auto, auto, -60px, -60px, 12s, true);
-//         }
-
-//         span:nth-child(1) {
-//             @include blob(260px, 260px, rgba(100, 15, 28, 0.70), 40%, auto, auto, 5%, 19s, false);
-//         }
-
-//         span:nth-child(2) {
-//             @include blob(180px, 180px, rgba(45, 8, 15, 0.65), 10%, auto, auto, 40%, 11s, true);
-//         }
-
-//         span:nth-child(3) {
-//             @include blob(340px, 200px, rgba(100, 15, 28, 0.58), auto, 20%, -40px, auto, 22s, false);
-//         }
-
-//         span:nth-child(4) {
-//             @include blob(150px, 150px, rgba(100, 15, 28, 0.70), 20%, 25%, auto, auto, 9s, true);
-//         }
-
-//     }
-
-//     // ── About blobs ──────────────────────────────────────
-//     .about & {
-//         &::before {
-//             @include blob(500px, 500px, rgba(100, 15, 28, 0.68), -120px, auto, auto, -100px, 18s, false);
-//         }
-
-//         &::after {
-//             @include blob(280px, 280px, rgba(45, 8, 15, 0.65), auto, -40px, -40px, auto, 13s, true);
-//         }
-
-//         span:nth-child(1) {
-//             @include blob(220px, 220px, rgba(100, 15, 28, 0.62), 30%, 10%, auto, auto, 15s, false);
-//         }
-
-//         span:nth-child(2) {
-//             @include blob(300px, 180px, rgba(45, 8, 15, 0.55), auto, auto, 10%, 20%, 20s, true);
-//         }
-
-//         span:nth-child(3) {
-//             @include blob(160px, 160px, rgba(100, 15, 28, 0.70), 60%, 30%, auto, auto, 10s, false);
-//         }
-
-//         span:nth-child(4) {
-//             @include blob(400px, 240px, rgba(45, 8, 15, 0.48), -60px, 25%, auto, auto, 24s, true);
-//         }
-
-//     }
-
-//     // ── Services blobs ───────────────────────────────────
-//     .services & {
-//         &::before {
-//             @include blob(360px, 360px, rgba(100, 15, 28, 0.68), -80px, 10%, auto, auto, 20s, false);
-//         }
-
-//         &::after {
-//             @include blob(240px, 240px, rgba(45, 8, 15, 0.62), auto, auto, -60px, 5%, 14s, true);
-//         }
-
-//         span:nth-child(1) {
-//             @include blob(200px, 200px, rgba(100, 15, 28, 0.65), 50%, auto, auto, 50%, 17s, false);
-//         }
-
-//         span:nth-child(2) {
-//             @include blob(300px, 180px, rgba(45, 8, 15, 0.55), 20%, auto, auto, -60px, 21s, true);
-//         }
-
-//         span:nth-child(3) {
-//             @include blob(160px, 280px, rgba(100, 15, 28, 0.60), auto, -40px, 0, auto, 12s, false);
-//         }
-
-//         span:nth-child(4) {
-//             @include blob(140px, 140px, rgba(45, 8, 15, 0.70), 10%, 35%, auto, auto, 8s, true);
-//         }
-
-//     }
-
-//     // ── Artworks blobs ───────────────────────────────────
-//     .artworks & {
-//         &::before {
-//             @include blob(400px, 400px, rgba(100, 15, 28, 0.62), -80px, auto, auto, -60px, 17s, false);
-//         }
-
-//         &::after {
-//             @include blob(260px, 260px, rgba(45, 8, 15, 0.58), auto, -40px, -60px, auto, 13s, true);
-//         }
-
-//         span:nth-child(1) {
-//             @include blob(220px, 320px, rgba(100, 15, 28, 0.58), 30%, 8%, auto, auto, 19s, false);
-//         }
-
-//         span:nth-child(2) {
-//             @include blob(180px, 180px, rgba(45, 8, 15, 0.65), auto, auto, 20%, 30%, 11s, true);
-//         }
-
-//         span:nth-child(3) {
-//             @include blob(300px, 200px, rgba(100, 15, 28, 0.52), -40px, 30%, auto, auto, 23s, false);
-//         }
-
-//         span:nth-child(4) {
-//             @include blob(150px, 150px, rgba(45, 8, 15, 0.68), 55%, auto, auto, 10%, 9s, true);
-//         }
-//     }
-
-//     // ── Newsletter blobs ─────────────────────────────────
-//     .newsletter & {
-//         &::before {
-//             @include blob(440px, 440px, rgba(100, 15, 28, 0.68), auto, auto, -100px, -80px, 15s, false);
-//         }
-
-//         &::after {
-//             @include blob(260px, 260px, rgba(45, 8, 15, 0.62), -40px, 5%, auto, auto, 17s, true);
-//         }
-
-//         span:nth-child(1) {
-//             @include blob(200px, 200px, rgba(100, 15, 28, 0.65), 40%, auto, auto, 40%, 13s, false);
-//         }
-
-//         span:nth-child(2) {
-//             @include blob(320px, 180px, rgba(45, 8, 15, 0.55), 10%, auto, auto, 15%, 20s, true);
-//         }
-
-//         span:nth-child(3) {
-//             @include blob(160px, 260px, rgba(100, 15, 28, 0.60), auto, 20%, 10%, auto, 11s, false);
-//         }
-
-//         span:nth-child(4) {
-//             @include blob(140px, 140px, rgba(45, 8, 15, 0.70), 65%, 40%, auto, auto, 8s, true);
-//         }
-//     }
-// }
-
-// // Reduce motion
-// @media (prefers-reduced-motion: reduce) {
-
-//     .blob-field,
-//     .blob-field::before,
-//     .blob-field::after,
-//     .blob-field span {
-//         animation: none !important;
-//     }
-// }

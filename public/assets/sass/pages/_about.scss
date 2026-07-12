@@ -14,6 +14,16 @@ $color-white: #FAF6EE;
 $color-text-muted: rgba(123, 29, 46, 0.56);
 $color-text-semi: rgba(123, 29, 46, 0.78);
 $color-accent-rose: #9C2438;
+$color-hero-bg: #000000;
+$color-hero-desc: #98001B;
+
+// ── NEW: dark-theme tokens (Skills / Experience / Footer now share hero palette) ──
+$color-dark-card: rgba(250, 246, 238, 0.04);
+$color-dark-border: rgba(250, 246, 238, 0.12);
+$color-text-onDark: $color-white;
+$color-text-onDark-muted: rgba(250, 246, 238, 0.65);
+$color-text-onDark-soft: rgba(250, 246, 238, 0.45);
+$color-accent-chip-bg: rgba(156, 36, 56, 0.20);
 
 $font-sans: 'Inter', sans-serif;
 $font-serif: 'Poppins', sans-serif;
@@ -134,108 +144,87 @@ $transition: 0.2s ease;
     }
 }
 
-// ── HEADER ───────────────────────────────────────────────────
+// ── HEADER (floating pill nav — matches layouts/app.blade.php markup) ──
+// Old .header__topbar / .header__navbar rules removed: the blade markup
+// uses .header__pill / .header__toggle / .bar, which had ZERO rules before,
+// so the header rendered with no background, no shape, and the nav (which
+// carries Bootstrap's .collapse class) stayed display:none on desktop too.
 .header {
     width: 100%;
     position: sticky;
     top: 0;
     z-index: 100;
+    display: flex;
+    justify-content: center;
+    padding: 20px 24px 0;
+    pointer-events: none; // let hero content behind be clickable; pill re-enables below
 
-    &__topbar {
-        background: $color-primary;
-        padding: 12px 24px;
-        display: flex;
-        justify-content: center;
-    }
-
-    &__topbar-inner {
-        @include centered-inner;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0;
-        gap: 16px;
-        flex-wrap: wrap;
-    }
-
-    &__topbar-left {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        flex-wrap: wrap;
-    }
-
-    &__topbar-right {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-    }
-
-    &__contact-item {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    &__icon {
-        width: 18px;
-        height: 18px;
-        flex-shrink: 0;
-    }
-
-    &__contact-text {
-        color: #fff;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 22px;
-    }
-
-    &__social-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: opacity $transition, transform 0.15s ease;
-
-        &:hover {
-            opacity: 0.8;
-            transform: translateY(-2px);
-        }
-    }
-
-    &__navbar {
-        background: $color-bg-cream;
-        padding: 20px 24px;
-        display: flex;
-        justify-content: center;
-        border-bottom: 1px solid rgba(123, 29, 46, 0.1);
-    }
-
-    &__navbar-inner {
-        @include centered-inner;
+    &__pill {
+        pointer-events: auto;
+        width: 100%;
+        max-width: $max-width;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0;
         gap: 24px;
+        background: linear-gradient(180deg, rgba(35, 12, 16, 0.94), rgba(11, 11, 13, 0.94));
+        border: 1px solid rgba(250, 246, 238, 0.08);
+        border-radius: 999px;
+        padding: 12px 12px 12px 24px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(14px);
+        position: relative;
     }
 
     &__logo {
         display: flex;
         align-items: center;
+        flex-shrink: 0;
     }
 
     &__logo-img {
-        height: 48px;
+        height: 38px;
         width: auto;
-        border-radius: 4px;
         object-fit: contain;
     }
 
-    &__nav-right {
-        display: flex;
+    // Mobile hamburger toggle (hidden on desktop)
+    &__toggle {
+        display: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(250, 246, 238, 0.08);
         align-items: center;
-        gap: 24px;
-        flex-wrap: wrap;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+
+        .bar {
+            position: relative;
+            width: 18px;
+            height: 1.5px;
+            background: $color-white;
+
+            &::before,
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                width: 18px;
+                height: 1.5px;
+                background: $color-white;
+            }
+
+            &::before {
+                top: -6px;
+            }
+
+            &::after {
+                top: 6px;
+            }
+        }
     }
 
     &__nav {
@@ -249,11 +238,12 @@ $transition: 0.2s ease;
         font-family: $font-serif;
         font-size: 12px;
         font-weight: 400;
-        color: $color-primary;
+        color: rgba(250, 246, 238, 0.65); // was $color-primary — unreadable on dark pill
         letter-spacing: 0.08em;
         position: relative;
         padding-bottom: 2px;
         text-decoration: none;
+        transition: color 0.2s ease;
 
         &::after {
             content: '';
@@ -262,11 +252,57 @@ $transition: 0.2s ease;
             left: 0;
             width: 0;
             height: 1.5px;
-            background: $color-primary;
+            background: $color-accent-rose; // was $color-primary
             transition: width 0.25s ease;
         }
 
-        &:hover::after {
+        &:hover,
+        &.is-active {
+            color: $color-white;
+        }
+
+        &:hover::after,
+        &.is-active::after {
+            width: 100%;
+        }
+    }
+
+    // Force nav visible on desktop regardless of Bootstrap's .collapse state —
+    // this is the fix for the nav being display:none with no toggle interaction.
+    @media (min-width: 769px) {
+        &__nav.collapse:not(.show) {
+            display: flex !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 16px 16px 0;
+
+        &__pill {
+            padding: 10px 10px 10px 18px;
+        }
+
+        &__toggle {
+            display: flex;
+        }
+
+        &__nav {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            right: 0;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+            background: linear-gradient(180deg, rgba(35, 12, 16, 0.97), rgba(11, 11, 13, 0.97));
+            border: 1px solid rgba(250, 246, 238, 0.08);
+            border-radius: 18px;
+            padding: 14px 20px;
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+        }
+
+        &__nav-link {
+            padding: 8px 0;
             width: 100%;
         }
     }
@@ -274,8 +310,8 @@ $transition: 0.2s ease;
 
 // ── ABOUT HERO ───────────────────────────────────────────────
 .about-hero {
-    background: $color-bg-cream;
-    padding: 80px 24px 72px;
+    background: $color-hero-bg;   // was $color-bg-cream
+    padding: 80px 150px 72px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -284,63 +320,40 @@ $transition: 0.2s ease;
     overflow: hidden;
     position: relative;
 
-    // Subtle decorative circle (matches home page's soft bg accents)
+    // remove the cream decorative circle — blobs na ang bahala
     &::before {
-        content: '';
-        position: absolute;
-        top: -120px;
-        right: -120px;
-        width: 480px;
-        height: 480px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(123, 29, 46, 0.06) 0%, transparent 70%);
-        pointer-events: none;
+        display: none;
     }
 
+    // NEW — was missing entirely; without it the text column has no width
+    // constraint and stretches to fill the flex row, overlapping the deco art.
     &__inner {
         width: min(520px, 100%);
+        flex: 1 1 420px;
         display: flex;
         flex-direction: column;
-        gap: 22px;
+        align-items: flex-start;
+        gap: 20px;
         position: relative;
-        z-index: 1;
+        z-index: 2;
+        text-align: left;
     }
 
     &__label {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: $color-text-semi;
+        color: rgba(250, 246, 238, 0.65);
 
         &::before {
-            content: '';
-            display: block;
-            width: 28px;
-            height: 1.5px;
-            background: $color-primary;
-            opacity: 0.5;
+            background: $color-accent-rose;
+            opacity: 0.7;
         }
     }
 
     &__title {
-        font-family: $font-serif;
-        font-size: clamp(32px, 5vw, 52px);
-        font-weight: 700;
-        line-height: 1.1;
-        color: $color-primary;
-        letter-spacing: -0.01em;
+        color: $color-white;   // was $color-primary
     }
 
     &__summary {
-        font-size: 15px;
-        font-weight: 400;
-        line-height: 27px;
-        color: rgba(123, 29, 46, 0.72);
-        max-width: 460px;
+        color: $color-hero-desc;   // was rgba(123, 29, 46, 0.72)
     }
 
     &__cta {
@@ -358,12 +371,11 @@ $transition: 0.2s ease;
         flex-shrink: 0;
         width: min(340px, 100%);
         height: 420px;
+        z-index: 1;   // ← add this
 
         &::before {
             display: none;
         }
-
-        // remove old border decoration
     }
 
     &__card {
@@ -456,16 +468,16 @@ $transition: 0.2s ease;
 }
 
 &__deco--cards {
-    width: clamp(190px, 21vw, 280px);
-    left: clamp(-60px, -5vw, -30px);
-    top: clamp(-40px, -4vh, -20px);
+    width: clamp(190px, 15vw, 280px);
+    left: clamp(-120px, -6vw, -50px);
+    top: 40px;
     animation-duration: 7s;
     animation-delay: 0s;
 }
 
 &__deco--dice {
     width: clamp(150px, 18vw, 230px);
-    right: clamp(-30px, -2vw, -10px);
+    right: -100px; // was clamp(-30px, -2vw, -10px) — no longer bleeds off the right edge
     top: clamp(24px, 6vh, 60px);
     animation-duration: 8s;
     animation-delay: -2s;
@@ -473,8 +485,8 @@ $transition: 0.2s ease;
 
 &__deco--rook {
     width: clamp(110px, 14vw, 180px);
-    right: clamp(-20px, -1vw, -5px);
-    bottom: clamp(-60px, -5vw, -30px);
+    right: clamp(16px, 2vw, 40px); // was clamp(-20px, -1vw, -5px) — no longer bleeds off the right edge
+    bottom: clamp(16px, 2vw, 40px); // was clamp(-60px, -5vw, -30px) — no longer clipped by overflow:hidden
     animation-duration: 9s;
     animation-delay: -4s;
 }
@@ -491,11 +503,61 @@ $transition: 0.2s ease;
 @media (max-width: 600px) {
     &__deco { display: none; }
 }
+
+.btn--outline-dark,
+    .btn--outline-light {
+        background: transparent;
+        color: $color-white;
+        outline: 1px solid $color-white;
+        outline-offset: -1px;
+    }
+}
+
+// ── Blobs (About hero — same PNG glows as home) ──────────────
+.about-hero .blob-field {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    // right-side glow
+    &::before {
+        top: 150px;
+        right: -220px;
+        background-image: url('/images/Ellipse_2318.png');
+    }
+
+    // left-side glow
+    &::after {
+        top: 0;
+        left: -900px;
+        background-image: url('/images/Ellipse_2319.png');
+    }
+
+    @media (max-width: 600px) {
+        &::before,
+        &::after {
+            width: 400px;
+            height: 400px;
+        }
+    }
 }
 
 // ── SKILLS ───────────────────────────────────────────────────
 .skills {
-    background: $color-bg-tan;
+    background: $color-hero-bg; // was $color-bg-tan — now matches hero
     padding: 96px 24px;
     display: flex;
     justify-content: center;
@@ -520,7 +582,7 @@ $transition: 0.2s ease;
         font-family: $font-serif;
         font-size: clamp(26px, 4vw, 38px);
         font-weight: 700;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         line-height: 1.2;
     }
 
@@ -528,7 +590,7 @@ $transition: 0.2s ease;
         font-size: 15px;
         font-weight: 400;
         line-height: 26px;
-        color: rgba(123, 29, 46, 0.70);
+        color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.70)
         max-width: 480px;
     }
 
@@ -542,31 +604,32 @@ $transition: 0.2s ease;
 
 // Skill Card
 .skill-card {
-    background: $color-bg-cream;
+    background: $color-dark-card; // was $color-bg-cream
     border-radius: 10px;
     padding: 32px 28px;
-    outline: 1px solid rgba(123, 29, 46, 0.13);
+    outline: 1px solid $color-dark-border; // was rgba(123, 29, 46, 0.13)
     outline-offset: -1px;
-    box-shadow: 0 2px 8px rgba(123, 29, 46, 0.06);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25); // was rgba(123, 29, 46, 0.06)
     display: flex;
     flex-direction: column;
     gap: 18px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
 
     &:hover {
         transform: translateY(-4px);
-        box-shadow: 0 10px 28px rgba(123, 29, 46, 0.13);
+        background: rgba(250, 246, 238, 0.06);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45); // was rgba(123, 29, 46, 0.13)
     }
 
     &__icon {
         width: 44px;
         height: 44px;
         border-radius: 10px;
-        background: rgba(123, 29, 46, 0.08);
+        background: $color-accent-chip-bg; // was rgba(123, 29, 46, 0.08)
         display: flex;
         align-items: center;
         justify-content: center;
-        color: $color-primary;
+        color: $color-accent-rose; // was $color-primary
         flex-shrink: 0;
     }
 
@@ -574,8 +637,16 @@ $transition: 0.2s ease;
         font-family: $font-serif;
         font-size: 16px;
         font-weight: 700;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         line-height: 1.3;
+    }
+
+    &__desc {
+        // NEW — blade uses .skill-card__desc; wasn't styled before, would've been invisible on dark bg
+        font-size: 13.5px;
+        font-weight: 400;
+        line-height: 22px;
+        color: $color-text-onDark-muted;
     }
 
     &__list {
@@ -590,14 +661,14 @@ $transition: 0.2s ease;
             font-size: 13.5px;
             font-weight: 400;
             line-height: 22px;
-            color: rgba(123, 29, 46, 0.75);
+            color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.75)
         }
     }
 
     &__tag {
         display: inline-block;
-        background: rgba(123, 29, 46, 0.10);
-        color: $color-primary;
+        background: $color-accent-chip-bg; // was rgba(123, 29, 46, 0.10)
+        color: $color-accent-rose; // was $color-primary
         font-size: 11px;
         font-weight: 700;
         letter-spacing: 0.06em;
@@ -611,7 +682,7 @@ $transition: 0.2s ease;
 
 // ── EXPERIENCE ───────────────────────────────────────────────
 .experience {
-    background: $color-bg-cream;
+    background: $color-hero-bg; // was $color-bg-cream
     padding: 96px 24px;
     display: flex;
     justify-content: center;
@@ -633,7 +704,7 @@ $transition: 0.2s ease;
         font-family: $font-serif;
         font-size: clamp(26px, 4vw, 38px);
         font-weight: 700;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         line-height: 1.2;
     }
 
@@ -641,7 +712,7 @@ $transition: 0.2s ease;
         font-size: 15px;
         font-weight: 400;
         line-height: 26px;
-        color: rgba(123, 29, 46, 0.68);
+        color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.68)
         max-width: 420px;
     }
 
@@ -659,7 +730,7 @@ $transition: 0.2s ease;
             left: 125px; // aligns with the dot
             bottom: 10px;
             width: 1.5px;
-            background: rgba(123, 29, 46, 0.15);
+            background: $color-dark-border; // was rgba(123, 29, 46, 0.15)
         }
     }
 }
@@ -672,7 +743,7 @@ $transition: 0.2s ease;
     position: relative;
 
     &+& {
-        border-top: 1px solid rgba(123, 29, 46, 0.10);
+        border-top: 1px solid $color-dark-border; // was rgba(123, 29, 46, 0.10)
     }
 
     &__meta {
@@ -690,9 +761,9 @@ $transition: 0.2s ease;
         width: 12px;
         height: 12px;
         border-radius: 50%;
-        background: $color-primary;
-        border: 2.5px solid $color-bg-cream;
-        box-shadow: 0 0 0 2px rgba(123, 29, 46, 0.3);
+        background: $color-accent-rose; // was $color-primary
+        border: 2.5px solid $color-hero-bg; // was $color-bg-cream
+        box-shadow: 0 0 0 2px rgba(156, 36, 56, 0.35); // was rgba(123, 29, 46, 0.3)
         position: absolute;
         right: -32px; // was -26px
         top: 6px;
@@ -702,7 +773,7 @@ $transition: 0.2s ease;
     &__date {
         font-size: 12px;
         font-weight: 600;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         letter-spacing: 0.02em;
         text-align: right;
         line-height: 18px;
@@ -711,7 +782,7 @@ $transition: 0.2s ease;
     &__location {
         font-size: 11px;
         font-weight: 400;
-        color: $color-text-muted;
+        color: $color-text-onDark-soft; // was $color-text-muted
         text-align: right;
         line-height: 16px;
     }
@@ -733,7 +804,7 @@ $transition: 0.2s ease;
     &__company {
         font-size: 13px;
         font-weight: 700;
-        color: $color-text-semi;
+        color: $color-text-onDark-muted; // was $color-text-semi
         letter-spacing: 0.03em;
     }
 
@@ -743,8 +814,8 @@ $transition: 0.2s ease;
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: $color-primary;
-        background: rgba(123, 29, 46, 0.10);
+        color: $color-accent-rose; // was $color-primary
+        background: $color-accent-chip-bg; // was rgba(123, 29, 46, 0.10)
         padding: 2px 9px;
         border-radius: 20px;
     }
@@ -753,7 +824,7 @@ $transition: 0.2s ease;
         font-family: $font-serif;
         font-size: 20px;
         font-weight: 700;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         line-height: 1.3;
     }
 
@@ -768,10 +839,10 @@ $transition: 0.2s ease;
             font-size: 14px;
             font-weight: 400;
             line-height: 24px;
-            color: rgba(123, 29, 46, 0.74);
+            color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.74)
 
             &::marker {
-                color: rgba(123, 29, 46, 0.40);
+                color: $color-text-onDark-soft; // was rgba(123, 29, 46, 0.40)
             }
         }
     }
@@ -840,7 +911,7 @@ $transition: 0.2s ease;
 
 // ── FOOTER ───────────────────────────────────────────────────
 .footer {
-    background: $color-bg-cream;
+    background: $color-hero-bg; // was $color-bg-cream
     padding: 72px 24px 0;
 
     &__inner {
@@ -860,7 +931,7 @@ $transition: 0.2s ease;
         font-size: clamp(20px, 3vw, 26px);
         font-weight: 600;
         line-height: 1.3;
-        color: $color-primary;
+        color: $color-text-onDark; // was $color-primary
         text-align: center;
         max-width: 360px;
     }
@@ -869,7 +940,7 @@ $transition: 0.2s ease;
         font-size: 15px;
         font-weight: 400;
         line-height: 24px;
-        color: rgba(123, 29, 46, 0.70);
+        color: $color-text-onDark-muted; // was rgba(123, 29, 46, 0.70)
         text-align: center;
         max-width: 300px;
     }
@@ -896,7 +967,7 @@ $transition: 0.2s ease;
 
     &__bottom {
         padding: 24px 0;
-        border-top: 1px solid rgba(123, 29, 46, 0.2);
+        border-top: 1px solid $color-dark-border; // was rgba(123, 29, 46, 0.2)
         display: flex;
         justify-content: center;
         align-items: center;
@@ -911,16 +982,16 @@ $transition: 0.2s ease;
         line-height: 22px;
 
         &--muted {
-            color: $color-text-muted;
+            color: $color-text-onDark-soft; // was $color-text-muted
         }
 
         &--divider {
-            color: rgba(123, 29, 46, 0.3);
+            color: $color-dark-border; // was rgba(123, 29, 46, 0.3)
             margin: 0 4px;
         }
 
         &--link {
-            color: $color-primary;
+            color: $color-text-onDark; // was $color-primary
             text-decoration: underline;
             text-underline-offset: 2px;
 
@@ -944,32 +1015,7 @@ $transition: 0.2s ease;
 
 @media (max-width: 768px) {
 
-    // Header
-    .header {
-        &__topbar-left {
-            gap: 12px;
-        }
-
-        &__topbar-right {
-            gap: 8px;
-        }
-
-        &__contact-text {
-            font-size: 12px;
-        }
-
-        &__nav {
-            gap: 18px;
-        }
-
-        &__nav-right {
-            gap: 14px;
-        }
-
-        &__logo-img {
-            height: 40px;
-        }
-    }
+    // Header — handled inside the .header block's own @media above now.
 
     // Hero
     .about-hero {
@@ -1034,16 +1080,7 @@ $transition: 0.2s ease;
 
 @media (max-width: 480px) {
 
-    // Header
-    .header {
-        &__topbar-left {
-            display: none;
-        }
-
-        &__nav {
-            display: none;
-        }
-    }
+    // Header — handled inside the .header block's own @media above now.
 
     // Hero
     .about-hero {

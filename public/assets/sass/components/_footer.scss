@@ -8,6 +8,7 @@ $color-white:        #FAF6EE;
 $color-text-muted:   rgba(123, 29, 46, 0.56);
 $color-text-semi:    rgba(123, 29, 46, 0.78);
 $color-accent-rose:  #9C2438;
+$color-hero-bg: #000000;
 
 $font-sans:  'Inter', sans-serif;
 $font-serif: 'Poppins', sans-serif;
@@ -38,7 +39,7 @@ html {
 
 body {
   font-family: $font-sans;
-  background-color: $color-bg-tan;
+  background-color: $color-hero-bg;
   color: $color-primary;
   min-width: 320px;
   overflow-x: hidden;
@@ -206,6 +207,111 @@ img {
 
       &:hover {
         opacity: 0.7;
+      }
+    }
+  }
+}
+
+// ============================================================
+// ── SITE FOOTER — dark "Like This Hand?" CTA band ────────────
+// Global footer appended in layouts/app.blade.php.
+// Mirrors the tuc-cta band from the project-detail mockup:
+// black bg, #71071A ambient glows, red divider line at bottom.
+// ============================================================
+
+// Dark tokens (kept in sync with _tuc.scss)
+$footer-bg:        #000000;
+$footer-glow:      #71071A;
+$footer-line:      #D22833;
+$footer-text:      #FFFFFF;
+
+.site-footer {
+  position: relative;
+  overflow: hidden;
+  background: $footer-bg;
+  padding: clamp(56px, 9vh, 96px) 24px 0;
+
+  // Ambient glow blobs (subtle, like the mockup's maroon gradient edges)
+  &__glow {
+    position: absolute;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: $footer-glow;
+    filter: blur(208px);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+
+  &__glow--left {
+    width: clamp(320px, 33vw, 480px);
+    left: -260px;
+    bottom: -220px;
+  }
+
+  &__glow--right {
+    width: clamp(320px, 33vw, 480px);
+    right: -260px;
+    top: -180px;
+  }
+
+  &__inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: $max-width;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    margin-bottom: clamp(48px, 8vh, 96px);
+    border-bottom: 1px solid $footer-line;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  &__logo {
+    width: 53px;
+    height: 53px;
+    object-fit: contain;
+  }
+
+  &__text {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: $footer-text;
+    max-width: 304px;
+    margin: 0;
+  }
+
+  &__btns {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    &__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__btns {
+      width: 100%;
+
+      .btn {
+        flex: 1;
+        justify-content: center;
       }
     }
   }

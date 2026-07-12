@@ -12,203 +12,158 @@
 
 @section('content')
 
-    {{-- ===================== PROJECT HERO ===================== --}}
-    @php $isUx = strtolower($project->category ?? '') === 'ux'; @endphp
+    {{-- ===================== HERO ===================== --}}
+    <section class="tuc-hero">
+        {{-- Ambient glows --}}
+        <div class="tuc-glow tuc-glow--left" aria-hidden="true"></div>
+        <div class="tuc-glow tuc-glow--right" aria-hidden="true"></div>
 
-    <section class="tuc-hero {{ $isUx ? 'tuc-hero--no-mockup' : '' }}">
+        {{-- Floating card scatters (same assets as the Artworks hero) --}}
+        <img class="tuc-hero__deco tuc-hero__deco--cards-left" src="{{ asset('images/Untitled_design__10_.png') }}"
+            alt="" aria-hidden="true" />
+        <img class="tuc-hero__deco tuc-hero__deco--cards-right" src="{{ asset('images/Untitled_design__9_.png') }}"
+            alt="" aria-hidden="true" />
+
         <div class="tuc-hero__inner">
-
-            <div class="tuc-hero__left">
-                <div class="tuc-hero__breadcrumb">
-                    <a href="{{ route('artworks') }}" class="tuc-hero__breadcrumb-link">Artworks</a>
-                    <span class="tuc-hero__breadcrumb-sep">›</span>
-                    <span class="tuc-hero__breadcrumb-current">{{ $project->title }}</span>
-                </div>
-                <div class="tuc-hero__meta">
-                    @if($project->category)
-                        <span class="tuc-hero__tag">{{ $project->category }}</span>
-                    @endif
-                </div>
-                <h1 class="tuc-hero__title">{{ $project->title }}</h1>
-                @if($project->description)
-                    <p class="tuc-hero__subtitle">{{ $project->description }}</p>
-                @endif
-                <div class="tuc-hero__cta-row">
-                    @if($project->link && $project->link !== '#')
-                        <a href="{{ $project->link }}" target="_blank" rel="noopener" class="btn btn--primary btn--arrow">
-                            Visit Live Site <span class="btn__arrow">›</span>
-                        </a>
-                    @endif
-                    <a href="{{ route('artworks') }}" class="btn btn--outline-dark">← Back to Portfolio</a>
-                </div>
+            <div class="tuc-hero__breadcrumb">
+                <a href="{{ route('artworks') }}" class="tuc-hero__breadcrumb-link">Artworks</a>
+                <span class="tuc-hero__breadcrumb-sep">›</span>
+                <span class="tuc-hero__breadcrumb-current">{{ $project->title }}</span>
             </div>
 
-            @if(!$isUx)
-                <div class="tuc-hero__mockup">
-                    @if($project->hero_image)
-                        @php
-                            $heroUrl = str_starts_with($project->hero_image, 'artworks/')
-                                ? asset('storage/' . $project->hero_image)
-                                : asset('images/' . $project->hero_image);
-                        @endphp
-                        <img src="{{ $heroUrl }}" alt="{{ $project->title }}" />
-                    @elseif($imgUrl)
-                        <img src="{{ $imgUrl }}" alt="{{ $project->title }}" />
-                    @endif
-
-                    @if(!empty($project->stats))
-                        @php $positions = ['tuc-hero__badge--top-right', 'tuc-hero__badge--bottom-left', 'tuc-hero__badge--bottom-right']; @endphp
-                        @foreach(array_slice((array) $project->stats, 0, 3) as $i => $stat)
-                            <div class="tuc-hero__badge {{ $positions[$i] ?? '' }}">
-                                <span class="tuc-hero__badge-value">{{ $stat['value'] }}</span>
-                                <span class="tuc-hero__badge-label">{{ $stat['label'] }}</span>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
+            @if ($project->category)
+                <p class="tuc-hero__eyebrow">{{ $project->category }}</p>
             @endif
 
-        </div>
-    </section>
+            <h1 class="tuc-hero__title">{{ $project->title }}</h1>
 
-    {{-- ===================== WHY / OVERVIEW ===================== --}}
-    <section class="tuc-why">
-        <div class="tuc-why__inner">
-            <div class="tuc-why__content">
-                <span class="tuc-section-label">Project Overview</span>
-                <h2 class="tuc-why__title">What this project delivered</h2>
-                <p class="tuc-why__body">
-                    {{ $project->meta ?? $project->description ?? 'A polished project built for client storytelling, user conversion, and digital presentation.' }}
-                </p>
+            @if ($project->description)
+                <p class="tuc-hero__subtitle">{{ $project->description }}</p>
+            @endif
+
+            <div class="tuc-hero__cta-row">
+                @if ($project->link && $project->link !== '#')
+                    <a href="{{ $project->link }}" target="_blank" rel="noopener" class="btn btn--table btn--arrow">
+                        Enter the Table <span class="btn__arrow">›</span>
+                    </a>
+                @else
+                    <a href="{{ route('artworks') }}" class="btn btn--table btn--arrow">
+                        Back to Portfolio <span class="btn__arrow">›</span>
+                    </a>
+                @endif
             </div>
-            <div class="tuc-why__quote-wrap">
-    <blockquote class="tuc-why__quote">
-        @php
-            $decoImages = ['deco-cards', 'deco-dice', 'deco-rook', 'deco-domino'];
-            $decoIndex  = ($project->sort_order ?? $project->id) % 4;
-            $decoSrc    = asset('images/' . $decoImages[$decoIndex] . '.png');
-        @endphp
-
-        <img src="{{ $decoSrc }}" alt="" class="tuc-why__deco-img" aria-hidden="true" />
-    </blockquote>
-</div>
         </div>
     </section>
 
-    {{-- ===================== FULL-WIDTH PREVIEW ===================== --}}
+    {{-- ===================== READING THE BOARD ===================== --}}
+    <section class="tuc-board">
+        <div class="tuc-board__inner">
+            <div class="tuc-board__content">
+                <h2 class="tuc-board__title">Reading the Board</h2>
+                <p class="tuc-board__body">{{ $project->meta ?? ($project->description ?? 'A polished project built for client storytelling, user conversion, and digital presentation.') }}</p>
+            </div>
+        </div>
+    </section>
+
+    {{-- ===================== THE GAME PLAN ===================== --}}
+    <section class="tuc-plan">
+        <div class="tuc-plan__header">
+            <h2 class="tuc-plan__title">The Game Plan</h2>
+            <p class="tuc-plan__sub">No move is made without a plan. Here's the sequence that shaped this project, from
+                first read to final play.</p>
+        </div>
+
+        <div class="tuc-plan__cards">
+            {{-- The Deal (Research) — club --}}
+            <article class="tuc-plan-card">
+                <div class="tuc-plan-card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="#98001B" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="7" r="4.4" />
+                        <circle cx="7" cy="13.4" r="4.4" />
+                        <circle cx="17" cy="13.4" r="4.4" />
+                        <path d="M11 13h2l1.4 8h-4.8L11 13z" />
+                    </svg>
+                </div>
+                <h3 class="tuc-plan-card__title">The Deal (Research)</h3>
+                <p class="tuc-plan-card__body">Understanding the user, the market, and the competition. Research methods
+                    used: user interviews, competitor analysis, and analytics review.</p>
+            </article>
+
+            {{-- The Draw (Wireframes & IA) — heart --}}
+            <article class="tuc-plan-card">
+                <div class="tuc-plan-card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="#98001B" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                    </svg>
+                </div>
+                <h3 class="tuc-plan-card__title">The Draw (Wireframes &amp; IA)</h3>
+                <p class="tuc-plan-card__body">Structuring the site — sitemaps, wireframes, and information architecture
+                    built around user flow and business goals.</p>
+            </article>
+
+            {{-- The Play (UI Design) — diamond --}}
+            <article class="tuc-plan-card">
+                <div class="tuc-plan-card__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="#98001B" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 1.5L20 12l-8 10.5L4 12 12 1.5z" />
+                    </svg>
+                </div>
+                <h3 class="tuc-plan-card__title">The Play (UI Design)</h3>
+                <p class="tuc-plan-card__body">Turning structure into visual design — color, typography, layout, and
+                    interaction design applied with intention.</p>
+            </article>
+        </div>
+    </section>
+
+    {{-- ===================== THE WINNING HAND ===================== --}}
     @php
         $previewUrl = null;
         if ($project->preview_image) {
             $previewUrl = str_starts_with($project->preview_image, 'artworks/')
                 ? asset('storage/' . $project->preview_image)
                 : asset('images/' . $project->preview_image);
+        } elseif ($project->hero_image) {
+            $previewUrl = str_starts_with($project->hero_image, 'artworks/')
+                ? asset('storage/' . $project->hero_image)
+                : asset('images/' . $project->hero_image);
         } elseif ($imgUrl) {
             $previewUrl = $imgUrl;
         }
+        $gallery = collect((array) ($project->gallery ?? []))->filter(fn($g) => !empty($g['file']));
     @endphp
-    @if($previewUrl && !$isUx)
-        <section class="tuc-preview">
-            <img src="{{ $previewUrl }}" alt="{{ $project->title }} preview" />
-        </section>
-    @endif
 
-    {{-- ===================== DESIGN PROCESS ===================== --}}
-    {{-- <section class="tuc-process">
-        <div class="tuc-process__inner">
-            <div class="tuc-process__left">
-                <span class="tuc-section-label">Behind the Build</span>
-                <h2 class="tuc-process__title">Design Process &amp; Approach</h2>
-                <p class="tuc-process__body">{{ $project->description }}</p>
-                @if(!empty($project->tools))
-                <div class="tuc-process__tools">
-                    <span class="tuc-process__tool-label">Tools Used</span>
-                    <div class="tuc-process__tool-tags">
-                        @foreach((array) $project->tools as $tool)
-                        <span class="tuc-process__tag">{{ $tool }}</span>
-                        @endforeach
-                    </div>
-                </div>
-                @endif
-            </div>
-            <div class="tuc-process__right">
-                <div class="tuc-process__steps">
-                    <div class="tuc-process__step">
-                        <div class="tuc-process__step-num">01</div>
-                        <div class="tuc-process__step-body">
-                            <h4>Discovery &amp; Research</h4>
-                            <p>User interviews, competitor analysis, and accessibility audit of existing platforms.</p>
-                        </div>
-                    </div>
-                    <div class="tuc-process__step">
-                        <div class="tuc-process__step-num">02</div>
-                        <div class="tuc-process__step-body">
-                            <h4>Wireframing &amp; IA</h4>
-                            <p>Information architecture mapping, low-fidelity wireframes, and user flow validation.</p>
-                        </div>
-                    </div>
-                    <div class="tuc-process__step">
-                        <div class="tuc-process__step-num">03</div>
-                        <div class="tuc-process__step-body">
-                            <h4>Visual Design</h4>
-                            <p>Brand system creation — color, typography, component library — all in Figma.</p>
-                        </div>
-                    </div>
-                    <div class="tuc-process__step">
-                        <div class="tuc-process__step-num">04</div>
-                        <div class="tuc-process__step-body">
-                            <h4>Build &amp; Launch</h4>
-                            <p>Pixel-perfect build with responsive breakpoints, animations, and performance optimization.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <section class="tuc-hand">
+        {{-- Ambient glows --}}
+        <div class="tuc-glow tuc-glow--left" aria-hidden="true"></div>
+        <div class="tuc-glow tuc-glow--right-top" aria-hidden="true"></div>
+        <div class="tuc-glow tuc-glow--right-mid" aria-hidden="true"></div>
+
+        <div class="tuc-hand__header">
+            <h2 class="tuc-hand__title">The Winning Hand</h2>
+            <p class="tuc-hand__sub">A look at the final design — every screen, every detail, placed with purpose.</p>
         </div>
-    </section> --}}
 
-    {{-- ===================== GALLERY ===================== --}}
-    @if(!empty($project->gallery) && count((array) $project->gallery))
-        <section class="tuc-gallery">
-            <div class="tuc-gallery__inner">
-                <div class="tuc-gallery__header">
-                    <span class="tuc-section-label">More Screens</span>
-                    <h2 class="tuc-gallery__title">Project Screenshots</h2>
-                </div>
-                <div class="tuc-gallery__grid">
-                    @foreach((array) $project->gallery as $item)
-                        <div class="tuc-gallery__item">
-                            <img src="{{ str_starts_with($item['file'], 'artworks/') ? asset('storage/' . $item['file']) : asset('images/' . $item['file']) }}"
-                                alt="{{ $item['label'] ?? '' }}" />
-                            <div class="tuc-gallery__item-overlay">
-                                <span>{{ $item['label'] ?? '' }}</span>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+        @if ($gallery->isNotEmpty())
+            <div class="tuc-hand__grid">
+                @foreach ($gallery as $item)
+                    <figure class="tuc-hand__item">
+                        <img src="{{ str_starts_with($item['file'], 'artworks/') ? asset('storage/' . $item['file']) : asset('images/' . $item['file']) }}"
+                            alt="{{ $item['label'] ?? $project->title }}" loading="lazy" />
+                        @if (!empty($item['label']))
+                            <figcaption class="tuc-hand__item-label">{{ $item['label'] }}</figcaption>
+                        @endif
+                    </figure>
+                @endforeach
             </div>
-        </section>
-    @endif
+        @elseif ($previewUrl)
+            <div class="tuc-hand__single">
+                <img src="{{ $previewUrl }}" alt="{{ $project->title }} preview" loading="lazy" />
+            </div>
+        @endif
 
-    {{-- ===================== NEXT PROJECT CTA ===================== --}}
-    <section class="tuc-next">
-        <div class="tuc-next__inner">
-            @if(isset($next) && $next)
-                <span class="tuc-section-label tuc-section-label--light">Next Project</span>
-                <h2 class="tuc-next__title">{{ $next->title }}</h2>
-                <p class="tuc-next__desc">{{ $next->description }}</p>
-                <a href="{{ route('project.detail', $next->slug) }}" class="btn btn--primary btn--arrow">
-                    View Project <span class="btn__arrow">›</span>
-                </a>
-            @else
-                <span class="tuc-section-label tuc-section-label--light">Next Project</span>
-                <h2 class="tuc-next__title">Explore More Work</h2>
-                <p class="tuc-next__desc">Each project tells a different story. Browse the full portfolio to see what else has
-                    been crafted.</p>
-                <a href="{{ route('artworks') }}" class="btn btn--primary btn--arrow">
-                    View All Projects <span class="btn__arrow">›</span>
-                </a>
-            @endif
-        </div>
+        {{-- Bottom CTA band now lives in layouts/app.blade.php as the global
+             .site-footer — removed here so it doesn't render twice. --}}
     </section>
 
 @endsection

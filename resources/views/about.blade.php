@@ -4,7 +4,7 @@
 
 @section('content')
     <section class="about-hero">
-        {{-- <div class="blob-field"><span></span><span></span><span></span><span></span></div> --}}
+        <div class="blob-field"><span></span><span></span><span></span><span></span></div>
         <img class="about-hero__deco about-hero__deco--cards" src="{{ asset('images/deco-cards.png') }}" alt=""
             aria-hidden="true" />
         <img class="about-hero__deco about-hero__deco--dice" src="{{ asset('images/deco-dice.png') }}" alt=""
@@ -15,17 +15,17 @@
             aria-hidden="true" />
         <div class="about-hero__inner">
             <div class="about-hero__label">About Me</div>
-            <h1 class="about-hero__title">{{ $siteSettings['about_hero_title'] ?? 'UI/UX Designer & SEO Specialist' }}</h1>
+            <h1 class="about-hero__title">{{ $siteSettings['about_hero_title'] ?? 'The Player Behind the Strategy' }}</h1>
             <p class="about-hero__summary">
-                {{ $siteSettings['about_hero_description'] ?? 'A designer who bridges aesthetics and discoverability — combining user-centered design with data-driven SEO strategies.' }}
+                {{ $siteSettings['about_hero_description'] ?? 'I\'m Keana Riela Dela Peña — a Computer Engineering graduate turned UI/UX Designer and SEO Specialist. I don\'t believe in guesswork. Every design choice and every ranking strategy is a calculated move, backed by research and sharpened through practice.' }}
             </p>
             <div class="about-hero__cta">
                 <a href="{{ route('contact') }}" class="btn btn--primary btn--arrow">Get in touch<span
                         class="btn__arrow">›</span></a>
                 <a href="{{ asset('assets/docs/Keana_Resume_SEO_Highlighted.pdf') }}" download
                     class="btn btn--outline-dark">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                         <polyline points="7 10 12 15 17 10" />
                         <line x1="12" y1="15" x2="12" y2="3" />
@@ -58,13 +58,13 @@
                 <p class="skills__desc">A cross-disciplinary toolkit spanning design, development, analytics, and SEO.</p>
             </div>
             <div class="skills__grid">
-                @foreach($skills as $skill)
+                @foreach ($skills as $skill)
                     <div class="skill-card">
                         <div class="skill-card__icon">
-                            @if($skill->icon)
-                                @if(str_starts_with($skill->icon, 'si:'))
-                                    <img src="https://cdn.simpleicons.org/{{ substr($skill->icon, 3) }}" width="28" height="28"
-                                        alt="{{ $skill->name }}"
+                            @if ($skill->icon)
+                                @if (str_starts_with($skill->icon, 'si:'))
+                                    <img src="https://cdn.simpleicons.org/{{ substr($skill->icon, 3) }}" width="28"
+                                        height="28" alt="{{ $skill->name }}"
                                         style="object-fit:contain; filter: sepia(1) saturate(2) hue-rotate(300deg) brightness(0.6);" />
                                 @else
                                     <i class="{{ $skill->icon }} colored" style="font-size:28px;"></i>
@@ -72,8 +72,8 @@
                             @else
                                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
                                     <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8" />
-                                    <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" stroke="currentColor"
-                                        stroke-width="1.8" stroke-linecap="round" />
+                                    <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
                                 </svg>
                             @endif
                         </div>
@@ -107,9 +107,9 @@
                                 <span class="exp-item__badge">{{ $exp->type }}</span>
                             </div>
                             <h3 class="exp-item__role">{{ $exp->role }}</h3>
-                            @if($exp->bullets)
+                            @if ($exp->bullets)
                                 <ul class="exp-item__bullets">
-                                    @foreach(is_array($exp->bullets) ? $exp->bullets : json_decode($exp->bullets, true) as $bullet)
+                                    @foreach (is_array($exp->bullets) ? $exp->bullets : json_decode($exp->bullets, true) as $bullet)
                                         <li>{{ $bullet }}</li>
                                     @endforeach
                                 </ul>
@@ -132,8 +132,10 @@
                             <h3 class="exp-item__role">UI/UX Designer &amp; SEO Specialist Intern</h3>
                             <ul class="exp-item__bullets">
                                 <li>Designed wireframes, mockups, and high-fidelity prototypes using Figma</li>
-                                <li>Conducted user research and usability testing to improve UX and interface consistency</li>
-                                <li>Performed on-page and technical SEO audits — optimizing meta tags, heading hierarchies, and
+                                <li>Conducted user research and usability testing to improve UX and interface consistency
+                                </li>
+                                <li>Performed on-page and technical SEO audits — optimizing meta tags, heading hierarchies,
+                                    and
                                     content structure</li>
                                 <li>Implemented keyword research and SEO best practices across site content</li>
                                 <li>Collaborated with the dev team to ensure accurate design handoffs with SEO standards
@@ -168,16 +170,15 @@
         </div>
     </section>
 
-    @include('partials.contact-newsletter')
 
 @endsection
 
 @push('scripts')
     <script>
-        (function () {
+        (function() {
             const el = document.getElementById('expCounter');
             const target = parseInt(el.dataset.target, 10);
-            const suffix = '{{ str_contains($siteSettings["experience_years"] ?? "2+", "+") ? "+" : "" }}';
+            const suffix = '{{ str_contains($siteSettings['experience_years'] ?? '2+', '+') ? '+' : '' }}';
             const duration = 2000; // ms — longer = smoother feel
             const start = performance.now();
 

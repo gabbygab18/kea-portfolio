@@ -1,779 +1,394 @@
 // ─────────────────────────────────────────────
-// _seo.scss  — SEO page styles (fully responsive)
+// _seo.scss — SEO page (dark theme, matches mockup)
+// Colours mirrored from _home.scss
 // ─────────────────────────────────────────────
 
-// ── Variables (mirrored from _home.scss) ─────
-$color-primary: #531A24;
-$color-primary-dark: #521320;
-$color-bg-cream: #F2E8D9;
-$color-bg-tan: #E3D4BC;
-$color-bg-light: #FAF6EE;
-$color-white: #FAF6EE;
-$color-text-muted: rgba(123, 29, 46, 0.56);
-$color-text-semi: rgba(123, 29, 46, 0.78);
-$color-accent-rose: #9C2438;
+// ── Shared tokens (from _home.scss) ───────────
+$color-hero-bg: #000000;
+$color-white:   #FAF6EE;
 
-$font-sans: 'Inter', sans-serif;
+$font-sans:  'Inter', sans-serif;
 $font-serif: 'Poppins', sans-serif;
 
-$max-width: 1106px;
 $transition: 0.2s ease;
 
-// ── Global section containment ────────────────
-// Prevents any SEO section from causing horizontal scroll
+// ── SEO dark-theme reds (from mockup) ─────────
+$seo-red-deep:   #71071A;              // button + glow blobs
+$seo-red-dark:   #620302;              // hero paragraph (matches mockup exactly)
+$seo-red-accent: #98001B;              // section sub-heading (same as _home hero desc)
+$seo-card-bg:    rgba(98, 3, 3, 0.35); // card fill
+$seo-card-line:  #5B0606;              // card outline
+$seo-tag-bg:     #630404;              // "SEO Analytics" pill
+$seo-glow:       rgba(113, 7, 26, 0.71);
+
+$seo-max: 1250px;
+
+// ── Section containment ───────────────────────
 .seo-hero,
-.seo-tools,
-.seo-projects,
-.seo-skills,
-.seo-cta {
+.seo-deck,
+.seo-skills {
     width: 100%;
     box-sizing: border-box;
-    overflow-x: hidden;
-}
-
-// ── Shared label ─────────────────────────────
-.seo-section-label {
-    display: inline-block;
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: $color-primary;
-    margin-bottom: .75rem;
+    // background: $color-hero-bg;
+    overflow: hidden;      // clips the big blurred glow blobs
+    position: relative;
 }
 
 // ═══════════════════════════════════════════════
 // ── HERO
 // ═══════════════════════════════════════════════
-// ── HERO ─────────────────────────────────────────────────────
 .seo-hero {
-    background: $color-bg-cream;
-    padding: 5rem 10vw 4rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    min-height: 800px;
+    padding: 3rem 5vw 4rem;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    width: 100%;
-    box-sizing: border-box;
+    justify-content: center;
+    text-align: center;
 
-    @media (max-width: 900px) {
-        grid-template-columns: 1fr;
-        padding: 3rem 1.5rem;
-    }
-
-    @media (max-width: 480px) {
-        padding: 2.5rem 1.25rem;
+    @media (max-width: 768px) {
+        min-height: 0;
+        padding: 3rem 1.5rem 4rem;
     }
 }
 
-.seo-hero__inner {
-    min-width: 0;
-    width: 100%;
-    box-sizing: border-box;
-    overflow: visible; // ensure no clipping
+// ── Chess board sitting behind the copy ───────
+.seo-hero__board-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+
+    img {
+        width: min(1080px, 92vw);
+        height: auto;
+        transform: translateY(20%);
+        display: block;
+    }
+
+    // Vignette that fades the board into the black background.
+    // Exact gradient values from the mockup (black → $color-hero-bg).
+    &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(91deg, $color-hero-bg 7%, rgba(11, 11, 13, 0) 50%, $color-hero-bg 100%),
+        linear-gradient(180deg,
+            rgba(11, 11, 13, .92) 0%,
+            rgba(11, 11, 13, 0)   40%,
+            rgba(11, 11, 13, 0)   68%,
+            $color-hero-bg        100%);   // ← bottom fade papuntang itim
 }
 
-.seo-hero__label {
+    @media (max-width: 768px) {
+        img { opacity: .55; }
+    }
+}
+
+// ── Hero copy ─────────────────────────────────
+.seo-hero__content {
+    position: relative;
+    z-index: 2;
+    max-width: 690px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: -240px;
+}
+
+.seo-hero__title {
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: clamp(2rem, 5.5vw, 55px);
+    line-height: 1.1;
+    color: $color-white;
+    max-width: 610px;
+    margin: 0;
+}
+
+.seo-hero__desc {
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: $seo-red-dark;   // #620302 — as in the mockup (deliberately subtle)
+    max-width: 690px;
+    margin: 0;
+
+    @media (max-width: 480px) { font-size: 14px; }
+}
+
+.seo-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: $seo-red-deep;
+    color: #fff;
+    font-family: $font-sans;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 14px 18px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(24, 32, 60, .08);
+    transition: opacity $transition, transform .15s ease;
+
+    span { font-size: 16px; line-height: 1; }
+
+    &:hover  { opacity: .9; transform: translateY(-1px); }
+    &:active { transform: translateY(0); }
+}
+
+// ── Hero glow ─────────────────────────────────
+// Full-cover maroon wash sitting ABOVE the board (z:1) but
+// below the copy (z:2), so it tints the board like the mockup.
+.seo-hero__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(46% 48% at 12% 42%, $seo-glow 0%, rgba(113,7,26,0) 60%),
+        radial-gradient(42% 46% at 88% 84%, rgba(113, 7, 26, .5) 0%, rgba(113, 7, 26, 0) 60%),
+        radial-gradient(55% 42% at 50% 80%, rgba(113, 7, 26, .3) 0%, rgba(113, 7, 26, 0) 66%);
+}
+
+// ═══════════════════════════════════════════════
+// ── THE DECK (tools grid)
+// ═══════════════════════════════════════════════
+.seo-deck { position: relative; margin-top: -1px;
+
+    @media (max-width: 768px) { padding: 3rem 1.5rem; }
+}
+
+.seo-deck__inner {
+    position: relative;
+    z-index: 2;
+    max-width: $seo-max;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+}
+
+.seo-deck__header {
+    max-width: 690px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.seo-deck__title {
+    font-family: $font-sans;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 4vw, 38px);
+    color: $color-white;
+    margin: 0;
+}
+
+.seo-deck__desc {
+    font-family: $font-sans;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: $seo-red-accent;
+    margin: 0;
+}
+
+.seo-deck__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 4vw, 3.875rem);   // ~62px on desktop, as in mockup
+
+    @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 560px) { grid-template-columns: 1fr; }
+}
+
+// ── Deck glows ────────────────────────────────
+// Behind the content (z:0). Section bg is opaque, glow sits over it.
+.seo-deck__glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+// .seo-deck__glow--right {
+//     // dating at 94% 6% → itaas para bumleed galing hero
+//     background: radial-gradient(52% 60% at 92% -6%,
+//         rgba(113, 7, 26, .5) 0%, rgba(113, 7, 26, 0) 60%);
+// }
+
+// .seo-deck__glow--bottom {
+//     background: radial-gradient(44% 50% at -4% 94%, rgba(113, 7, 26, .5) 0%, rgba(113, 7, 26, 0) 60%);
+// }
+
+// ── Card ──────────────────────────────────────
+.seo-card {
+    background: $seo-card-bg;
+    border-radius: 20px;
+    outline: 2px solid $seo-card-line;
+    outline-offset: -2px;
+    padding: 30px 40px;
+    min-height: 264px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    transition: transform $transition, box-shadow $transition;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(113, 7, 26, .25);
+    }
+
+    @media (max-width: 560px) { padding: 26px 28px; }
+}
+
+.seo-card__icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    img { width: 50px; height: 50px; object-fit: contain; }
+    svg { width: 32px; height: 32px; color: $color-white; }
+}
+
+.seo-card__name {
+    font-family: $font-sans;
+    font-weight: 500;
+    font-size: 22px;
+    color: $color-white;
+    margin: 0;
+}
+
+.seo-card__desc {
+    font-family: $font-sans;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.4;
+    color: $color-white;
+    margin: 0;
+}
+
+.seo-card__tag {
+    align-self: flex-start;
+    margin-top: 4px;
+    background: $seo-tag-bg;
+    color: $color-white;
+    font-family: $font-sans;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1;
+    padding: 8px 16px;
+    border-radius: 52px;
+}
+
+// ═══════════════════════════════════════════════
+// ── SKILLS & EXPERTISE (dark, same card language)
+// ═══════════════════════════════════════════════
+.seo-skills {
+    padding: 4rem 5vw;
+
+    @media (max-width: 768px) { padding: 3rem 1.5rem; }
+}
+
+.seo-skills__inner {
+    position: relative;
+    z-index: 2;
+    max-width: $seo-max;
+    margin: 0 auto;
+}
+
+.seo-section-label {
+    display: inline-block;
+    font-family: $font-sans;
     font-size: .72rem;
     font-weight: 700;
     letter-spacing: .12em;
     text-transform: uppercase;
-    color: $color-primary;
-    margin-bottom: 1rem;
-}
-
-.seo-hero__title {
-    font-family: $font-serif;
-    font-size: clamp(1.8rem, 6vw, 3.4rem);
-    font-weight: 700;
-    line-height: 1.15;
-    color: $color-primary;
-    margin-bottom: 1.25rem;
-    word-break: break-word;
-    overflow-wrap: break-word;
-
-    em {
-        font-style: italic;
-        color: $color-accent-rose;
-    }
-}
-
-.seo-hero__desc {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: $color-text-semi;
-    max-width: 480px;
-    margin-bottom: 2rem;
-    word-break: break-word;
-    overflow-wrap: break-word;
-
-    @media (max-width: 480px) {
-        font-size: .9rem;
-    }
-}
-
-.seo-hero__cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-
-    @media (max-width: 480px) {
-        flex-direction: column;
-
-        .btn {
-            width: 100%;
-            justify-content: center;
-        }
-    }
-}
-
-// ── Hero right visual panel ───────────────────
-// ── Hero right visual panel ───────────────────
-.seo-hero__visual {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    @media (max-width: 900px) {
-        display: none;
-    }
-}
-
-.seo-hero__visual-img {
-    width: 100%;
-    max-width: 480px;
-    height: auto;
-    object-fit: contain;
-    display: block;
-}
-
-// ── Floating badges with animation ───────────
-@keyframes badgeFloat {
-
-    0%,
-    100% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes badgeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(16px) scale(0.92);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.seo-hero__badge {
-    position: absolute;
-    background: $color-primary;
-    color: $color-white;
-    border-radius: 12px;
-    padding: .6rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 0 4px 16px rgba(123, 29, 46, .25);
-    animation:
-        badgeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both,
-        badgeFloat 3s ease-in-out infinite;
-
-    &--1 {
-        top: 0;
-        right: 2rem;
-        animation-delay: 0.2s, 0.8s;
-    }
-
-    &--2 {
-        top: 4.5rem;
-        right: 8rem;
-        animation-delay: 0.4s, 1.2s;
-    }
-}
-
-.seo-hero__badge-num {
-    font-size: 1.4rem;
-    font-weight: 800;
-    line-height: 1;
-}
-
-.seo-hero__badge-label {
-    font-size: .65rem;
-    font-weight: 600;
-    letter-spacing: .06em;
-    opacity: .8;
-    margin-top: .15rem;
-}
-
-// ── Rank card with animated fill bars ────────
-@keyframes fillBar {
-    from {
-        width: 0%;
-    }
-
-    to {
-        width: var(--target-w);
-    }
-}
-
-.seo-hero__rank-card {
-    margin-top: 7rem;
-    background: $color-bg-light;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 20px rgba(123, 29, 46, .07);
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-}
-
-.seo-hero__rank-bar {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-    font-size: .83rem;
-
-    span {
-        color: $color-text-muted;
-        white-space: nowrap;
-        min-width: 120px;
-    }
-
-    strong {
-        color: $color-primary;
-        font-weight: 700;
-        white-space: nowrap;
-        min-width: 40px;
-        text-align: right;
-    }
-}
-
-.seo-hero__rank-track {
-    flex: 1;
-    height: 7px;
-    border-radius: 99px;
-    background: $color-bg-tan;
-    overflow: hidden;
-}
-
-.seo-hero__rank-fill {
-    height: 100%;
-    width: 0%;
-    border-radius: 99px;
-    background: $color-primary;
-    transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-// ═══════════════════════════════════════════════
-// ── TOOLS
-// ═══════════════════════════════════════════════
-.seo-tools {
-    background: $color-bg-tan;
-    padding: 5rem 10vw;
-
-    @media (max-width: 900px) {
-        padding: 3rem 1.5rem;
-    }
-
-    @media (max-width: 480px) {
-        padding: 2.5rem 1.25rem;
-    }
-}
-
-.seo-tools__inner {
-    max-width: $max-width;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.seo-tools__header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 2.5rem;
-}
-
-.seo-tools__title {
-    font-family: $font-serif;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 700;
-    color: $color-primary;
-    margin: 0;
-}
-
-.seo-tools__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1.25rem;
-    width: 100%;
-
-    @media (max-width: 600px) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    @media (max-width: 360px) {
-        grid-template-columns: 1fr;
-    }
-}
-
-.seo-tool-card {
-    background: $color-bg-cream;
-    border: 1px solid rgba(123, 29, 46, .1);
-    border-radius: 14px;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: .5rem;
-    transition: transform $transition, box-shadow $transition;
-    min-width: 0; // critical: prevents grid blowout
-    box-sizing: border-box;
-
-    &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 24px rgba(123, 29, 46, .1);
-    }
-
-    @media (max-width: 600px) {
-        padding: 1.25rem 1rem;
-    }
-}
-
-.seo-tool-card__icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    background: $color-bg-light;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: .25rem;
-    color: $color-primary;
-    flex-shrink: 0;
-
-    img {
-        width: 28px;
-        height: 28px;
-        object-fit: contain;
-    }
-}
-
-.seo-tool-card__name {
-    font-size: .95rem;
-    font-weight: 700;
-    color: $color-primary;
-    margin: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
-
-    @media (max-width: 600px) {
-        font-size: .88rem;
-    }
-}
-
-.seo-tool-card__desc {
-    font-size: .8rem;
-    line-height: 1.55;
-    color: $color-text-semi;
-    margin: 0;
-    flex: 1;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-.seo-tool-card__tag {
-    display: inline-block;
-    font-size: .68rem;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: $color-primary;
-    background: rgba(123, 29, 46, .08);
-    padding: .25rem .6rem;
-    border-radius: 99px;
-    margin-top: .25rem;
-    align-self: flex-start;
-}
-
-// ═══════════════════════════════════════════════
-// ── PROJECTS
-// ═══════════════════════════════════════════════
-.seo-projects {
-    background: $color-bg-cream;
-    padding: 5rem 10vw;
-
-    @media (max-width: 900px) {
-        padding: 3rem 1.5rem;
-    }
-
-    @media (max-width: 480px) {
-        padding: 2.5rem 1.25rem;
-    }
-}
-
-.seo-projects__inner {
-    max-width: $max-width;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.seo-projects__header {
-    margin-bottom: 3rem;
-}
-
-.seo-projects__title {
-    font-family: $font-serif;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 700;
-    color: $color-primary;
-    margin: 0 0 .5rem;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-.seo-projects__desc {
-    font-size: .95rem;
-    color: $color-text-semi;
-    margin: 0;
-}
-
-.seo-projects__list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
-}
-
-.seo-project-card {
-    background: $color-bg-light;
-    border-radius: 16px;
-    padding: 2rem 2rem 2rem 1.75rem;
-    display: grid;
-    grid-template-columns: 90px 1fr auto;
-    gap: 1.5rem;
-    align-items: flex-start;
-    border-left: 4px solid $color-primary;
-    box-shadow: 0 2px 12px rgba(123, 29, 46, .05);
-    transition: box-shadow $transition;
-    width: 100%;
-    box-sizing: border-box;
-    min-width: 0;
-
-    &:hover {
-        box-shadow: 0 6px 24px rgba(123, 29, 46, .1);
-    }
-
-    // Tablet: collapse to 2 cols (meta + body), no link column
-    @media (max-width: 700px) {
-        grid-template-columns: auto 1fr;
-        border-left: none;
-        border-top: 4px solid $color-primary;
-        padding: 1.5rem;
-        gap: 1rem;
-    }
-
-    // Mobile: fully stacked
-    @media (max-width: 480px) {
-        grid-template-columns: 1fr;
-        padding: 1.25rem;
-        gap: .75rem;
-    }
-}
-
-.seo-project-card__meta {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .5rem;
-    padding-top: .25rem;
-    min-width: 0;
-
-    // On mobile: display meta inline (num + cat side by side)
-    @media (max-width: 480px) {
-        flex-direction: row;
-        align-items: center;
-        gap: .75rem;
-    }
-}
-
-.seo-project-card__num {
-    font-size: 2rem;
-    font-weight: 800;
-    color: rgba(123, 29, 46, .15);
-    line-height: 1;
-    font-family: $font-serif;
-
-    @media (max-width: 480px) {
-        font-size: 1.4rem;
-    }
-}
-
-.seo-project-card__cat {
-    font-size: .68rem;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    color: $color-primary;
-    background: rgba(123, 29, 46, .08);
-    padding: .25rem .6rem;
-    border-radius: 99px;
-    white-space: nowrap;
-}
-
-.seo-project-card__body {
-    display: flex;
-    flex-direction: column;
-    gap: .75rem;
-    min-width: 0; // critical for grid text overflow
-}
-
-.seo-project-card__title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: $color-primary;
-    margin: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
-
-    @media (max-width: 480px) {
-        font-size: 1rem;
-    }
-}
-
-.seo-project-card__desc {
-    font-size: .9rem;
-    line-height: 1.65;
-    color: $color-text-semi;
-    margin: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
-
-    @media (max-width: 480px) {
-        font-size: .85rem;
-    }
-}
-
-.seo-project-card__results {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: .35rem;
-
-    li {
-        font-size: .85rem;
-        color: $color-primary;
-        padding-left: 1.1rem;
-        position: relative;
-        word-break: break-word;
-        overflow-wrap: break-word;
-
-        &::before {
-            content: '↑';
-            position: absolute;
-            left: 0;
-            color: $color-primary;
-            font-size: .75rem;
-        }
-    }
-}
-
-.seo-project-card__tools {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .4rem;
-    margin-top: .25rem;
-}
-
-.seo-project-card__tool-tag {
-    font-size: .72rem;
-    font-weight: 600;
-    color: $color-text-semi;
-    background: $color-bg-tan;
-    padding: .2rem .55rem;
-    border-radius: 6px;
-    white-space: nowrap;
-}
-
-.seo-project-card__link {
-    font-size: .83rem;
-    font-weight: 700;
-    color: $color-primary;
-    text-decoration: none;
-    white-space: nowrap;
-    padding-top: .35rem;
-    transition: opacity $transition;
-    align-self: flex-start;
-
-    &:hover {
-        opacity: .7;
-    }
-
-    // On mobile, link sits below the body naturally in stacked grid
-    @media (max-width: 480px) {
-        padding-top: 0;
-    }
-}
-
-// ═══════════════════════════════════════════════
-// ── CTA BAND (optional section)
-// ═══════════════════════════════════════════════
-.seo-cta {
-    background: $color-primary;
-    padding: 5rem 10vw;
-    text-align: center;
-
-    @media (max-width: 900px) {
-        padding: 3rem 1.5rem;
-    }
-
-    @media (max-width: 480px) {
-        padding: 2.5rem 1.25rem;
-    }
-}
-
-.seo-cta__inner {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-.seo-cta__title {
-    font-family: $font-serif;
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 700;
-    color: $color-white;
-    margin: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
-}
-
-.seo-cta__desc {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: rgba(250, 246, 238, .75);
-    margin: 0 0 .5rem;
-}
-
-// ═══════════════════════════════════════════════
-// ── SKILLS & EXPERTISE
-// ═══════════════════════════════════════════════
-.seo-skills {
-    padding: 5rem 10vw;
-    background: $color-bg-cream;
-
-    @media (max-width: 900px) {
-        padding: 3rem 1.5rem;
-    }
-
-    @media (max-width: 480px) {
-        padding: 2.5rem 1.25rem;
-    }
-}
-
-.seo-skills__inner {
-    max-width: $max-width;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
+    color: $seo-red-accent;
+    margin-bottom: .75rem;
 }
 
 .seo-skills__header {
-    text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 }
 
 .seo-skills__title {
-    font-family: $font-serif;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 800;
-    color: $color-primary;
+    font-family: $font-sans;
+    font-size: clamp(1.6rem, 3vw, 30px);
+    font-weight: 700;
+    color: $color-white;
     margin: .4rem 0 .75rem;
 }
 
 .seo-skills__desc {
-    color: $color-text-semi;
+    color: $seo-red-accent;
     font-size: .95rem;
     margin: 0;
 }
 
 .seo-skills__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-    width: 100%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem);
 
-    @media (max-width: 640px) {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-    }
-
-    @media (max-width: 420px) {
-        grid-template-columns: 1fr;
-    }
+    @media (max-width: 900px) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 560px) { grid-template-columns: 1fr; }
 }
 
 .seo-skill-card {
-    background: $color-bg-tan;
-    border: 1px solid rgba(123, 29, 46, .1);
-    border-radius: 14px;
-    padding: 1.75rem;
+    background: $seo-card-bg;
+    border-radius: 20px;
+    outline: 2px solid $seo-card-line;
+    outline-offset: -2px;
+    padding: 30px 40px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: .6rem;
-    transition: box-shadow .2s ease, transform .2s ease;
-    box-sizing: border-box;
-    min-width: 0;
+    gap: .5rem;
+    transition: transform $transition, box-shadow $transition;
 
     &:hover {
-        box-shadow: 0 8px 28px rgba(123, 29, 46, .08);
-        transform: translateY(-2px);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(113, 7, 26, .2);
     }
 
-    @media (max-width: 640px) {
-        padding: 1.25rem;
-    }
+    @media (max-width: 560px) { padding: 26px 28px; }
 }
 
 .seo-skill-card__num {
-    font-size: 72px;
+    font-size: 40px;
     line-height: 1;
-    color: $color-primary;
-    opacity: 1;
+    color: $seo-red-deep;
     user-select: none;
     pointer-events: none;
-    margin-bottom: -8px;
+    margin-bottom: .25rem;
 }
 
 .seo-skill-card__title {
-    font-size: 1rem;
+    font-family: $font-sans;
+    font-size: 1.1rem;
     font-weight: 700;
-    color: $color-primary;
+    color: $color-white;
     margin: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
 }
 
 .seo-skill-card__text {
+    font-family: $font-sans;
     font-size: .875rem;
-    color: $color-text-semi;
     line-height: 1.6;
+    color: rgba(250, 246, 238, .72);
     margin: 0;
-    word-break: break-word;
-    overflow-wrap: break-word;
 }

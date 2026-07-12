@@ -3,19 +3,29 @@
 @section('title', 'Artworks')
 
 @section('content')
+
+
     <section class="artworks-hero">
-        <img class="artworks-hero__deco artworks-hero__deco--cards-left"  src="{{ asset('images/Untitled_design__10_.png') }}" alt="" aria-hidden="true" />
-<img class="artworks-hero__deco artworks-hero__deco--cards-right" src="{{ asset('images/Untitled_design__9_.png') }}"  alt="" aria-hidden="true" />
-        <p class="artworks-hero__eyebrow">Portfolio</p>
-        <h1 class="artworks-hero__title">All Artworks & Projects</h1>
-        <p class="artworks-hero__desc">A collection of web design, development, and branding projects crafted with care.</p>
+        {{-- Ambient glows (same treatment as project-detail hero) --}}
+        <div class="artworks-hero__glow artworks-hero__glow--left" aria-hidden="true"></div>
+        <div class="artworks-hero__glow artworks-hero__glow--right" aria-hidden="true"></div>
+
+        <img class="artworks-hero__deco artworks-hero__deco--cards-left" src="{{ asset('images/Untitled_design__10_.png') }}"
+            alt="" aria-hidden="true" />
+        <img class="artworks-hero__deco artworks-hero__deco--cards-right" src="{{ asset('images/Untitled_design__9_.png') }}"
+            alt="" aria-hidden="true" />
+        <p class="artworks-hero__eyebrow">Off the Table, Into the Craft</p>
+        <h1 class="artworks-hero__title">The Wild Cards</h1>
+        <p class="artworks-hero__desc">Not every move is calculated for conversion. Some are just for the love of the game.
+            This is where design becomes play — a look at the creative work, AI-generated pieces, and visual experiments
+            outside the client brief.</p>
     </section>
 
     {{-- FILTER BAR --}}
     <div class="filter-bar">
         <div class="filter-bar__inner">
             <button class="filter-btn active" data-filter="all">All</button>
-            @foreach($categories as $category)
+            @foreach ($categories as $category)
                 <button class="filter-btn" data-filter="{{ Str::slug($category) }}">
                     {{ $category }}
                 </button>
@@ -26,7 +36,7 @@
     <section class="artworks-grid-section">
         <div class="artworks-grid-section__inner">
             <div class="artworks-grid" id="artworksGrid">
-                @foreach($artworks as $artwork)
+                @foreach ($artworks as $artwork)
                     @php
                         $idx = $loop->index;
                         $thumb = $artwork->image
@@ -35,9 +45,11 @@
                                 : asset('images/' . $artwork->image))
                             : null;
                     @endphp
-                   <div class="artwork-card" data-category="{{ Str::slug($artwork->category) }}" data-idx="{{ $idx }}" onclick="window.location='{{ route('project.detail', $artwork->slug) }}'">
+                    <div class="artwork-card" data-category="{{ Str::slug($artwork->category) }}"
+                        data-idx="{{ $idx }}"
+                        onclick="window.location='{{ route('project.detail', $artwork->slug) }}'">
                         <div class="artwork-card__img-wrap">
-                            @if($thumb)
+                            @if ($thumb)
                                 <img src="{{ $thumb }}" alt="{{ $artwork->title }}" />
                             @endif
                             <span class="artwork-card__tag">{{ $artwork->category }}</span>
@@ -45,21 +57,27 @@
                         <div class="artwork-card__body">
                             <div class="artwork-card__meta">
                                 <div class="artwork-card__author">
-                                    <img src="{{ asset('images/logo.png') }}" alt="Avatar" class="artwork-card__avatar" />
-                                    <span class="artwork-card__name">{{ $siteSettings['brand_name'] ?? '@keanariela' }}</span>
+                                    <img src="{{ asset('images/logo.png') }}" alt="Avatar"
+                                        class="artwork-card__avatar" />
+                                    <span
+                                        class="artwork-card__name">{{ $siteSettings['brand_name'] ?? '@keanariela' }}</span>
                                 </div>
                                 {{-- LIKE & SAVE BUTTONS --}}
                                 <div class="artwork-card__actions">
-                                    <button class="artwork-card__icon-btn btn-heart" data-idx="{{ $idx }}" title="Like">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7B1D2E"
-                                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <button class="artwork-card__icon-btn btn-heart" data-idx="{{ $idx }}"
+                                        title="Like">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                            stroke="#7B1D2E" stroke-width="1.8" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path
                                                 d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
                                         </svg>
                                     </button>
-                                    <button class="artwork-card__icon-btn btn-save" data-idx="{{ $idx }}" title="Save">
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7B1D2E"
-                                            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                    <button class="artwork-card__icon-btn btn-save" data-idx="{{ $idx }}"
+                                        title="Save">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                                            stroke="#7B1D2E" stroke-width="1.8" stroke-linecap="round"
+                                            stroke-linejoin="round">
                                             <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
                                         </svg>
                                     </button>
@@ -77,7 +95,7 @@
                                     </svg>
                                 </a>
                                 <div class="artwork-card__tools">
-                                    @foreach($artwork->tools ?? [] as $tool)
+                                    @foreach ($artwork->tools ?? [] as $tool)
                                         <span class="artwork-card__tool-badge">{{ $tool }}</span>
                                     @endforeach
                                 </div>
@@ -93,7 +111,7 @@
         </div>
     </section>
 
-    @include('partials.contact-newsletter')
+    {{-- @include('partials.contact-newsletter') --}}
 
 @endsection
 
@@ -118,7 +136,8 @@
                 document.querySelectorAll(`.btn-heart[data-idx="${idx}"]`).forEach(b => {
                     liked.has(idx) ? b.classList.remove('liked') : b.classList.add('liked');
                 });
-                liked.has(idx) ? (liked.delete(idx), showToast('Removed from likes')) : (liked.add(idx), showToast('❤️ Liked!'));
+                liked.has(idx) ? (liked.delete(idx), showToast('Removed from likes')) : (liked.add(idx), showToast(
+                    '❤️ Liked!'));
             }
 
             const bookmark = e.target.closest('.btn-save');
@@ -127,7 +146,8 @@
                 document.querySelectorAll(`.btn-save[data-idx="${idx}"]`).forEach(b => {
                     saved.has(idx) ? b.classList.remove('saved') : b.classList.add('saved');
                 });
-                saved.has(idx) ? (saved.delete(idx), showToast('Removed from saved')) : (saved.add(idx), showToast('🔖 Saved!'));
+                saved.has(idx) ? (saved.delete(idx), showToast('Removed from saved')) : (saved.add(idx), showToast(
+                    '🔖 Saved!'));
             }
         });
 
@@ -141,13 +161,14 @@
                 btn.classList.add('active');
                 const filter = btn.dataset.filter;
                 cards.forEach(card => {
-                    card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
+                    card.style.display = (filter === 'all' || card.dataset.category === filter) ?
+                        '' : 'none';
                 });
             });
         });
 
         /* LOAD MORE */
-        document.getElementById('loadMoreBtn').addEventListener('click', function () {
+        document.getElementById('loadMoreBtn').addEventListener('click', function() {
             this.textContent = 'No more projects to load';
             this.disabled = true;
             this.style.opacity = '0.5';
